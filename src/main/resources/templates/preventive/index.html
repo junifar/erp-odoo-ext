@@ -28,63 +28,89 @@
                 <div class="row">
                     <div class="col-md-12">
                     <div class="table-responsive">
-                        <table class="table border table-sm table-striped ">
+                        <table class="table border table-sm table-striped table-condensed">
                             <thead>
                             <tr>
-                                <th>Tahun</th>
-                                <th>Tipe Project</th>
-                                <th>Customer</th>
-                                <th>Area / Sub Area</th>
-                                <th>Nilai PO</th>
-                                <th>Nilai Penagihan</th>
-                                <th>Nilai Budget</th>
-                                <th>Laba/Rugi</th>
-                                <th>Action</th>
+                                <th class="align-top text-center">Tahun</th>
+                                <th class="align-top text-center">Tipe Project</th>
+                                <th class="align-top text-center">Project ID</th>
+                                <th class="align-top text-center">Site Name</th>
+                                <th class="align-top text-center">Customer</th>
+                                <th class="align-top text-center">Area / Sub Area</th>
+                                <th class="align-top text-center">Nilai PO</th>
+                                <th class="align-top text-center">Nilai Penagihan</th>
+                                <th class="align-top text-center">Nilai Budget</th>
+                                <th class="align-top text-center">Realisasi Budget</th>
+                                <th class="align-top text-center">Laba/Rugi</th>
+                                <th class="align-top text-center">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>2018</td>
-                                <td>FLM</td>
-                                <td>DMT</td>
-                                <td>Sumbagsel (Paket 1) / Bengkulu DMT</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td>2018</td>
-                                <td>FLM</td>
-                                <td>DMT</td>
-                                <td>Sumbagsel (Paket 1) / Bengkulu DMT</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <td>2018</td>
-                                <td>FLM</td>
-                                <td>DMT</td>
-                                <td>Sumbagsel (Paket 1) / Bengkulu DMT</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right">0.00</td>
-                                <td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>
-                            </tr>
-                            <tr>
-                                <th colspan="3">Total</th>
-                                <th class="text-right">0.00</th>
-                                <th class="text-right">0.00</th>
-                                <th class="text-right">0.00</th>
-                                <th class="text-right">0.00</th>
-                                <th class="text-right">0.00</th>
-                                <th></th>
-                            </tr>
+                            <span th:each="dataRow : ${preventiveDataList}">
+                                <!--<span th:if="${#strings.length(dataRow.tahun) > 0}">-->
+                                    <tr>
+                                        <td th:text="${dataRow.tahun}">2018</td>
+                                        <td>FLM</td>
+                                        <td th:text="${dataRow.project_id}">Project ID</td>
+                                        <td th:text="${dataRow.site_name}">Site Name</td>
+                                        <td th:text="${dataRow.customer_name}">DMT</td>
+                                        <td th:text="${dataRow.area}">Sumbagsel (Paket 1) / Bengkulu DMT</td>
+                                        <td class="text-right" th:text="${dataRow.nilai_po}">0.00</td>
+                                        <td class="text-right" th:text="${dataRow.nilai_penagihan}">0.00</td>
+                                        <td class="text-right" th:text="${dataRow.nilai_budget}">0.00</td>
+                                        <td class="text-right" th:text="${dataRow.realisasi_budget}">0.00</td>
+                                        <td class="text-right" th:text="${dataRow.laba_rugi}">0.00</td>
+                                        <td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>
+                                    </tr>
+                                <!--</span>-->
+                            </span>
+
+                            <!--<tr>-->
+                                <!--<td>2018</td>-->
+                                <!--<td>FLM</td>-->
+                                <!--<td>DMT</td>-->
+                                <!--<td>Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>2018</td>-->
+                                <!--<td>FLM</td>-->
+                                <!--<td>DMT</td>-->
+                                <!--<td>Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td>2018</td>-->
+                                <!--<td>FLM</td>-->
+                                <!--<td>DMT</td>-->
+                                <!--<td>Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right">0.00</td>-->
+                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<th colspan="3">Total</th>-->
+                                <!--<th class="text-right">0.00</th>-->
+                                <!--<th class="text-right">0.00</th>-->
+                                <!--<th class="text-right">0.00</th>-->
+                                <!--<th class="text-right">0.00</th>-->
+                                <!--<th class="text-right">0.00</th>-->
+                                <!--<th class="text-right">0.00</th>-->
+                                <!--<th></th>-->
+                            <!--</tr>-->
                             </tbody>
                         </table>
                     </div>
