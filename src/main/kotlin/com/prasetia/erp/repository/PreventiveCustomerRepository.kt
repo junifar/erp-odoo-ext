@@ -203,7 +203,8 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                     ) AS E ON E.project_id = "public".project_project.id
                             WHERE
                                 "public".project_project."state" NOT IN ('cancelled') AND
-                                "public".project_project.site_type_id = 7
+                                "public".project_project.site_type_id = 7 AND
+                                "public".project_site.tahun IS NOT NULL
                         """
     }
 
