@@ -45,23 +45,16 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
 
         const val QUERY_PREVENTIVE_REPORT = """
                             SELECT
-                                ROW_NUMBER() OVER (ORDER BY "public".project_project."id") AS id,
-                                "public".project_project."id" AS project_id_id,
-                                "public".project_site.tahun,
-                                "public".project_site."name" AS site_name,
-                                "public".account_analytic_account."name" AS project_id,
-                                "public".project_project."state",
-                                "public".res_partner.code AS customer_name,
-                                "public".project_site_type."name" AS project_type,
-                                "public".project_area."name" AS area,
+                                ROW_NUMBER() OVER (ORDER BY "public".res_partner."id") AS id,
                                 "public".res_partner."id" AS customer_id,
-                                A.area_detail_id,
-                                A.area_detail,
-                                B.nilai_po,
-                                C.nilai_penagihan,
-                                D.nilai_budget,
-                                E.realisasi_budget,
-                                C.nilai_penagihan-E.realisasi_budget AS laba_rugi
+                                "public".res_partner.code AS customer_name,
+                                "public".project_area."name" AS area,
+                                "public".project_site.tahun,
+                                sum(B.nilai_po) AS nilai_po,
+                                sum(C.nilai_penagihan) AS nilai_penagihan,
+                                sum(D.nilai_budget) AS nilai_budget ,
+                                sum(E.realisasi_budget) AS realisasi_budget,
+                                sum(C.nilai_penagihan-E.realisasi_budget) AS laba_rugi
                             FROM
                                 "public".project_project
                                 LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
@@ -205,6 +198,11 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                 "public".project_project."state" NOT IN ('cancelled') AND
                                 "public".project_project.site_type_id = 7 AND
                                 "public".project_site.tahun IS NOT NULL
+                            GROUP BY
+                                    "public".res_partner."id",
+                                "public".res_partner.code,
+                                "public".project_area."name",
+                                "public".project_site.tahun
                         """
     }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.prasetia.erp.constant.GlobalConstant.Companion.BASE_URL
 import com.prasetia.erp.model.preventive.PreventiveCustomer
+import com.prasetia.erp.pojo.PreventiveCustomerYear
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
@@ -16,8 +17,9 @@ class PreventiveController{
     @RequestMapping("/preventive")
     fun indexPreventive(model:Model): String{
         val objectMapper = ObjectMapper()
-        val url = URL(BASE_URL + "api/preventive_customer")
+        val url = URL(BASE_URL + "api/preventive_customer1")
         val preventiveDataList: List<PreventiveCustomer> = objectMapper.readValue(url)
+//        val preventiveDataList: List<PreventiveCustomerYear> = objectMapper.readValue(url)
         model.addAttribute("preventiveDataList", preventiveDataList)
         return "preventive/index"
     }

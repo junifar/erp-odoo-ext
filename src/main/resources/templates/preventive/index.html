@@ -57,9 +57,9 @@
                             <thead>
                             <tr>
                                 <th>Tahun</th>
-                                <th>Tipe</th>
-                                <th>ProjectID</th>
-                                <th>Site Name</th>
+                                <!--<th>Tipe</th>-->
+                                <!--<th>ProjectID</th>-->
+                                <!--<th>Site Name</th>-->
                                 <th>Customer</th>
                                 <th>Area / Sub Area</th>
                                 <th>PO</th>
@@ -71,20 +71,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="dataRow : ${preventiveDataList}">
-                                <td th:text="${dataRow.tahun}">2018</td>
-                                <td>FLM</td>
-                                <td th:text="${dataRow.project_id}">Project ID</td>
-                                <td th:text="${dataRow.site_name}">Site Name</td>
-                                <td th:text="${dataRow.customer_name}">DMT</td>
-                                <td th:text="${dataRow.area}">Sumbagsel (Paket 1) / Bengkulu DMT</td>
-                                <td class="text-right" th:text="${dataRow.nilai_po}">0.00</td>
-                                <td class="text-right" th:text="${dataRow.nilai_penagihan}">0.00</td>
-                                <td class="text-right" th:text="${dataRow.nilai_budget}">0.00</td>
-                                <td class="text-right" th:text="${dataRow.realisasi_budget}">0.00</td>
-                                <td class="text-right" th:text="${dataRow.laba_rugi}">0.00</td>
-                                <td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>
-                            </tr>
+                            <!--<tr th:each="dataRow : ${preventiveDataList}">-->
+                                <!--<td th:text="${dataRow.tahun}">2018</td>-->
+                                <!--&lt;!&ndash;<td>FLM</td>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td th:text="${dataRow.project_id}">Project ID</td>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<td th:text="${dataRow.site_name}">Site Name</td>&ndash;&gt;-->
+                                <!--<td th:text="${dataRow.customer_name}">DMT</td>-->
+                                <!--<td th:text="${dataRow.area}">Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
+                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.nilai_po, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
+                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.nilai_penagihan, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
+                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.nilai_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
+                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.realisasi_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
+                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.laba_rugi, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
+                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
+                            <!--</tr>-->
 
                             <!--<tr>-->
                                 <!--<td>2018</td>-->
