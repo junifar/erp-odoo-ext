@@ -33,7 +33,8 @@ class PreventiveCustomerGroupDetail(
         val laba_rugi: Long?,
         val persent_penagihan:Long?,
         val persent_budget:Long?,
-        val persent_laba_rugi:Long?
+        val persent_laba_rugi:Long?,
+        val area_id:Long?
 ){
-    constructor(): this(0, "", 0, 0, 0, 0, 0, 0, 0, 0)
+    constructor(): this(0, "", 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }

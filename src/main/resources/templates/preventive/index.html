@@ -49,7 +49,7 @@
                                             <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.persent_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>
                                             <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.laba_rugi, 1, 'POINT', 2, 'COMMA')}">0.00</td>
                                             <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.persent_laba_rugi, 1, 'POINT', 2, 'COMMA')}">0.00</td>
-                                            <td class="text-right small"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>
+                                            <td class="text-right small"><a th:href="@{'/preventive/detail/' + ${dataRowDetail.customer_id} + '/' + ${dataRow.tahun} + '/' + ${dataRowSubDetail.area_id}}">Detail</a></td>
                                         </tr>
                                     </span>
                                     </span>

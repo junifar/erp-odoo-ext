@@ -1,4 +1,4 @@
-package com.prasetia.erp.repository
+package com.prasetia.erp.repository.preventive
 
 import com.prasetia.erp.model.preventive.PreventiveCustomer
 import org.springframework.data.jpa.repository.Query
@@ -49,6 +49,7 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                 "public".res_partner."id" AS customer_id,
                                 "public".res_partner.code AS customer_name,
                                 "public".project_area."name" AS area,
+                                "public".project_area."id" AS area_id,
                                 "public".project_site.tahun,
                                 sum(B.nilai_po) AS nilai_po,
                                 sum(C.nilai_penagihan) AS nilai_penagihan,
@@ -205,7 +206,8 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                     "public".res_partner."id",
                                 "public".res_partner.code,
                                 "public".project_area."name",
-                                "public".project_site.tahun
+                                "public".project_site.tahun,
+                                "public".project_area."id"
                         """
     }
 

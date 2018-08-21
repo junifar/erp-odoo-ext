@@ -29,8 +29,10 @@ class PreventiveController{
         return "preventive/index"
     }
 
-    @RequestMapping("/preventive/detail/{id}")
-    fun detailPreventive(model: Model, @PathVariable("id") id: Int): String{
+    @RequestMapping("/preventive/detail/{customer_id}/{tahun}/{area_id}")
+    fun detailPreventive(model: Model, @PathVariable("customer_id") customer_id: Int, @PathVariable("tahun") tahun: Int,
+                         @PathVariable("area_id") area_id: String): String{
+        println(tahun)
         return "preventive/detail"
     }
 
