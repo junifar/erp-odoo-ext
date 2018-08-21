@@ -23,6 +23,7 @@ class PreventiveController{
     fun getAllData1(): MutableList<PreventiveCustomerYear> {
         val data = repository.getAllData()
         var yearGroup: MutableList<PreventiveCustomerYear> = mutableListOf()
+        var id:Long = 1
         data.forEach {
             item->
             var found = false
@@ -30,13 +31,14 @@ class PreventiveController{
                 itemDetail ->
                 if(itemDetail.tahun == item.tahun) found = true
             }
-            if (!found) yearGroup.add(PreventiveCustomerYear(item.tahun, getCustomerItemDetail(item.tahun, data)))
+            if (!found) yearGroup.add(PreventiveCustomerYear(id++, item.tahun, getCustomerItemDetail(item.tahun, data)))
         }
         return  yearGroup
     }
 
     fun getCustomerItemDetail(tahun: String, data:Iterable<PreventiveCustomer>):MutableList<PreventiveCustomerGroup>{
         val customerItemDetail:MutableList<PreventiveCustomerGroup> = mutableListOf()
+        var id:Long = 1
         data.forEach {
             item->
             if(item.tahun == tahun){
@@ -45,7 +47,7 @@ class PreventiveController{
                     itemDetail ->
                     if (itemDetail.customer_id == item.customer_id) found = true
                 }
-                if (!found) customerItemDetail.add(PreventiveCustomerGroup(item.customer_name, item.customer_id, getCustomerSubItemDetail(tahun, item.customer_id, data)))
+                if (!found) customerItemDetail.add(PreventiveCustomerGroup(id++, item.customer_name, item.customer_id, getCustomerSubItemDetail(tahun, item.customer_id, data)))
             }
         }
         return customerItemDetail
@@ -55,7 +57,7 @@ class PreventiveController{
         data.forEach {
             item->
             if((item.tahun == tahun) and (item.customer_id == customer_id)){
-                customerSubItemDetail.add(PreventiveCustomerGroupDetail(item.id, item.area, item.nilai_po, item.nilai_penagihan, item.nilai_budget, item.realisasi_budget, item.laba_rugi))
+                customerSubItemDetail.add(PreventiveCustomerGroupDetail(item.id, item.area, item.nilai_po, item.nilai_penagihan, item.nilai_budget, item.realisasi_budget, item.laba_rugi, item.persent_penagihan, item.persent_budget, item.persent_laba_rugi))
             }
         }
         return customerSubItemDetail

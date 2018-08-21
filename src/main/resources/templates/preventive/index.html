@@ -2,31 +2,6 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/header :: header}"></head>
 <body class="bg-light">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css">
-
-    <script type="text/javascript" th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
-
-    <style type="text/css">
-        th, td { white-space: nowrap; }
-        div.dataTables_wrapper {
-            width: 100%;
-            margin: 0 auto;
-        }
-    </style>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#preventive_data').DataTable({
-                scrollX: true
-            });
-        } );
-    </script>
-
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <main role="main" class="container">
         <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -36,102 +11,49 @@
                         <h3 >Maintenance Preventive Projects Report</h3>
                     </div>
                 </div>
-                <!--<div class="row">&nbsp;</div>-->
-                <!--<div class="row">-->
-                    <!--<div class="col-md-12">-->
-                    <!--<form class="form-inline">-->
-                        <!--<div class="input-group">-->
-                            <!--<input type="email" class="form-control" placeholder="Tahun">-->
-                            <!--<div class="input-group-append">-->
-                                <!--<button class="btn btn-primary" type="button">Filter</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</form>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table id="preventive_data" class="table table-striped table-bordered display nowrap" style="width:100%">
+                        <div class="table-responsive">
+                        <table class="table table-striped table-bordered display nowrap" style="width:100%">
                             <thead>
                             <tr>
-                                <th>Tahun</th>
-                                <!--<th>Tipe</th>-->
-                                <!--<th>ProjectID</th>-->
-                                <!--<th>Site Name</th>-->
-                                <th>Customer</th>
-                                <th>Area / Sub Area</th>
-                                <th>PO</th>
-                                <th>Penagihan</th>
-                                <th>Nilai Budget</th>
-                                <th>Realisasi Budget</th>
-                                <th>Laba/Rugi</th>
-                                <th>Action</th>
+                                <th class="small text-center">Customer</th>
+                                <th class="small text-center">Area</th>
+                                <th class="small text-center">PO</th>
+                                <th class="small text-center">Penagihan</th>
+                                <th class="small text-center">%</th>
+                                <th class="small text-center">Nilai Budget</th>
+                                <th class="small text-center">Realisasi Budget</th>
+                                <th class="small text-center">%</th>
+                                <th class="small text-center">Laba/Rugi</th>
+                                <th class="small text-center">%</th>
+                                <th class="small text-center">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <!--<tr th:each="dataRow : ${preventiveDataList}">-->
-                                <!--<td th:text="${dataRow.tahun}">2018</td>-->
-                                <!--&lt;!&ndash;<td>FLM</td>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<td th:text="${dataRow.project_id}">Project ID</td>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<td th:text="${dataRow.site_name}">Site Name</td>&ndash;&gt;-->
-                                <!--<td th:text="${dataRow.customer_name}">DMT</td>-->
-                                <!--<td th:text="${dataRow.area}">Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
-                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.nilai_po, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
-                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.nilai_penagihan, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
-                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.nilai_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
-                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.realisasi_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
-                                <!--<td class="text-right" th:text="${#numbers.formatDecimal(dataRow.laba_rugi, 1, 'POINT', 2, 'COMMA')}">0.00</td>-->
-                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
-                            <!--</tr>-->
-
-                            <!--<tr>-->
-                                <!--<td>2018</td>-->
-                                <!--<td>FLM</td>-->
-                                <!--<td>DMT</td>-->
-                                <!--<td>Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>2018</td>-->
-                                <!--<td>FLM</td>-->
-                                <!--<td>DMT</td>-->
-                                <!--<td>Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<td>2018</td>-->
-                                <!--<td>FLM</td>-->
-                                <!--<td>DMT</td>-->
-                                <!--<td>Sumbagsel (Paket 1) / Bengkulu DMT</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right">0.00</td>-->
-                                <!--<td class="text-right"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<th colspan="3">Total</th>-->
-                                <!--<th class="text-right">0.00</th>-->
-                                <!--<th class="text-right">0.00</th>-->
-                                <!--<th class="text-right">0.00</th>-->
-                                <!--<th class="text-right">0.00</th>-->
-                                <!--<th class="text-right">0.00</th>-->
-                                <!--<th class="text-right">0.00</th>-->
-                                <!--<th></th>-->
-                            <!--</tr>-->
+                                <span th:each="dataRow : ${preventiveDataList}">
+                                    <tr>
+                                        <td colspan="811"><h6 th:text="${'Periode : ' + dataRow.tahun}" ></h6></td>
+                                    </tr>
+                                    <span th:each="dataRowDetail : ${dataRow.detail}">
+                                    <span th:each="dataRowSubDetail : ${dataRowDetail.detail}">
+                                        <tr>
+                                            <td th:text="${dataRowDetail.customer}" class="small">2018</td>
+                                            <td th:text="${dataRowSubDetail.area}" class="small">Sumbagsel (Paket 1) / Bengkulu DMT</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.nilai_po, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.nilai_penagihan, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.persent_penagihan, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.nilai_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.realisasi_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.persent_budget, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.laba_rugi, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small" th:text="${#numbers.formatDecimal(dataRowSubDetail.persent_laba_rugi, 1, 'POINT', 2, 'COMMA')}">0.00</td>
+                                            <td class="text-right small"><a th:href="@{'/preventive/detail/1'}">Detail</a></td>
+                                        </tr>
+                                    </span>
+                                    </span>
+                                </span>
                             </tbody>
                         </table>
                     </div>
@@ -140,6 +62,7 @@
             </div>
         </div>
     </main>
-
+    <script type="text/javascript" th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 </body>
 </html>

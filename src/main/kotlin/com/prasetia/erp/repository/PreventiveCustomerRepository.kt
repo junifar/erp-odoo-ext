@@ -52,9 +52,12 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                 "public".project_site.tahun,
                                 sum(B.nilai_po) AS nilai_po,
                                 sum(C.nilai_penagihan) AS nilai_penagihan,
+                                round(sum(C.nilai_penagihan)/sum(B.nilai_po) * 100, 2) AS persent_penagihan,
                                 sum(D.nilai_budget) AS nilai_budget ,
                                 sum(E.realisasi_budget) AS realisasi_budget,
-                                sum(C.nilai_penagihan-E.realisasi_budget) AS laba_rugi
+                                sum(E.realisasi_budget)/sum(D.nilai_budget) * 100 AS persent_budget,
+                                sum(C.nilai_penagihan-E.realisasi_budget) AS laba_rugi,
+                                sum(C.nilai_penagihan-E.realisasi_budget)/sum(E.realisasi_budget) *  100 AS persent_laba_rugi
                             FROM
                                 "public".project_project
                                 LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"

@@ -15,8 +15,11 @@ class PreventiveCustomer(
         val nilai_budget: Long?,
         val realisasi_budget: Long?,
         val laba_rugi: Long?,
-        val customer_id:Long?
+        val customer_id:Long?,
+        val persent_penagihan:Long?,
+        val persent_budget:Long?,
+        val persent_laba_rugi:Long?
 ){
     constructor(): this(0, "", "", "", 0, 0, 0, 0,
-            0, 0)
+            0, 0, 0, 0, 0)
 }
