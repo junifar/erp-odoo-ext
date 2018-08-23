@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="row">&nbsp;</div>
-                <div class="row">
+                <div th:each="dataRow : ${preventiveDetailDataList}" class="row">
                     <div class="col-md-6">
                         <dl class="item-property col-md-6">
                             <dt>Project Type</dt>
@@ -20,17 +20,17 @@
                         </dl>
                         <dl class="item-property col-md-6">
                             <dt>Tahun</dt>
-                            <dd><p>2018</p></dd>
+                            <dd><p th:text="${dataRow.tahun}">2018</p></dd>
                         </dl>
                     </div>
                     <div class="col-md-6">
                         <dl class="item-property col-md-6">
                             <dt>Customer</dt>
-                            <dd><p>DMT</p></dd>
+                            <dd><p th:text="${dataRow.customer_name}">DMT</p></dd>
                         </dl>
                         <dl class="item-property col-md-6">
                             <dt>Area / Sub Area</dt>
-                            <dd><p>Sumbagsel (Paket 1) / Bengkulu DMT</p></dd>
+                            <dd><p th:text="${dataRow.area}">Sumbagsel (Paket 1) / Bengkulu DMT</p></dd>
                         </dl>
                     </div>
                 </div>
@@ -191,125 +191,125 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <table class="table border table-sm table-striped ">
-                            <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>January</th>
-                                <th>February</th>
-                                <th>March</th>
-                                <th>April</th>
-                                <th>May</th>
-                                <th>June</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>Laba / Rugi</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Realisasi Budget vs Nilai Budget</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Realisasi Penagihan vs Nilai PO</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Realisasi Budget vs Nilai PO</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Budget vs PO</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>PPH 2%</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Tgl pembayaran dr Cust</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Cash cycle (bulan)</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Bunga 1%/bulan</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            <tr>
-                                <th>Laba/(rugi) sebelum depreasiasi</th>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-md-12">
+                    <table class="table border table-sm table-striped ">
+                        <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>January</th>
+                            <th>February</th>
+                            <th>March</th>
+                            <th>April</th>
+                            <th>May</th>
+                            <th>June</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>Laba / Rugi</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Realisasi Budget vs Nilai Budget</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Realisasi Penagihan vs Nilai PO</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Realisasi Budget vs Nilai PO</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Budget vs PO</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>PPH 2%</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Tgl pembayaran dr Cust</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Cash cycle (bulan)</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Bunga 1%/bulan</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Laba/(rugi) sebelum depreasiasi</th>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                            <td>0.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
             </div>
         </div>
     </main>
