@@ -3,8 +3,8 @@ package com.prasetia.erp.controller.web
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.prasetia.erp.constant.GlobalConstant.Companion.BASE_URL
-import com.prasetia.erp.model.preventive.PreventiveCustomerDetail
 import com.prasetia.erp.pojo.PreventiveCustomerYear
+import com.prasetia.erp.pojo.preventive.PreventiveCustomerDetailHeader
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
@@ -33,7 +33,10 @@ class PreventiveController{
                          @PathVariable("area_id") area_id: String): String{
         val objectMapper = ObjectMapper()
         val url = URL(BASE_URL + "api/preventive_by_customer_year_area/%d/%d/%s".format(customer_id,tahun,area_id))
-        val preventiveDetailDataList:List<PreventiveCustomerDetail> = objectMapper.readValue(url)
+        val preventiveDetailDataList:List<PreventiveCustomerDetailHeader> = objectMapper.readValue(url)
+        preventiveDetailDataList.forEach {
+            println(it.id)
+        }
         model.addAttribute("preventiveDetailDataList", preventiveDetailDataList)
         return "preventive/detail"
     }

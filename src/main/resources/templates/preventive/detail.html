@@ -5,34 +5,35 @@
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <main role="main" class="container">
         <div class="my-3 p-3 bg-white rounded shadow-sm">
-            <div class="col-md-12">
+            <div class="col-md-12" th:each="dataRow : ${preventiveDetailDataList}">
                 <div class="row">
                     <div class="col-md-12">
                         <h3 >Maintenance Preventive Projects Report Detail</h3>
                     </div>
                 </div>
                 <div class="row">&nbsp;</div>
-                <div th:each="dataRow : ${preventiveDetailDataList}" class="row">
-                    <div class="col-md-6">
-                        <dl class="item-property col-md-6">
-                            <dt>Project Type</dt>
-                            <dd><p>FLM (First Line Maintenance) </p></dd>
-                        </dl>
-                        <dl class="item-property col-md-6">
-                            <dt>Tahun</dt>
-                            <dd><p th:text="${dataRow.tahun}">2018</p></dd>
-                        </dl>
-                    </div>
-                    <div class="col-md-6">
-                        <dl class="item-property col-md-6">
-                            <dt>Customer</dt>
-                            <dd><p th:text="${dataRow.customer_name}">DMT</p></dd>
-                        </dl>
-                        <dl class="item-property col-md-6">
-                            <dt>Area / Sub Area</dt>
-                            <dd><p th:text="${dataRow.area}">Sumbagsel (Paket 1) / Bengkulu DMT</p></dd>
-                        </dl>
-                    </div>
+
+                <div class="row">
+                <div class="col-md-6">
+                    <dl class="item-property col-md-6">
+                        <dt>Project Type</dt>
+                        <dd><p>FLM (First Line Maintenance) </p></dd>
+                    </dl>
+                    <dl class="item-property col-md-6">
+                        <dt>Tahun</dt>
+                        <dd><p th:text="${dataRow.tahun}">2018</p></dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="item-property col-md-6">
+                        <dt>Customer</dt>
+                        <dd><p th:text="${dataRow.customer_name}">DMT</p></dd>
+                    </dl>
+                    <dl class="item-property col-md-6">
+                        <dt>Area / Sub Area</dt>
+                        <dd><p th:text="${dataRow.area}">Sumbagsel (Paket 1) / Bengkulu DMT</p></dd>
+                    </dl>
+                </div>
                 </div>
                 <div class="row">&nbsp;</div>
                 <div class="row">
@@ -42,63 +43,105 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                    <table class="table border table-sm table-striped ">
+                    <table class="table border table-sm table-striped small">
                         <thead>
                         <tr>
-                            <th>Project ID</th>
+                            <!--<th>Project ID</th>-->
                             <th>Nomor PO</th>
-                            <th>January</th>
-                            <th>February</th>
-                            <th>March</th>
-                            <th>April</th>
+                            <th>Jan</th>
+                            <th>Feb</th>
+                            <th>Mar</th>
+                            <th>Apr</th>
                             <th>May</th>
-                            <th>June</th>
+                            <th>Jun</th>
+                            <th>Jul</th>
+                            <th>Aug</th>
+                            <th>Sep</th>
+                            <th>Okt</th>
+                            <th>Nov</th>
+                            <th>Des</th>
                             <th>Total</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>PPSAS_JUNI_2018</td>
-                            <td>4100056733</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>6.000.000.000,00</td>
-                        </tr>
-                        <tr>
-                            <td>PPSAS_JUNI_2018</td>
-                            <td>4100056734</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>6.000.000.000,00</td>
-                        </tr>
-                        <tr>
-                            <td>PPSAS_JUNI_2018</td>
-                            <td>4100056735</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>1.000.000.000,00</td>
-                            <td>6.000.000.000,00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Total</td>
-                            <td>3.000.000.000,00</td>
-                            <td>3.000.000.000,00</td>
-                            <td>3.000.000.000,00</td>
-                            <td>3.000.000.000,00</td>
-                            <td>3.000.000.000,00</td>
-                            <td>3.000.000.000,00</td>
-                            <td>6.000.000.000,00</td>
+                        <tr th:each="dataRowPO : ${dataRow.sale_order}">
+                            <!--<td>PPSAS_JUNI_2018</td>-->
+                            <td th:text="${dataRowPO.client_order_ref}">4100056733</td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 1}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 2}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 3}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 4}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 5}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 6}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 7}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 8}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 9}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 10}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 11}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
+                                    <span th:if="${dataRowPOLine.bulan == 12}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
+                                </span>
+                            </td>
+                            <!--<span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 1}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 1}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 2}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 2}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 3}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 3}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 4}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 4}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 5}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 5}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 6}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 6}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 7}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 7}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 8}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 8}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 9}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 9}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 10}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 10}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 11}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 11}">0,00</td>-->
+                            <!--<td th:if="${dataRowPOLine.bulan == 12}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 12}">0,00</td>-->
+                            <!--</span>-->
+                            <td>0,00</td>
                         </tr>
                         </tbody>
                     </table>
@@ -191,7 +234,7 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-md-12">
+                    <div class="col-md-12">
                     <table class="table border table-sm table-striped ">
                         <thead>
                         <tr>
@@ -309,7 +352,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+                </div>
             </div>
         </div>
     </main>

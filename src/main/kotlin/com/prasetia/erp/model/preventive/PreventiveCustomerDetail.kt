@@ -11,8 +11,7 @@ class PreventiveCustomerDetail(
         val customer_name:String,
         val area:String,
         val area_id:Long?,
-        val tahun:Long,
-        val bulan:Long
+        val tahun:Long
 ){
-    constructor(): this(0, 0, "", "", 0, 0, 0)
+    constructor(): this(0, 0, "", "", 0, 0)
 }

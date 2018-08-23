@@ -3,7 +3,6 @@ package com.prasetia.erp.repository.preventive
 import com.prasetia.erp.model.preventive.PreventiveCustomerDetail
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
-import org.springframework.data.repository.query.Param
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Repository
 import javax.websocket.server.PathParam
@@ -18,8 +17,7 @@ interface PreventiveCustomerDetailRepository: CrudRepository<PreventiveCustomerD
                                     "public".res_partner.code AS customer_name,
                                     "public".project_area."name" AS area,
                                     "public".project_area."id" AS area_id,
-                                    "public".project_site.tahun,
-                                    "public".project_site.bulan
+                                    "public".project_site.tahun
                                 FROM
                                     "public".project_project
                                     LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
@@ -39,7 +37,6 @@ interface PreventiveCustomerDetailRepository: CrudRepository<PreventiveCustomerD
                                     "public".res_partner.code,
                                     "public".project_area."name",
                                     "public".project_site.tahun,
-                                    "public".project_site.bulan,
                                     "public".project_area."id"
                                 """
 
@@ -50,8 +47,7 @@ interface PreventiveCustomerDetailRepository: CrudRepository<PreventiveCustomerD
                                     "public".res_partner.code AS customer_name,
                                     "public".project_area."name" AS area,
                                     "public".project_area."id" AS area_id,
-                                    "public".project_site.tahun,
-                                    "public".project_site.bulan
+                                    "public".project_site.tahun
                                 FROM
                                     "public".project_project
                                     LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
@@ -71,7 +67,6 @@ interface PreventiveCustomerDetailRepository: CrudRepository<PreventiveCustomerD
                                     "public".res_partner.code,
                                     "public".project_area."name",
                                     "public".project_site.tahun,
-                                    "public".project_site.bulan,
                                     "public".project_area."id"
                                 """
     }
