@@ -38,16 +38,201 @@
                 <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h4 >Nilai PO / Bulan</h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
                     <table class="table border table-sm table-striped small">
                         <thead>
                         <tr>
-                            <!--<th>Project ID</th>-->
                             <th>Nomor PO</th>
+                            <th>Jan</th>
+                            <th>Feb</th>
+                            <th>Mar</th>
+                            <th>Apr</th>
+                            <th>May</th>
+                            <th>Jun</th>
+                            <th>Jul</th>
+                            <th>Aug</th>
+                            <th>Sep</th>
+                            <th>Okt</th>
+                            <th>Nov</th>
+                            <th>Des</th>
+                            <th>Total</th>
+                        </tr>
+                        <tr>
+                            <th colspan="14"><strong>Nilai PO / Bulan</strong></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dataRowPO : ${dataRow.sale_order}">
+                            <td th:text="${dataRowPO.client_order_ref}">4100056733</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.i, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.ii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.iii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.iv, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.v, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.vi, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.vii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.vii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.ix, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.x, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.xi, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.xii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowPO.total, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                        </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th colspan="14"><strong>Nilai Penagihan (DPP)/Bulan</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dataRowInvoice : ${dataRow.invoice}">
+                            <td th:text="${dataRowInvoice.client_order_ref}">4100056733</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.i, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.ii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.iii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.iv, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.v, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.vi, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.vii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.vii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.ix, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.x, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.xi, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.xii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowInvoice.total, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <th colspan="14"><strong>Budget dan Realisasi</strong></th>
+                        </tr>
+                        <tr>
+                            <th>Keterangan</th>
+                            <th>Jan</th>
+                            <th>Feb</th>
+                            <th>Mar</th>
+                            <th>Apr</th>
+                            <th>May</th>
+                            <th>Jun</th>
+                            <th>Jul</th>
+                            <th>Aug</th>
+                            <th>Sep</th>
+                            <th>Okt</th>
+                            <th>Nov</th>
+                            <th>Des</th>
+                            <th>Total</th>
+                        </tr>
+                        <tr>
+                            <th colspan="14"><strong>Budget</strong></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dataRowBudget : ${dataRow.budget}">
+                            <td th:text="${dataRowBudget.name}">4100056733</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.i, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.ii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.iii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.iv, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.v, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.vi, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.vii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.viii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.ix, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.x, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.xi, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.xii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                            <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.total, 1, 'POINT', 2, 'COMMA')}">0,00</td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <th colspan="14"><strong>Realisasi</strong></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>4100056733</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                        </tr>
+                        <tr>
+                            <th>TOTAL</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                            <th class="text-right">0,00</th>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <th>Summary</th>
                             <th>Jan</th>
                             <th>Feb</th>
                             <th>Mar</th>
@@ -64,294 +249,169 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="dataRowPO : ${dataRow.sale_order}">
-                            <!--<td>PPSAS_JUNI_2018</td>-->
-                            <td th:text="${dataRowPO.client_order_ref}">4100056733</td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 1}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 2}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 3}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 4}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 5}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 6}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 7}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 8}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 9}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 10}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 11}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">
-                                    <span th:if="${dataRowPOLine.bulan == 12}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</span><span th:if="${dataRowPOLine.bulan != 1}">0,00</span>
-                                </span>
-                            </td>
-                            <!--<span th:each="dataRowPOLine: ${dataRowPO.sale_order_line}">-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 1}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 1}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 2}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 2}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 3}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 3}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 4}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 4}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 5}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 5}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 6}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 6}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 7}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 7}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 8}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 8}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 9}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 9}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 10}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 10}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 11}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 11}">0,00</td>-->
-                            <!--<td th:if="${dataRowPOLine.bulan == 12}" th:text="${#numbers.formatDecimal(dataRowPOLine.nilai_po, 1, 'POINT', 2, 'COMMA')}">0,00</td><td th:if="${dataRowPOLine.bulan != 12}">0,00</td>-->
-                            <!--</span>-->
-                            <td>0,00</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    </div>
-                </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Budget & Realisasi</h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5>Budget </h5>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table border table-sm table-striped ">
-                            <thead>
-                            <tr>
-                                <th>Project ID</th>
-                                <th>Nomor PO</th>
-                                <th>January</th>
-                                <th>February</th>
-                                <th>March</th>
-                                <th>April</th>
-                                <th>May</th>
-                                <th>June</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>PPSAS_JUNI_2018</td>
-                                <td>4100056735</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>6.000.000.000,00</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5>Realisasi</h5>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <table class="table border table-sm table-striped ">
-                            <thead>
-                            <tr>
-                                <th>Project ID</th>
-                                <th>Nomor PO</th>
-                                <th>January</th>
-                                <th>February</th>
-                                <th>March</th>
-                                <th>April</th>
-                                <th>May</th>
-                                <th>June</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>PPSAS_JUNI_2018</td>
-                                <td>4100056735</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>1.000.000.000,00</td>
-                                <td>6.000.000.000,00</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h5>Summary</h5>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    <table class="table border table-sm table-striped ">
-                        <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>January</th>
-                            <th>February</th>
-                            <th>March</th>
-                            <th>April</th>
-                            <th>May</th>
-                            <th>June</th>
-                            <th>Total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
                         <tr>
                             <th>Laba / Rugi</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Realisasi Budget vs Nilai Budget</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Realisasi Penagihan vs Nilai PO</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Realisasi Budget vs Nilai PO</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Budget vs PO</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>PPH 2%</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Tgl pembayaran dr Cust</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Cash cycle (bulan)</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Bunga 1%/bulan</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         <tr>
                             <th>Laba/(rugi) sebelum depreasiasi</th>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
-                            <td>0.00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
+                            <td class="text-right">0,00</td>
                         </tr>
                         </tbody>
                     </table>
-                </div>
+                    </div>
                 </div>
             </div>
         </div>

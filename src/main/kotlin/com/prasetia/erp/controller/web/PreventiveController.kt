@@ -34,9 +34,6 @@ class PreventiveController{
         val objectMapper = ObjectMapper()
         val url = URL(BASE_URL + "api/preventive_by_customer_year_area/%d/%d/%s".format(customer_id,tahun,area_id))
         val preventiveDetailDataList:List<PreventiveCustomerDetailHeader> = objectMapper.readValue(url)
-        preventiveDetailDataList.forEach {
-            println(it.id)
-        }
         model.addAttribute("preventiveDetailDataList", preventiveDetailDataList)
         return "preventive/detail"
     }

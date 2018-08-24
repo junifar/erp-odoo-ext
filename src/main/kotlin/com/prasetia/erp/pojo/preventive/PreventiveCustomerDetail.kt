@@ -10,24 +10,72 @@ class PreventiveCustomerDetailHeader(
         val area:String?,
         val area_id:Long?,
         val tahun:String,
-        var sale_order: MutableList<PreventiveClientOrderRef>?
+        var sale_order: MutableList<PreventiveSaleOrder>?,
+        var invoice: MutableList<PreventiveInvoice>?,
+        var budget: MutableList<PreventiveBudget>?
 ){
-    constructor(): this(0, 0, "", "", 0, "", null)
-}
-
-class PreventiveClientOrderRef(
-        @Id
-        val id:Long,
-        val client_order_ref: String,
-        var sale_order_line: MutableList<PreventiveSaleOrder>?
-){
-    constructor(): this(0, "", null)
+    constructor(): this(0, 0, "", "", 0, "", null, null, null)
 }
 
 class PreventiveSaleOrder(
         @Id
-        val bulan:Long,
-        val nilai_po: Long?
+        val id:Long,
+        val client_order_ref: String,
+        val i:Long?,
+        val ii:Long?,
+        val iii:Long?,
+        val iv:Long?,
+        val v:Long?,
+        val vi:Long?,
+        val vii:Long?,
+        val viii:Long?,
+        val ix:Long?,
+        val x:Long?,
+        val xi:Long?,
+        val xii:Long?,
+        val total: Long?
 ){
-    constructor(): this(0, 0)
+    constructor(): this(0, "", 0, 0,0,0,0,0,0,0,0,0,0,0, 0)
+}
+
+class PreventiveInvoice(
+        @Id
+        val id:Long,
+        val client_order_ref: String,
+        val i:Long?,
+        val ii:Long?,
+        val iii:Long?,
+        val iv:Long?,
+        val v:Long?,
+        val vi:Long?,
+        val vii:Long?,
+        val viii:Long?,
+        val ix:Long?,
+        val x:Long?,
+        val xi:Long?,
+        val xii:Long?,
+        val total: Long?
+){
+    constructor(): this(0, "", 0, 0,0,0,0,0,0,0,0,0,0,0, 0)
+}
+
+class PreventiveBudget(
+        @Id
+        val id:Long,
+        val name: String,
+        val i:Long?,
+        val ii:Long?,
+        val iii:Long?,
+        val iv:Long?,
+        val v:Long?,
+        val vi:Long?,
+        val vii:Long?,
+        val viii:Long?,
+        val ix:Long?,
+        val x:Long?,
+        val xi:Long?,
+        val xii:Long?,
+        val total: Long?
+){
+    constructor(): this(0, "", 0, 0,0,0,0,0,0,0,0,0,0,0, 0)
 }
