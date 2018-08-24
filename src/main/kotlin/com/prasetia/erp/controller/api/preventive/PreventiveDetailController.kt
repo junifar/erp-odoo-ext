@@ -151,7 +151,7 @@ class PreventiveDetailController{
                     val x = getPreventiveSaleOrderNilaiInvoice(customer_id, tahun, area_id, item.client_order_ref, 10, data)
                     val xi = getPreventiveSaleOrderNilaiInvoice(customer_id, tahun, area_id, item.client_order_ref, 11, data)
                     val xii = getPreventiveSaleOrderNilaiInvoice(customer_id, tahun, area_id, item.client_order_ref, 12, data)
-                    val total = i + ii + iii + iv + v + vi + vii + vii + ix + x + xi + xii
+                    val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
                     preventiveInvoice.add(PreventiveInvoice(item.id, item.client_order_ref,
                             i, ii, iii,
                             iv, v, vi,
@@ -203,7 +203,7 @@ class PreventiveDetailController{
                     val x = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 10, data)
                     val xi = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 11, data)
                     val xii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 12, data)
-                    val total = i + ii + iii + iv + v + vi + vii + vii + ix + x + xi + xii
+                    val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
 
                     preventiveBudget.add(PreventiveBudget(item.id, item.name,
                             i, ii, iii, iv,
@@ -255,7 +255,7 @@ class PreventiveDetailController{
                     val x = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 10, data)
                     val xi = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 11, data)
                     val xii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 12, data)
-                    val total = i + ii + iii + iv + v + vi + vii + vii + ix + x + xi + xii
+                    val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
 
                     preventiveRealisasiBudget.add(PreventiveRealisasiBudget(item.id, item.name,
                             i, ii, iii, iv,
