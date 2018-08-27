@@ -15,7 +15,7 @@ class PreventiveCustomerYear(
 class PreventiveCustomerGroup(
         @Id
         val id:Long,
-        var customer: String,
+        var customer: String?,
         var customer_id: Long?,
         var detail: MutableList<PreventiveCustomerGroupDetail>?
 ){
