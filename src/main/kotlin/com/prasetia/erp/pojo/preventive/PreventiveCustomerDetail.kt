@@ -13,7 +13,7 @@ class PreventiveCustomerDetailHeader(
         var sale_order: MutableList<PreventiveSaleOrder>?,
         var invoice: MutableList<PreventiveInvoice>?,
         var budget_area: MutableList<PreventiveBudgetArea>?,
-        var realisasi_budget: MutableList<PreventiveRealisasiBudget>?
+        var realisasi_budget_area: MutableList<PreventiveRealisasiBudgetArea>?
 ){
     constructor(): this(0, 0, "", "", 0, "", null, null, null, null)
 }
@@ -88,6 +88,15 @@ class PreventiveBudget(
         val total: Long?
 ){
     constructor(): this(0, "", 0, 0,0,0,0,0,0,0,0,0,0,0, 0)
+}
+
+class PreventiveRealisasiBudgetArea(
+        @Id
+        val id:Long,
+        val area_detail: String?,
+        var realisasi_budget: MutableList<PreventiveRealisasiBudget>?
+){
+    constructor(): this(0, "", null)
 }
 
 class PreventiveRealisasiBudget(

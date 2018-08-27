@@ -18,7 +18,8 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                             "public".project_site.tahun,
                             "public".project_site.customer_id,
                             budget_plan_line_parent."name",
-                            SUM(A.budget_realisasi) AS realisasi_budget
+                            SUM(A.budget_realisasi) AS realisasi_budget,
+                            "public".budget_area_detail."name" AS area_detail
                             FROM
                             "public".budget_plan_line
                             LEFT JOIN "public".budget_plan ON "public".budget_plan_line.budget_id = "public".budget_plan."id"
@@ -86,6 +87,7 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                                                 AA.budget_plan_line_id,
                                                 AA.ref
                                 ) AS A ON A.budget_plan_line_id = "public".budget_plan_line."id"
+                            LEFT JOIN "public".budget_area_detail ON "public".budget_plan.area_detail_id = "public".budget_area_detail."id"
                             WHERE
                             "public".project_project."state" NOT IN ('cancelled') AND
                             "public".project_project.site_type_id = 7 AND
@@ -101,7 +103,8 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                             "public".project_site.area_id,
                             "public".project_site.bulan,
                             "public".project_site.tahun,
-                            "public".project_site.customer_id
+                            "public".project_site.customer_id,
+                            "public".budget_area_detail."name"
                             """
 
         const val QUERY_NULL = """
@@ -112,7 +115,8 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                             "public".project_site.tahun,
                             "public".project_site.customer_id,
                             budget_plan_line_parent."name",
-                            SUM(A.budget_realisasi) AS realisasi_budget
+                            SUM(A.budget_realisasi) AS realisasi_budget,
+                            "public".budget_area_detail."name" AS area_detail
                             FROM
                             "public".budget_plan_line
                             LEFT JOIN "public".budget_plan ON "public".budget_plan_line.budget_id = "public".budget_plan."id"
@@ -180,6 +184,7 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                                                 AA.budget_plan_line_id,
                                                 AA.ref
                                 ) AS A ON A.budget_plan_line_id = "public".budget_plan_line."id"
+                            LEFT JOIN "public".budget_area_detail ON "public".budget_plan.area_detail_id = "public".budget_area_detail."id"
                             WHERE
                             "public".project_project."state" NOT IN ('cancelled') AND
                             "public".project_project.site_type_id = 7 AND
@@ -195,7 +200,8 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                             "public".project_site.area_id,
                             "public".project_site.bulan,
                             "public".project_site.tahun,
-                            "public".project_site.customer_id
+                            "public".project_site.customer_id,
+                            "public".budget_area_detail."name"
                             """
     }
 

@@ -199,8 +199,11 @@
                             <th colspan="14"><strong>Realisasi</strong></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="dataRowRealisasiBudget : ${dataRow.realisasi_budget}">
+                        <tbody th:each="dataRowRealisasiBudgetArea : ${dataRow.realisasi_budget_area}">
+                        <tr>
+                            <th colspan="14"><strong th:text="${dataRowRealisasiBudgetArea.area_detail}">Budget</strong></th>
+                        </tr>
+                        <tr th:each="dataRowRealisasiBudget : ${dataRowRealisasiBudgetArea.realisasi_budget}">
                             <td th:text="${dataRowRealisasiBudget.name}">4100056733</td>
                             <td class="text-right" th:text="${#numbers.formatDecimal(dataRowRealisasiBudget.i, 1, 'POINT', 2, 'COMMA')}">0,00</td>
                             <td class="text-right" th:text="${#numbers.formatDecimal(dataRowRealisasiBudget.ii, 1, 'POINT', 2, 'COMMA')}">0,00</td>

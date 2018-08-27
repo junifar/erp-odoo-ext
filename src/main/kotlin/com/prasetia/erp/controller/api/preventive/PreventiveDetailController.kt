@@ -45,7 +45,7 @@ class PreventiveDetailController{
                     getPreventiveSaleOrder(customer_id, tahun, area_id, dataPreventiveSaleOrder),
                     getPreventiveInvoice(customer_id, tahun, area_id, dataPreventiveInvoice),
                     getPreventiveBudgetArea(customer_id, tahun, area_id, dataPreventiveBudget),
-                    getPreventiveRealisasiBudget(customer_id, tahun, area_id, dataPreventiveRealisasiBudget)))
+                    getPreventiveRealisasiBudgetArea(customer_id, tahun, area_id, dataPreventiveRealisasiBudget)))
         }
         return headerGroup
     }
@@ -248,11 +248,11 @@ class PreventiveDetailController{
         return nilai_budget
     }
 
-    fun getPreventiveRealisasiBudget(customer_id: Int, tahun: String, area_id: String, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveRealisasiBudget>{
+    fun getPreventiveRealisasiBudget(customer_id: Int, tahun: String, area_id: String, sub_area: String?, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveRealisasiBudget>{
         val preventiveRealisasiBudget:MutableList<PreventiveRealisasiBudget> = mutableListOf()
         data.forEach {
             item->
-            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id)){
+            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id) and (item.area_detail == sub_area)){
                 var found = false
                 preventiveRealisasiBudget.forEach {
                     itemDetail ->
@@ -281,5 +281,24 @@ class PreventiveDetailController{
             }
         }
         return preventiveRealisasiBudget
+    }
+
+    fun getPreventiveRealisasiBudgetArea(customer_id: Int, tahun: String, area_id: String, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>): MutableList<PreventiveRealisasiBudgetArea>{
+        val preventiveRealisasiBudgetArea:MutableList<PreventiveRealisasiBudgetArea> = mutableListOf()
+        var id:Long = 0
+        data.forEach {
+            item->
+            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id)){
+                var found = false
+                preventiveRealisasiBudgetArea.forEach {
+                    itemDetail->
+                    if (itemDetail.area_detail == item.area_detail?: "-") found = true
+                }
+                if(!found){
+                    preventiveRealisasiBudgetArea.add(PreventiveRealisasiBudgetArea(id++, item.area_detail?: "-", getPreventiveRealisasiBudget(customer_id, tahun, area_id, item.area_detail, data)))
+                }
+            }
+        }
+        return preventiveRealisasiBudgetArea
     }
 }
