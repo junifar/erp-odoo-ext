@@ -157,8 +157,11 @@
                             <th colspan="14"><strong>Budget</strong></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="dataRowBudget : ${dataRow.budget}">
+                        <tbody th:each="dataRowBudgetArea : ${dataRow.budget_area}">
+                        <tr>
+                            <th colspan="14"><strong th:text="${dataRowBudgetArea.area_detail}">Budget</strong></th>
+                        </tr>
+                        <tr th:each="dataRowBudget : ${dataRowBudgetArea.budget}">
                             <td th:text="${dataRowBudget.name}">4100056733</td>
                             <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.i, 1, 'POINT', 2, 'COMMA')}">0,00</td>
                             <td class="text-right" th:text="${#numbers.formatDecimal(dataRowBudget.ii, 1, 'POINT', 2, 'COMMA')}">0,00</td>
@@ -336,86 +339,6 @@
                                 <td class="text-right" th:text="${#numbers.formatDecimal(total_budget_vs_nilai_po[11], 1, 'POINT', 2, 'COMMA')}">0,00</td>
                                 <td class="text-right" th:text="${#numbers.formatDecimal(total_budget_vs_nilai_po[12], 1, 'POINT', 2, 'COMMA')}">0,00</td>
                             </tr>
-                            <!--<tr>-->
-                                <!--<th>PPH 2%</th>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<th>Tgl pembayaran dr Cust</th>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<th>Cash cycle (bulan)</th>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<th>Bunga 1%/bulan</th>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<th>Laba/(rugi) sebelum depreasiasi</th>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                                <!--<td class="text-right">0,00</td>-->
-                            <!--</tr>-->
                             </tbody>
                         </table>
                     </div>

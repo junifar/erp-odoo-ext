@@ -85,22 +85,25 @@ class PreventiveController{
         var total:Long = 0
         data.forEach {
             items->
-            items.budget?.forEach {
+            items.budget_area?.forEach {
                 item_details->
-                when (month){
-                    "i" -> item_details.i?.let { total = total.plus(it) }
-                    "ii" -> item_details.ii?.let { total =  total.plus(it) }
-                    "iii" -> item_details.iii?.let { total =  total.plus(it) }
-                    "iv" -> item_details.iv?.let { total = total.plus(it) }
-                    "v" -> item_details.v?.let { total =  total.plus(it) }
-                    "vi" -> item_details.vi?.let { total =  total.plus(it) }
-                    "vii" -> item_details.vii?.let { total = total.plus(it) }
-                    "viii" -> item_details.viii?.let { total = total.plus(it) }
-                    "ix" -> item_details.ix?.let { total = total.plus(it) }
-                    "x" -> item_details.x?.let { total = total.plus(it) }
-                    "xi" -> item_details.xi?.let { total = total.plus(it) }
-                    "xii" -> item_details.xii?.let { total = total.plus(it) }
-                    "total" -> item_details.total?.let { total = total.plus(it) }
+                item_details.budget?.forEach {
+                    item_sub_details ->
+                    when (month){
+                        "i" -> item_sub_details.i?.let { total = total.plus(it) }
+                        "ii" -> item_sub_details.ii?.let { total =  total.plus(it) }
+                        "iii" -> item_sub_details.iii?.let { total =  total.plus(it) }
+                        "iv" -> item_sub_details.iv?.let { total = total.plus(it) }
+                        "v" -> item_sub_details.v?.let { total =  total.plus(it) }
+                        "vi" -> item_sub_details.vi?.let { total =  total.plus(it) }
+                        "vii" -> item_sub_details.vii?.let { total = total.plus(it) }
+                        "viii" -> item_sub_details.viii?.let { total = total.plus(it) }
+                        "ix" -> item_sub_details.ix?.let { total = total.plus(it) }
+                        "x" -> item_sub_details.x?.let { total = total.plus(it) }
+                        "xi" -> item_sub_details.xi?.let { total = total.plus(it) }
+                        "xii" -> item_sub_details.xii?.let { total = total.plus(it) }
+                        "total" -> item_sub_details.total?.let { total = total.plus(it) }
+                    }
                 }
             }
 

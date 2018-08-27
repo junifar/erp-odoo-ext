@@ -12,7 +12,8 @@ class PreventiveBudget(
         val tahun:Long,
         val customer_id: Long?,
         val name:String,
-        val nilai_budget: Long?
+        val nilai_budget: Long?,
+        val area_detail: String?
 ){
-    constructor(): this(0, 0, 0, 0, 0, "", 0)
+    constructor(): this(0, 0, 0, 0, 0, "", 0, "")
 }

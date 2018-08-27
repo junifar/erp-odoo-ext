@@ -1,10 +1,7 @@
 package com.prasetia.erp.controller.api.preventive
 
 import com.prasetia.erp.model.preventive.PreventiveSaleOrder
-import com.prasetia.erp.pojo.preventive.PreventiveBudget
-import com.prasetia.erp.pojo.preventive.PreventiveCustomerDetailHeader
-import com.prasetia.erp.pojo.preventive.PreventiveInvoice
-import com.prasetia.erp.pojo.preventive.PreventiveRealisasiBudget
+import com.prasetia.erp.pojo.preventive.*
 import com.prasetia.erp.repository.preventive.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
@@ -47,7 +44,7 @@ class PreventiveDetailController{
                     item.customer_name, item.area, item.area_id, item.tahun.toString(),
                     getPreventiveSaleOrder(customer_id, tahun, area_id, dataPreventiveSaleOrder),
                     getPreventiveInvoice(customer_id, tahun, area_id, dataPreventiveInvoice),
-                    getPreventiveBudget(customer_id, tahun, area_id, dataPreventiveBudget),
+                    getPreventiveBudgetArea(customer_id, tahun, area_id, dataPreventiveBudget),
                     getPreventiveRealisasiBudget(customer_id, tahun, area_id, dataPreventiveRealisasiBudget)))
         }
         return headerGroup
@@ -180,11 +177,11 @@ class PreventiveDetailController{
         return nilai_budget
     }
 
-    fun getPreventiveBudget(customer_id: Int, tahun: String, area_id: String, data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>):MutableList<PreventiveBudget>{
+    fun getPreventiveBudget(customer_id: Int, tahun: String, area_id: String, sub_area: String?, data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>):MutableList<PreventiveBudget>{
         val preventiveBudget:MutableList<PreventiveBudget> = mutableListOf()
         data.forEach {
             item->
-            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id)){
+            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id) and (item.area_detail == sub_area)){
                 var found = false
                 preventiveBudget.forEach {
                     itemDetail ->
@@ -213,6 +210,25 @@ class PreventiveDetailController{
             }
         }
         return preventiveBudget
+    }
+
+    fun getPreventiveBudgetArea(customer_id: Int, tahun: String, area_id: String, data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>):MutableList<PreventiveBudgetArea>{
+        val preventiveBudgetArea:MutableList<PreventiveBudgetArea> = mutableListOf()
+        var id:Long= 0
+        data.forEach {
+            item ->
+            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id)){
+                var found = false
+                preventiveBudgetArea.forEach {
+                    itemDetail->
+                    if(itemDetail.area_detail == item.area_detail?: "-") found = true
+                }
+                if (!found){
+                    preventiveBudgetArea.add(PreventiveBudgetArea(id++, item.area_detail?: "-", getPreventiveBudget(customer_id, tahun, area_id, item.area_detail , data)))
+                }
+            }
+        }
+        return preventiveBudgetArea
     }
 
     fun getPreventiveNilaiRealisasiBudget(customer_id: Int, tahun: String, area_id: String, name: String, bulan: Long, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>): Long{
