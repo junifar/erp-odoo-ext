@@ -143,145 +143,15 @@ class PreventiveController{
         val url = URL(BASE_URL + "api/preventive_by_customer_year_area/%d/%d/%s".format(customer_id,tahun,area_id))
         val preventiveDetailDataList:List<PreventiveCustomerDetailHeader> = objectMapper.readValue(url)
 
-        val totalNilaiPO = longArrayOf(
-                getTotalPO(preventiveDetailDataList, "i"),
-                getTotalPO(preventiveDetailDataList, "ii"),
-                getTotalPO(preventiveDetailDataList, "iii"),
-                getTotalPO(preventiveDetailDataList, "iv"),
-                getTotalPO(preventiveDetailDataList, "v"),
-                getTotalPO(preventiveDetailDataList, "vi"),
-                getTotalPO(preventiveDetailDataList, "vii"),
-                getTotalPO(preventiveDetailDataList, "viii"),
-                getTotalPO(preventiveDetailDataList, "ix"),
-                getTotalPO(preventiveDetailDataList, "x"),
-                getTotalPO(preventiveDetailDataList, "xi"),
-                getTotalPO(preventiveDetailDataList, "xii"),
-                getTotalPO(preventiveDetailDataList, "total"))
-
-        val totalNilaiInvoice = longArrayOf(
-                getTotalInvoice(preventiveDetailDataList, "i"),
-                getTotalInvoice(preventiveDetailDataList, "ii"),
-                getTotalInvoice(preventiveDetailDataList, "iii"),
-                getTotalInvoice(preventiveDetailDataList, "iv"),
-                getTotalInvoice(preventiveDetailDataList, "v"),
-                getTotalInvoice(preventiveDetailDataList, "vi"),
-                getTotalInvoice(preventiveDetailDataList, "vii"),
-                getTotalInvoice(preventiveDetailDataList, "viii"),
-                getTotalInvoice(preventiveDetailDataList, "ix"),
-                getTotalInvoice(preventiveDetailDataList, "x"),
-                getTotalInvoice(preventiveDetailDataList, "xi"),
-                getTotalInvoice(preventiveDetailDataList, "xii"),
-                getTotalInvoice(preventiveDetailDataList, "total"))
-
-        val totalNilaiBudget = longArrayOf(
-                getTotalBudget(preventiveDetailDataList, "i"),
-                getTotalBudget(preventiveDetailDataList, "ii"),
-                getTotalBudget(preventiveDetailDataList, "iii"),
-                getTotalBudget(preventiveDetailDataList, "iv"),
-                getTotalBudget(preventiveDetailDataList, "v"),
-                getTotalBudget(preventiveDetailDataList, "vi"),
-                getTotalBudget(preventiveDetailDataList, "vii"),
-                getTotalBudget(preventiveDetailDataList, "viii"),
-                getTotalBudget(preventiveDetailDataList, "ix"),
-                getTotalBudget(preventiveDetailDataList, "x"),
-                getTotalBudget(preventiveDetailDataList, "xi"),
-                getTotalBudget(preventiveDetailDataList, "xii"),
-                getTotalBudget(preventiveDetailDataList, "total"))
-
-        val totalNilaiRealisasiBudget = longArrayOf(
-                getTotalRealisasiBudget(preventiveDetailDataList, "i"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "ii"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "iii"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "iv"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "v"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "vi"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "vii"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "viii"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "ix"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "x"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "xi"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "xii"),
-                getTotalRealisasiBudget(preventiveDetailDataList, "total"))
-
-        val totalLabaRugi = longArrayOf(
-                totalNilaiInvoice[0] - totalNilaiBudget[0],
-                totalNilaiInvoice[1] - totalNilaiBudget[1],
-                totalNilaiInvoice[2] - totalNilaiBudget[2],
-                totalNilaiInvoice[3] - totalNilaiBudget[3],
-                totalNilaiInvoice[4] - totalNilaiBudget[4],
-                totalNilaiInvoice[5] - totalNilaiBudget[5],
-                totalNilaiInvoice[6] - totalNilaiBudget[6],
-                totalNilaiInvoice[7] - totalNilaiBudget[7],
-                totalNilaiInvoice[8] - totalNilaiBudget[8],
-                totalNilaiInvoice[9] - totalNilaiBudget[9],
-                totalNilaiInvoice[10] - totalNilaiBudget[10],
-                totalNilaiInvoice[11] - totalNilaiBudget[11],
-                totalNilaiInvoice[12] - totalNilaiBudget[12]
-        )
-
-        val totalRealisasiVsBudget = floatArrayOf(
-                if (totalNilaiBudget[0] > 0) totalNilaiRealisasiBudget[0].toFloat() * 100 / totalNilaiBudget[0] else (0).toFloat(),
-                if (totalNilaiBudget[1] > 0) totalNilaiRealisasiBudget[1].toFloat() * 100 / totalNilaiBudget[1] else (0).toFloat(),
-                if (totalNilaiBudget[2] > 0) totalNilaiRealisasiBudget[2].toFloat() * 100 / totalNilaiBudget[2] else (0).toFloat(),
-                if (totalNilaiBudget[3] > 0) totalNilaiRealisasiBudget[3].toFloat() * 100 / totalNilaiBudget[3] else (0).toFloat(),
-                if (totalNilaiBudget[4] > 0) totalNilaiRealisasiBudget[4].toFloat() * 100 / totalNilaiBudget[4] else (0).toFloat(),
-                if (totalNilaiBudget[5] > 0) totalNilaiRealisasiBudget[5].toFloat() * 100 / totalNilaiBudget[5] else (0).toFloat(),
-                if (totalNilaiBudget[6] > 0) totalNilaiRealisasiBudget[6].toFloat() * 100 / totalNilaiBudget[6] else (0).toFloat(),
-                if (totalNilaiBudget[7] > 0) totalNilaiRealisasiBudget[7].toFloat() * 100 / totalNilaiBudget[7] else (0).toFloat(),
-                if (totalNilaiBudget[8] > 0) totalNilaiRealisasiBudget[8].toFloat() * 100 / totalNilaiBudget[8] else (0).toFloat(),
-                if (totalNilaiBudget[9] > 0) totalNilaiRealisasiBudget[9].toFloat() * 100 / totalNilaiBudget[9] else (0).toFloat(),
-                if (totalNilaiBudget[10] > 0) totalNilaiRealisasiBudget[10].toFloat() * 100 / totalNilaiBudget[10] else (0).toFloat(),
-                if (totalNilaiBudget[11] > 0) totalNilaiRealisasiBudget[11].toFloat() * 100 / totalNilaiBudget[11] else (0).toFloat(),
-                if (totalNilaiBudget[12] > 0) totalNilaiRealisasiBudget[12].toFloat() * 100 / totalNilaiBudget[12] else (0).toFloat()
-        )
-
-        val totalInvoiceVsNilaiPO = floatArrayOf(
-                if(totalNilaiInvoice[0] > 0) totalNilaiPO[0].toFloat() / totalNilaiInvoice[0] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[1] > 0) totalNilaiPO[1].toFloat() / totalNilaiInvoice[1] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[2] > 0) totalNilaiPO[2].toFloat() / totalNilaiInvoice[2] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[3] > 0) totalNilaiPO[3].toFloat() / totalNilaiInvoice[3] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[4] > 0) totalNilaiPO[4].toFloat() / totalNilaiInvoice[4] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[5] > 0) totalNilaiPO[5].toFloat() / totalNilaiInvoice[5] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[6] > 0) totalNilaiPO[6].toFloat() / totalNilaiInvoice[6] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[7] > 0) totalNilaiPO[7].toFloat() / totalNilaiInvoice[7] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[8] > 0) totalNilaiPO[8].toFloat() / totalNilaiInvoice[8] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[9] > 0) totalNilaiPO[9].toFloat() / totalNilaiInvoice[9] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[10] > 0) totalNilaiPO[10].toFloat() / totalNilaiInvoice[10] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[11] > 0) totalNilaiPO[11].toFloat() / totalNilaiInvoice[11] * 100 else (0).toFloat(),
-                if(totalNilaiInvoice[12] > 0) totalNilaiPO[12].toFloat() / totalNilaiInvoice[12] * 100 else (0).toFloat()
-        )
-
-        val totalRealisasiBudgetVsNilaiPO = floatArrayOf(
-                if(totalNilaiRealisasiBudget[0] > 0) totalNilaiPO[0].toFloat() / totalNilaiRealisasiBudget[0] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[1] > 0) totalNilaiPO[1].toFloat() / totalNilaiRealisasiBudget[1] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[2] > 0) totalNilaiPO[2].toFloat() / totalNilaiRealisasiBudget[2] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[3] > 0) totalNilaiPO[3].toFloat() / totalNilaiRealisasiBudget[3] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[4] > 0) totalNilaiPO[4].toFloat() / totalNilaiRealisasiBudget[4] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[5] > 0) totalNilaiPO[5].toFloat() / totalNilaiRealisasiBudget[5] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[6] > 0) totalNilaiPO[6].toFloat() / totalNilaiRealisasiBudget[6] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[7] > 0) totalNilaiPO[7].toFloat() / totalNilaiRealisasiBudget[7] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[8] > 0) totalNilaiPO[8].toFloat() / totalNilaiRealisasiBudget[8] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[9] > 0) totalNilaiPO[9].toFloat() / totalNilaiRealisasiBudget[9] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[10] > 0) totalNilaiPO[10].toFloat() / totalNilaiRealisasiBudget[10] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[11] > 0) totalNilaiPO[11].toFloat() / totalNilaiRealisasiBudget[11] * 100 else (0).toFloat(),
-                if(totalNilaiRealisasiBudget[12] > 0) totalNilaiPO[12].toFloat() / totalNilaiRealisasiBudget[12] * 100 else (0).toFloat()
-        )
-
-        val totalBudgetVsNilaiPO = floatArrayOf(
-                if(totalNilaiBudget[0] > 0) totalNilaiPO[0].toFloat() / totalNilaiBudget[0] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[1] > 0) totalNilaiPO[1].toFloat() / totalNilaiBudget[1] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[2] > 0) totalNilaiPO[2].toFloat() / totalNilaiBudget[2] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[3] > 0) totalNilaiPO[3].toFloat() / totalNilaiBudget[3] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[4] > 0) totalNilaiPO[4].toFloat() / totalNilaiBudget[4] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[5] > 0) totalNilaiPO[5].toFloat() / totalNilaiBudget[5] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[6] > 0) totalNilaiPO[6].toFloat() / totalNilaiBudget[6] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[7] > 0) totalNilaiPO[7].toFloat() / totalNilaiBudget[7] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[8] > 0) totalNilaiPO[8].toFloat() / totalNilaiBudget[8] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[9] > 0) totalNilaiPO[9].toFloat() / totalNilaiBudget[9] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[10] > 0) totalNilaiPO[10].toFloat() / totalNilaiBudget[10] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[11] > 0) totalNilaiPO[11].toFloat() / totalNilaiBudget[11] * 100 else (0).toFloat(),
-                if(totalNilaiBudget[12] > 0) totalNilaiPO[12].toFloat() / totalNilaiBudget[12] * 100 else (0).toFloat()
-        )
+        val totalNilaiPO = getTotalPO(preventiveDetailDataList)
+        val totalNilaiInvoice = getTotalInvoice(preventiveDetailDataList)
+        val totalNilaiBudget = getTotalNilaiBudget(preventiveDetailDataList)
+        val totalNilaiRealisasiBudget = getTotalNilaiRealisasiBudget(preventiveDetailDataList)
+        val totalLabaRugi = getDifferenceValue(totalNilaiInvoice, totalNilaiBudget)
+        val totalRealisasiVsBudget = getDivisionPrecent(totalNilaiRealisasiBudget, totalNilaiBudget)
+        val totalInvoiceVsNilaiPO  = getDivisionPrecent(totalNilaiPO, totalNilaiInvoice)
+        val totalRealisasiBudgetVsNilaiPO = getDivisionPrecent(totalNilaiPO, totalNilaiRealisasiBudget)
+        val totalBudgetVsNilaiPO = getDivisionPrecent(totalNilaiPO, totalNilaiBudget)
 
         model.addAttribute("preventiveDetailDataList", preventiveDetailDataList)
         model.addAttribute("total_nilai_po", totalNilaiPO)
@@ -296,4 +166,95 @@ class PreventiveController{
         return "preventive/detail"
     }
 
+    fun getTotalPO(data:List<PreventiveCustomerDetailHeader>) = longArrayOf(
+                                                                getTotalPO(data, "i"),
+                                                                getTotalPO(data, "ii"),
+                                                                getTotalPO(data, "iii"),
+                                                                getTotalPO(data, "iv"),
+                                                                getTotalPO(data, "v"),
+                                                                getTotalPO(data, "vi"),
+                                                                getTotalPO(data, "vii"),
+                                                                getTotalPO(data, "viii"),
+                                                                getTotalPO(data, "ix"),
+                                                                getTotalPO(data, "x"),
+                                                                getTotalPO(data, "xi"),
+                                                                getTotalPO(data, "xii"),
+                                                                getTotalPO(data, "total"))
+
+    fun getTotalInvoice(data:List<PreventiveCustomerDetailHeader>) = longArrayOf(
+            getTotalInvoice(data, "i"),
+            getTotalInvoice(data, "ii"),
+            getTotalInvoice(data, "iii"),
+            getTotalInvoice(data, "iv"),
+            getTotalInvoice(data, "v"),
+            getTotalInvoice(data, "vi"),
+            getTotalInvoice(data, "vii"),
+            getTotalInvoice(data, "viii"),
+            getTotalInvoice(data, "ix"),
+            getTotalInvoice(data, "x"),
+            getTotalInvoice(data, "xi"),
+            getTotalInvoice(data, "xii"),
+            getTotalInvoice(data, "total"))
+
+    fun getTotalNilaiBudget(data:List<PreventiveCustomerDetailHeader>) = longArrayOf(
+            getTotalBudget(data, "i"),
+            getTotalBudget(data, "ii"),
+            getTotalBudget(data, "iii"),
+            getTotalBudget(data, "iv"),
+            getTotalBudget(data, "v"),
+            getTotalBudget(data, "vi"),
+            getTotalBudget(data, "vii"),
+            getTotalBudget(data, "viii"),
+            getTotalBudget(data, "ix"),
+            getTotalBudget(data, "x"),
+            getTotalBudget(data, "xi"),
+            getTotalBudget(data, "xii"),
+            getTotalBudget(data, "total"))
+
+    fun getTotalNilaiRealisasiBudget(data:List<PreventiveCustomerDetailHeader>) = longArrayOf(
+            getTotalRealisasiBudget(data, "i"),
+            getTotalRealisasiBudget(data, "ii"),
+            getTotalRealisasiBudget(data, "iii"),
+            getTotalRealisasiBudget(data, "iv"),
+            getTotalRealisasiBudget(data, "v"),
+            getTotalRealisasiBudget(data, "vi"),
+            getTotalRealisasiBudget(data, "vii"),
+            getTotalRealisasiBudget(data, "viii"),
+            getTotalRealisasiBudget(data, "ix"),
+            getTotalRealisasiBudget(data, "x"),
+            getTotalRealisasiBudget(data, "xi"),
+            getTotalRealisasiBudget(data, "xii"),
+            getTotalRealisasiBudget(data, "total"))
+
+    fun getDifferenceValue(data:LongArray, data1:LongArray) = longArrayOf(
+            data[0] - data1[0],
+            data[1] - data1[1],
+            data[2] - data1[2],
+            data[3] - data1[3],
+            data[4] - data1[4],
+            data[5] - data1[5],
+            data[6] - data1[6],
+            data[7] - data1[7],
+            data[8] - data1[8],
+            data[9] - data1[9],
+            data[10] - data1[10],
+            data[11] - data1[11],
+            data[12] - data1[12]
+    )
+
+    fun getDivisionPrecent(data:LongArray, data1: LongArray) = floatArrayOf(
+            if (data1[0] > 0) data[0].toFloat() * 100 / data1[0] else (0).toFloat(),
+            if (data1[1] > 0) data[1].toFloat() * 100 / data1[1] else (0).toFloat(),
+            if (data1[2] > 0) data[2].toFloat() * 100 / data1[2] else (0).toFloat(),
+            if (data1[3] > 0) data[3].toFloat() * 100 / data1[3] else (0).toFloat(),
+            if (data1[4] > 0) data[4].toFloat() * 100 / data1[4] else (0).toFloat(),
+            if (data1[5] > 0) data[5].toFloat() * 100 / data1[5] else (0).toFloat(),
+            if (data1[6] > 0) data[6].toFloat() * 100 / data1[6] else (0).toFloat(),
+            if (data1[7] > 0) data[7].toFloat() * 100 / data1[7] else (0).toFloat(),
+            if (data1[8] > 0) data[8].toFloat() * 100 / data1[8] else (0).toFloat(),
+            if (data1[9] > 0) data[9].toFloat() * 100 / data1[9] else (0).toFloat(),
+            if (data1[10] > 0) data[10].toFloat() * 100 / data1[10] else (0).toFloat(),
+            if (data1[11] > 0) data[11].toFloat() * 100 / data1[11] else (0).toFloat(),
+            if (data1[12] > 0) data[12].toFloat() * 100 / data1[12] else (0).toFloat()
+    )
 }
