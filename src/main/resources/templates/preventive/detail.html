@@ -2,6 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/header :: header_prasetia}"></head>
 <body class="bg-gray">
+<!--<style type="text/css">-->
+    <!--.table-bordered {-->
+        <!--border: 1px solid #000000!important;-->
+    <!--}-->
+    <!--.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {-->
+        <!--border: 1px solid #000000 !important;-->
+    <!--}-->
+<!--</style>-->
     <nav th:replace="~{fragments/navbar :: navbar_prasetia}"></nav>
     <main role="main" class="container">
         <div class="box">
@@ -40,7 +48,7 @@
                 <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-md-12">
-                    <table class="table border table-sm table-striped small">
+                    <table class="table border table-bordered table-sm table-striped small">
                         <thead>
                         <tr>
                             <th>Nomor PO</th>
@@ -244,7 +252,7 @@
                 <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table border table-sm table-striped small">
+                        <table class="table border table-bordered table-sm table-striped small">
                             <thead>
                             <tr>
                                 <th>Summary</th>
