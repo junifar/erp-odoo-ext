@@ -5,14 +5,43 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.prasetia.erp.constant.GlobalConstant.Companion.BASE_URL
 import com.prasetia.erp.pojo.PreventiveCustomerYear
 import com.prasetia.erp.pojo.preventive.PreventiveCustomerDetailHeader
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import java.net.URL
+import javax.servlet.http.HttpServletResponse
 
 @Controller("Preventive Web Controller")
 class PreventiveController{
+
+    @Throws(IllegalStateException::class)
+    @RequestMapping("/preventive/download/xls")
+    fun downloadExcel(model:Model, response: HttpServletResponse): String{
+        response.setHeader("Content-Disposition", "attachment; filename=\"budget-preventive-file.xls\"")
+        response.contentType = "application/vnd.ms-excel"
+
+        val workbook = HSSFWorkbook()
+        val sheet = workbook.createSheet("Preventive")
+
+        var header = sheet.createRow(1)
+        header.createCell(1).setCellValue("Tipe Proyek")
+        header.createCell(2).setCellValue("FLM (First Line Maintenance)")
+
+        header = sheet.createRow(3)
+        header.createCell(1).setCellValue("Customer")
+        header.createCell(2).setCellValue("DMT")
+
+        val out = response.outputStream
+        workbook.write(out)
+
+        out.flush()
+        out.close()
+        workbook.close()
+
+        return ""
+    }
 
     @RequestMapping("/preventive")
     fun indexPreventive(model:Model): String{
