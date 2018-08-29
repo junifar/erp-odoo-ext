@@ -15,7 +15,7 @@ import java.security.Security
 import javax.annotation.PostConstruct
 
 @Title("Vaadin Login")
-@Theme("valo-green")
+@Theme("valo-default")
 @SpringUI(path = "/ui")
 class MainView: UI() {
 
@@ -108,7 +108,7 @@ class MainView: UI() {
 
     fun login() {
         login.isEnabled = true
-        page.setLocation("/ui/dashboard")
+        page.setLocation("/")
     }
 
 }

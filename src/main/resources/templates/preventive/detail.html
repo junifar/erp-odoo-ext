@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{fragments/header :: header}"></head>
-<body class="bg-light">
-    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<head th:replace="~{fragments/header :: header_prasetia}"></head>
+<body class="bg-gray">
+    <nav th:replace="~{fragments/navbar :: navbar_prasetia}"></nav>
     <main role="main" class="container">
-        <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <div class="box">
+            <div class="box-body">
+                <div class="my-3 p-3 bg-white rounded shadow-sm">
             <div class="col-md-12" th:each="dataRow : ${preventiveDetailDataList}">
                 <div class="row">
                     <div class="col-md-12">
@@ -346,6 +348,8 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
             </div>
         </div>
     </main>
