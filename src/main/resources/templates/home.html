@@ -98,53 +98,54 @@
     </style>
 </head>
 <body>
-    <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-app">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><span>Prasetia OpenERP Report</span></a>
-            </div>
-            <div id="navbar-app" class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav">
-                    <!--<li><a href="#">Inicio</a></li>-->
-                    <li class="dropdown mega-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Budget Report<span class="caret"></span></a>
-                        <ul class="dropdown-menu mega-dropdown-menu row" role="menu">
-                            <li class="col-md-3">
-                                <ul>
-                                    <li class="dropdown-header">Internal</li>
-                                    <li><a href="#">Budget Monitoring Department</a></li>
-                                    <!--<li><a href="#">Budget Monitoring Maintenance Corrective</a></li>-->
-                                </ul>
-                            </li>
-                            <li class="col-md-9">
-                                <span class="dropdown-header">Project</span>
-                                <div class="row">
-                                    <ul class="col-md-4">
-                                        <li class="sub-header">Maintenance</li>
-                                        <li><a href="#">Budget Monitoring Maintenance Preventive</a></li>
-                                        <li><a href="#">Budget Monitoring Maintenance Corrective</a></li>
-                                    </ul>
-                                    <ul class="col-md-4">
-                                        <li class="sub-header">Budget</li>
-                                        <li><a href="">Budget Monitoring Project</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/ui}" class="btn btn-sm btn-nav btn-default"><span class="glyphicon glyphicon-off"></span> Sign Out</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <!--<div class="navbar navbar-default" role="navigation">-->
+        <!--<div class="container-fluid">-->
+            <!--<div class="navbar-header">-->
+                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-app">-->
+                    <!--<span class="sr-only">Toggle navigation</span>-->
+                    <!--<span class="icon-bar"></span>-->
+                    <!--<span class="icon-bar"></span>-->
+                    <!--<span class="icon-bar"></span>-->
+                <!--</button>-->
+                <!--<a class="navbar-brand" href="#"><span>Prasetia OpenERP Report</span></a>-->
+            <!--</div>-->
+            <!--<div id="navbar-app" class="collapse navbar-collapse navbar-ex1-collapse">-->
+                <!--<ul class="nav navbar-nav">-->
+                    <!--&lt;!&ndash;<li><a href="#">Inicio</a></li>&ndash;&gt;-->
+                    <!--<li class="dropdown mega-dropdown">-->
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Budget Report<span class="caret"></span></a>-->
+                        <!--<ul class="dropdown-menu mega-dropdown-menu row" role="menu">-->
+                            <!--<li class="col-md-3">-->
+                                <!--<ul>-->
+                                    <!--<li class="dropdown-header">Internal</li>-->
+                                    <!--<li><a href="#">Budget Monitoring Department</a></li>-->
+                                    <!--&lt;!&ndash;<li><a href="#">Budget Monitoring Maintenance Corrective</a></li>&ndash;&gt;-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                            <!--<li class="col-md-9">-->
+                                <!--<span class="dropdown-header">Project</span>-->
+                                <!--<div class="row">-->
+                                    <!--<ul class="col-md-4">-->
+                                        <!--<li class="sub-header">Maintenance</li>-->
+                                        <!--<li><a href="#">Budget Monitoring Maintenance Preventive</a></li>-->
+                                        <!--<li><a href="#">Budget Monitoring Maintenance Corrective</a></li>-->
+                                    <!--</ul>-->
+                                    <!--<ul class="col-md-4">-->
+                                        <!--<li class="sub-header">Budget</li>-->
+                                        <!--<li><a href="">Budget Monitoring Project</a></li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--<ul class="nav navbar-nav navbar-right">-->
+                    <!--<li><a th:href="@{/ui}" class="btn btn-sm btn-nav btn-default"><span class="glyphicon glyphicon-off"></span> Sign Out</a></li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <nav th:replace="~{fragments/navbar :: navbar_prasetia}"></nav>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
