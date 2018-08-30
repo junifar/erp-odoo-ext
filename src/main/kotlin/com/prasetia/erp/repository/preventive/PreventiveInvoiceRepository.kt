@@ -47,6 +47,8 @@ interface  PreventiveInvoiceRepository:CrudRepository<PreventiveInvoice, Long>{
                                 "public".project_site.customer_id = :partner_id AND
                                 "public".project_site.area_id  = :area_id AND
                                 "public".project_site.tahun = :tahun
+                            ORDER BY
+                                 CAST("public".project_site.bulan AS INTEGER) ASC
                         """
 
         const val QUERY_NULL = """
@@ -88,6 +90,8 @@ interface  PreventiveInvoiceRepository:CrudRepository<PreventiveInvoice, Long>{
                                 "public".project_site.customer_id = :partner_id AND
                                 "public".project_site.area_id  IS NULL AND
                                 "public".project_site.tahun = :tahun
+                            ORDER BY
+                                 CAST("public".project_site.bulan AS INTEGER) ASC
                         """
     }
 

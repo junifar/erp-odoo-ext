@@ -44,6 +44,8 @@ interface PreventiveBudgetRepository:CrudRepository<PreventiveBudget, Long>{
                                 "public".project_site.tahun,
                                 "public".project_site.customer_id,
                                 "public".budget_area_detail."name"
+                            ORDER BY
+                                 CAST("public".project_site.bulan AS INTEGER) ASC
                         """
 
         const val QUERY_NULL = """
@@ -80,6 +82,8 @@ interface PreventiveBudgetRepository:CrudRepository<PreventiveBudget, Long>{
                                 "public".project_site.tahun,
                                 "public".project_site.customer_id,
                                 "public".budget_area_detail."name"
+                            ORDER BY
+                                 CAST("public".project_site.bulan AS INTEGER) ASC
                         """
     }
 
