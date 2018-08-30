@@ -18,9 +18,10 @@ class PreventiveController{
 
     @Throws(IllegalStateException::class)
     @RequestMapping("/preventive/download/xls")
-    fun downloadExcel(model:Model, response: HttpServletResponse): String{
-        response.setHeader("Content-Disposition", "attachment; filename=\"budget-preventive-file.xls\"")
+    fun downloadExcel(model:Model, response: HttpServletResponse){
+
         response.contentType = "application/vnd.ms-excel"
+        response.setHeader("Content-Disposition", "attachment; filename=\"budget-preventive-file.xls\"")
 
         val workbook = HSSFWorkbook()
         val sheet = workbook.createSheet("Preventive")
@@ -40,7 +41,7 @@ class PreventiveController{
         out.close()
         workbook.close()
 
-        return ""
+//        return ""
     }
 
     @RequestMapping("/preventive")
