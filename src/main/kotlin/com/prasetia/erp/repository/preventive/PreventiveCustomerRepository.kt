@@ -203,11 +203,13 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                 "public".project_project.site_type_id = 7 AND
                                 "public".project_site.tahun IS NOT NULL
                             GROUP BY
-                                    "public".res_partner."id",
+                                "public".res_partner."id",
                                 "public".res_partner.code,
                                 "public".project_area."name",
                                 "public".project_site.tahun,
                                 "public".project_area."id"
+                            ORDER BY
+                                "public".project_site."tahun" desc
                         """
     }
 

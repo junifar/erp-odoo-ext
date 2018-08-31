@@ -30,9 +30,16 @@ class PreventiveController{
         header.createCell(1).setCellValue("Tipe Proyek")
         header.createCell(2).setCellValue("FLM (First Line Maintenance)")
 
-        header = sheet.createRow(3)
+        header = sheet.createRow(2)
         header.createCell(1).setCellValue("Customer")
         header.createCell(2).setCellValue("DMT")
+
+        header = sheet.createRow(3)
+        header.createCell(1).setCellValue("Area")
+        header.createCell(2).setCellValue("Sulmapua")
+
+        sheet.setColumnWidth(1, 13000)
+        sheet.setColumnWidth(2, 350)
 
         val out = response.outputStream
         workbook.write(out)
@@ -48,10 +55,6 @@ class PreventiveController{
     fun indexPreventive(model:Model): String{
         val objectMapper = ObjectMapper()
         val url = URL(BASE_URL + "api/preventive_customer")
-//        val preventiveDataList: List<PreventiveCustomer> = objectMapper.readValue(url)
-//        preventiveDataList.forEach{
-//            println(it.customer_name)
-//        }
         val preventiveDataList: List<PreventiveCustomerYear> = objectMapper.readValue(url)
         model.addAttribute("preventiveDataList", preventiveDataList)
         return "preventive/index"
