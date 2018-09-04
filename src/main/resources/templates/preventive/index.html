@@ -62,6 +62,20 @@
                                         </span>
                                     </span>
                                         </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th colspan="2">TOTAL</th>
+                                            <th class="text-right" th:text="${#numbers.formatDecimal(total[0], 1, 'POINT', 2, 'COMMA')}">0,00</th>
+                                            <th class="text-right" th:text="${#numbers.formatDecimal(total[1], 1, 'POINT', 2, 'COMMA')}" >0,00</th>
+                                            <th class="text-right">-</th>
+                                            <th class="text-right" th:text="${#numbers.formatDecimal(total[2], 1, 'POINT', 2, 'COMMA')}" >0,00</th>
+                                            <th class="text-right" th:text="${#numbers.formatDecimal(total[3], 1, 'POINT', 2, 'COMMA')}" >0,00</th>
+                                            <th class="text-right">-</th>
+                                            <th class="text-right" th:text="${#numbers.formatDecimal(total[4], 1, 'POINT', 2, 'COMMA')}" >0,00</th>
+                                            <th class="text-right">-</th>
+                                            <th class="text-right">-</th>
+                                        </tr>
+                                        </tfoot>
                                     </table>
                                     <!--</div>-->
                                     <!--</div>-->

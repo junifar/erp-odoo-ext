@@ -51,11 +51,41 @@ class PreventiveController{
 //        return ""
     }
 
+    //type : total_po, total_penagihan, total_budget, total_realisasi, total_laba_rugi
+    fun getTotalPreventiveCustomer(data:List<PreventiveCustomerYear>, type:String): Long{
+        var total: Long = 0
+        data.forEach {
+            items->
+            items.detail?.forEach {
+                item_details->
+                item_details.detail?.forEach {
+                    when (type){
+                        "total_po" -> it.nilai_po?.let { total = total.plus(it) }
+                        "total_penagihan" -> it.nilai_penagihan?.let { total = total.plus(it) }
+                        "total_budget" -> it.nilai_budget?.let { total= total.plus(it) }
+                        "total_realisasi" -> it.realisasi_budget?.let { total = total.plus(it) }
+                        "total_laba_rugi" -> it.laba_rugi?.let { total = total.plus(it) }
+                    }
+                }
+            }
+        }
+        return total
+    }
+
+    fun getTotalPreventiveCustomer(data:List<PreventiveCustomerYear>) = longArrayOf(
+            getTotalPreventiveCustomer(data, "total_po"),
+            getTotalPreventiveCustomer(data, "total_penagihan"),
+            getTotalPreventiveCustomer(data, "total_budget"),
+            getTotalPreventiveCustomer(data, "total_realisasi"),
+            getTotalPreventiveCustomer(data, "total_laba_rugi")
+    )
+
     @RequestMapping("/preventive")
     fun indexPreventive(model:Model): String{
         val objectMapper = ObjectMapper()
         val url = URL(BASE_URL + "api/preventive_customer")
         val preventiveDataList: List<PreventiveCustomerYear> = objectMapper.readValue(url)
+        model.addAttribute("total", getTotalPreventiveCustomer(preventiveDataList))
         model.addAttribute("preventiveDataList", preventiveDataList)
         return "preventive/index"
     }
