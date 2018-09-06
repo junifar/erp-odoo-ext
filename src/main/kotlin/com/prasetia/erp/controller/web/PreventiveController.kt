@@ -20,6 +20,10 @@ import javax.servlet.http.HttpServletResponse
 class PreventiveController{
 
     var numRow:Int = 8
+    var numRowTotalNilaiPO = 0
+    var numRowTotalNilaiInvoice = 0
+    var numRowTotalBudget = 0
+    var numRowTotalRealisasi = 0
 
     fun setColWidth(sheet:HSSFSheet):HSSFSheet{
         // 1:260
@@ -89,6 +93,23 @@ class PreventiveController{
         fontCalibriTableHeader.fontHeightInPoints = 11
         fontCalibriTableHeader.bold = true
         styleTableHeader.dataFormat = HSSFDataFormat.getBuiltinFormat("#,##0.00")
+        styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+        styleTableHeader.fillForegroundColor = HSSFColor.GREY_25_PERCENT.index
+        styleTableHeader.setBorderBottom(BorderStyle.THIN)
+        styleTableHeader.setBorderTop(BorderStyle.THIN)
+        styleTableHeader.setBorderLeft(BorderStyle.THIN)
+        styleTableHeader.setBorderRight(BorderStyle.THIN)
+        styleTableHeader.setFont(fontCalibriTableHeader)
+        return styleTableHeader
+    }
+
+    fun styleTableHeaderPercent(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableHeader = workbook.createCellStyle()
+        val fontCalibriTableHeader = workbook.createFont()
+        fontCalibriTableHeader.fontName = "Calibri"
+        fontCalibriTableHeader.fontHeightInPoints = 11
+        fontCalibriTableHeader.bold = true
+        styleTableHeader.dataFormat = HSSFDataFormat.getBuiltinFormat("0.00%")
         styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND)
         styleTableHeader.fillForegroundColor = HSSFColor.GREY_25_PERCENT.index
         styleTableHeader.setBorderBottom(BorderStyle.THIN)
@@ -397,6 +418,7 @@ class PreventiveController{
         content.getCell(27).setCellStyle(styleTableHeaderNumber)
         content.createCell(28)
         content.getCell(28).setCellStyle(styleTableHeaderNumber)
+        this.numRowTotalNilaiPO = numRow + 1
         this.numRow = ++numRow
     }
 
@@ -568,6 +590,7 @@ class PreventiveController{
         content.getCell(27).setCellStyle(styleTableHeaderNumber)
         content.createCell(28)
         content.getCell(28).setCellStyle(styleTableHeaderNumber)
+        this.numRowTotalNilaiInvoice = numRowLocal+1
         this.numRow = ++numRowLocal
     }
 
@@ -742,6 +765,7 @@ class PreventiveController{
         content.getCell(27).setCellStyle(styleTableHeaderNumber)
         content.createCell(28)
         content.getCell(28).setCellStyle(styleTableHeaderNumber)
+        this.numRowTotalBudget = numRowLocal + 1
         this.numRow = ++numRowLocal
     }
 
@@ -916,7 +940,403 @@ class PreventiveController{
         content.getCell(27).setCellStyle(styleTableHeaderNumber)
         content.createCell(28)
         content.getCell(28).setCellStyle(styleTableHeaderNumber)
+        this.numRowTotalRealisasi = numRowLocal+1
         this.numRow = ++numRowLocal
+    }
+
+    fun createSummaryPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet, preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
+        val styleTableContent = styleTableContent(workbook)
+        val styleTableContentNumber = styleTableContentNumber(workbook)
+        val styleTableHeader = styleTableHeader(workbook)
+        val styleTableHeaderNumber = styleTableHeaderNumber(workbook)
+        val styleTableHeaderPercent = styleTableHeaderPercent(workbook)
+
+        var numRowLocal = this.numRow
+        val firstRow = this.numRow+1
+        var content:HSSFRow
+
+        var cell3:HSSFCell
+        var cell5:HSSFCell
+        var cell7:HSSFCell
+        var cell9:HSSFCell
+        var cell11:HSSFCell
+        var cell13:HSSFCell
+        var cell15:HSSFCell
+        var cell17:HSSFCell
+        var cell19:HSSFCell
+        var cell21:HSSFCell
+        var cell23:HSSFCell
+        var cell25:HSSFCell
+        var cell27:HSSFCell
+
+        content = sheet.createRow(numRowLocal++)
+        cell3 = content.createCell(3)
+        cell5 = content.createCell(5)
+        cell7 = content.createCell(7)
+        cell9 = content.createCell(9)
+        cell11 = content.createCell(11)
+        cell13 = content.createCell(13)
+        cell15 = content.createCell(15)
+        cell17 = content.createCell(17)
+        cell19 = content.createCell(19)
+        cell21 = content.createCell(21)
+        cell23 = content.createCell(23)
+        cell25 = content.createCell(25)
+        cell27 = content.createCell(27)
+
+        content.createCell(1).setCellValue("Laba/(Rugi) gross")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        content.createCell(2).setCellValue("")
+        content.getCell(2).setCellStyle(styleTableHeader)
+        cell3.cellFormula = "D${this.numRowTotalNilaiInvoice}+D${this.numRowTotalRealisasi}"
+        content.getCell(3).setCellStyle(styleTableHeaderNumber)
+        content.createCell(4)
+        content.getCell(4).setCellStyle(styleTableHeaderNumber)
+        cell5.cellFormula = "F${this.numRowTotalNilaiInvoice}+F${this.numRowTotalRealisasi}"
+        content.getCell(5).setCellStyle(styleTableHeaderNumber)
+        content.createCell(6)
+        content.getCell(6).setCellStyle(styleTableHeaderNumber)
+        cell7.cellFormula = "H${this.numRowTotalNilaiInvoice}+H${this.numRowTotalRealisasi}"
+        content.getCell(7).setCellStyle(styleTableHeaderNumber)
+        content.createCell(8)
+        content.getCell(8).setCellStyle(styleTableHeaderNumber)
+        cell9.cellFormula = "J${this.numRowTotalNilaiInvoice}+J${this.numRowTotalRealisasi}"
+        content.getCell(9).setCellStyle(styleTableHeaderNumber)
+        content.createCell(10)
+        content.getCell(10).setCellStyle(styleTableHeaderNumber)
+        cell11.cellFormula = "L${this.numRowTotalNilaiInvoice}+L${this.numRowTotalRealisasi}"
+        content.getCell(11).setCellStyle(styleTableHeaderNumber)
+        content.createCell(12)
+        content.getCell(12).setCellStyle(styleTableHeaderNumber)
+        cell13.cellFormula = "N${this.numRowTotalNilaiInvoice}+N${this.numRowTotalRealisasi}"
+        content.getCell(13).setCellStyle(styleTableHeaderNumber)
+        content.createCell(14)
+        content.getCell(14).setCellStyle(styleTableHeaderNumber)
+        cell15.cellFormula = "P${this.numRowTotalNilaiInvoice}+P${this.numRowTotalRealisasi}"
+        content.getCell(15).setCellStyle(styleTableHeaderNumber)
+        content.createCell(16)
+        content.getCell(16).setCellStyle(styleTableHeaderNumber)
+        cell17.cellFormula = "R${this.numRowTotalNilaiInvoice}+R${this.numRowTotalRealisasi}"
+        content.getCell(17).setCellStyle(styleTableHeaderNumber)
+        content.createCell(18)
+        content.getCell(18).setCellStyle(styleTableHeaderNumber)
+        cell19.cellFormula = "T${this.numRowTotalNilaiInvoice}+T${this.numRowTotalRealisasi}"
+        content.getCell(19).setCellStyle(styleTableHeaderNumber)
+        content.createCell(20)
+        content.getCell(20).setCellStyle(styleTableHeaderNumber)
+        cell21.cellFormula = "V${this.numRowTotalNilaiInvoice}+V${this.numRowTotalRealisasi}"
+        content.getCell(21).setCellStyle(styleTableHeaderNumber)
+        content.createCell(22)
+        content.getCell(22).setCellStyle(styleTableHeaderNumber)
+        cell23.cellFormula = "X${this.numRowTotalNilaiInvoice}+X${this.numRowTotalRealisasi}"
+        content.getCell(23).setCellStyle(styleTableHeaderNumber)
+        content.createCell(24)
+        content.getCell(24).setCellStyle(styleTableHeaderNumber)
+        cell25.cellFormula = "Z${this.numRowTotalNilaiInvoice}+Z${this.numRowTotalRealisasi}"
+        content.getCell(25).setCellStyle(styleTableHeaderNumber)
+        content.createCell(26)
+        content.getCell(26).setCellStyle(styleTableHeaderNumber)
+        cell27.cellFormula = "AB${this.numRowTotalNilaiInvoice}+AB${this.numRowTotalRealisasi}"
+        content.getCell(27).setCellStyle(styleTableHeaderNumber)
+        content.createCell(28)
+        content.getCell(28).setCellStyle(styleTableHeaderNumber)
+        sheet.addMergedRegion(CellRangeAddress(numRowLocal-1, numRowLocal-1, 1,2))
+
+        content = sheet.createRow(numRowLocal++)
+        cell3 = content.createCell(3)
+        cell5 = content.createCell(5)
+        cell7 = content.createCell(7)
+        cell9 = content.createCell(9)
+        cell11 = content.createCell(11)
+        cell13 = content.createCell(13)
+        cell15 = content.createCell(15)
+        cell17 = content.createCell(17)
+        cell19 = content.createCell(19)
+        cell21 = content.createCell(21)
+        cell23 = content.createCell(23)
+        cell25 = content.createCell(25)
+        cell27 = content.createCell(27)
+
+        content.createCell(1).setCellValue("Realisasi Budget vs nilai budget")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        content.createCell(2).setCellValue("")
+        content.getCell(2).setCellStyle(styleTableHeader)
+        cell3.cellFormula = "D${this.numRowTotalRealisasi}/D${this.numRowTotalBudget}"
+        content.getCell(3).setCellStyle(styleTableHeaderPercent)
+        content.createCell(4)
+        content.getCell(4).setCellStyle(styleTableHeaderPercent)
+        cell5.cellFormula = "F${this.numRowTotalRealisasi}/F${this.numRowTotalBudget}"
+        content.getCell(5).setCellStyle(styleTableHeaderPercent)
+        content.createCell(6)
+        content.getCell(6).setCellStyle(styleTableHeaderPercent)
+        cell7.cellFormula = "H${this.numRowTotalRealisasi}/H${this.numRowTotalBudget}"
+        content.getCell(7).setCellStyle(styleTableHeaderPercent)
+        content.createCell(8)
+        content.getCell(8).setCellStyle(styleTableHeaderPercent)
+        cell9.cellFormula = "J${this.numRowTotalRealisasi}/J${this.numRowTotalBudget}"
+        content.getCell(9).setCellStyle(styleTableHeaderPercent)
+        content.createCell(10)
+        content.getCell(10).setCellStyle(styleTableHeaderPercent)
+        cell11.cellFormula = "L${this.numRowTotalRealisasi}/L${this.numRowTotalBudget}"
+        content.getCell(11).setCellStyle(styleTableHeaderPercent)
+        content.createCell(12)
+        content.getCell(12).setCellStyle(styleTableHeaderPercent)
+        cell13.cellFormula = "N${this.numRowTotalRealisasi}/N${this.numRowTotalBudget}"
+        content.getCell(13).setCellStyle(styleTableHeaderPercent)
+        content.createCell(14)
+        content.getCell(14).setCellStyle(styleTableHeaderPercent)
+        cell15.cellFormula = "P${this.numRowTotalRealisasi}/P${this.numRowTotalBudget}"
+        content.getCell(15).setCellStyle(styleTableHeaderPercent)
+        content.createCell(16)
+        content.getCell(16).setCellStyle(styleTableHeaderPercent)
+        cell17.cellFormula = "R${this.numRowTotalRealisasi}/R${this.numRowTotalBudget}"
+        content.getCell(17).setCellStyle(styleTableHeaderPercent)
+        content.createCell(18)
+        content.getCell(18).setCellStyle(styleTableHeaderPercent)
+        cell19.cellFormula = "T${this.numRowTotalRealisasi}/T${this.numRowTotalBudget}"
+        content.getCell(19).setCellStyle(styleTableHeaderPercent)
+        content.createCell(20)
+        content.getCell(20).setCellStyle(styleTableHeaderPercent)
+        cell21.cellFormula = "V${this.numRowTotalRealisasi}/V${this.numRowTotalBudget}"
+        content.getCell(21).setCellStyle(styleTableHeaderPercent)
+        content.createCell(22)
+        content.getCell(22).setCellStyle(styleTableHeaderPercent)
+        cell23.cellFormula = "X${this.numRowTotalRealisasi}/X${this.numRowTotalBudget}"
+        content.getCell(23).setCellStyle(styleTableHeaderPercent)
+        content.createCell(24)
+        content.getCell(24).setCellStyle(styleTableHeaderPercent)
+        cell25.cellFormula = "Z${this.numRowTotalRealisasi}/Z${this.numRowTotalBudget}"
+        content.getCell(25).setCellStyle(styleTableHeaderPercent)
+        content.createCell(26)
+        content.getCell(26).setCellStyle(styleTableHeaderPercent)
+        cell27.cellFormula = "AB${this.numRowTotalRealisasi}/AB${this.numRowTotalBudget}"
+        content.getCell(27).setCellStyle(styleTableHeaderPercent)
+        content.createCell(28)
+        content.getCell(28).setCellStyle(styleTableHeaderPercent)
+        sheet.addMergedRegion(CellRangeAddress(numRowLocal-1, numRowLocal-1, 1,2))
+
+        content = sheet.createRow(numRowLocal++)
+        cell3 = content.createCell(3)
+        cell5 = content.createCell(5)
+        cell7 = content.createCell(7)
+        cell9 = content.createCell(9)
+        cell11 = content.createCell(11)
+        cell13 = content.createCell(13)
+        cell15 = content.createCell(15)
+        cell17 = content.createCell(17)
+        cell19 = content.createCell(19)
+        cell21 = content.createCell(21)
+        cell23 = content.createCell(23)
+        cell25 = content.createCell(25)
+        cell27 = content.createCell(27)
+
+        content.createCell(1).setCellValue("Realisasi Penagihan vs nilai PO")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        content.createCell(2).setCellValue("")
+        content.getCell(2).setCellStyle(styleTableHeader)
+        cell3.cellFormula = "D${this.numRowTotalNilaiInvoice}/D${this.numRowTotalNilaiPO}"
+        content.getCell(3).setCellStyle(styleTableHeaderPercent)
+        content.createCell(4)
+        content.getCell(4).setCellStyle(styleTableHeaderPercent)
+        cell5.cellFormula = "F${this.numRowTotalNilaiInvoice}/F${this.numRowTotalNilaiPO}"
+        content.getCell(5).setCellStyle(styleTableHeaderPercent)
+        content.createCell(6)
+        content.getCell(6).setCellStyle(styleTableHeaderPercent)
+        cell7.cellFormula = "H${this.numRowTotalNilaiInvoice}/H${this.numRowTotalNilaiPO}"
+        content.getCell(7).setCellStyle(styleTableHeaderPercent)
+        content.createCell(8)
+        content.getCell(8).setCellStyle(styleTableHeaderPercent)
+        cell9.cellFormula = "J${this.numRowTotalNilaiInvoice}/J${this.numRowTotalNilaiPO}"
+        content.getCell(9).setCellStyle(styleTableHeaderPercent)
+        content.createCell(10)
+        content.getCell(10).setCellStyle(styleTableHeaderPercent)
+        cell11.cellFormula = "L${this.numRowTotalNilaiInvoice}/L${this.numRowTotalNilaiPO}"
+        content.getCell(11).setCellStyle(styleTableHeaderPercent)
+        content.createCell(12)
+        content.getCell(12).setCellStyle(styleTableHeaderPercent)
+        cell13.cellFormula = "N${this.numRowTotalNilaiInvoice}/N${this.numRowTotalNilaiPO}"
+        content.getCell(13).setCellStyle(styleTableHeaderPercent)
+        content.createCell(14)
+        content.getCell(14).setCellStyle(styleTableHeaderPercent)
+        cell15.cellFormula = "P${this.numRowTotalNilaiInvoice}/P${this.numRowTotalNilaiPO}"
+        content.getCell(15).setCellStyle(styleTableHeaderPercent)
+        content.createCell(16)
+        content.getCell(16).setCellStyle(styleTableHeaderPercent)
+        cell17.cellFormula = "R${this.numRowTotalNilaiInvoice}/R${this.numRowTotalNilaiPO}"
+        content.getCell(17).setCellStyle(styleTableHeaderPercent)
+        content.createCell(18)
+        content.getCell(18).setCellStyle(styleTableHeaderPercent)
+        cell19.cellFormula = "T${this.numRowTotalNilaiInvoice}/T${this.numRowTotalNilaiPO}"
+        content.getCell(19).setCellStyle(styleTableHeaderPercent)
+        content.createCell(20)
+        content.getCell(20).setCellStyle(styleTableHeaderPercent)
+        cell21.cellFormula = "V${this.numRowTotalNilaiInvoice}/V${this.numRowTotalNilaiPO}"
+        content.getCell(21).setCellStyle(styleTableHeaderPercent)
+        content.createCell(22)
+        content.getCell(22).setCellStyle(styleTableHeaderPercent)
+        cell23.cellFormula = "X${this.numRowTotalNilaiInvoice}/X${this.numRowTotalNilaiPO}"
+        content.getCell(23).setCellStyle(styleTableHeaderPercent)
+        content.createCell(24)
+        content.getCell(24).setCellStyle(styleTableHeaderPercent)
+        cell25.cellFormula = "Z${this.numRowTotalNilaiInvoice}/Z${this.numRowTotalNilaiPO}"
+        content.getCell(25).setCellStyle(styleTableHeaderPercent)
+        content.createCell(26)
+        content.getCell(26).setCellStyle(styleTableHeaderPercent)
+        cell27.cellFormula = "AB${this.numRowTotalNilaiInvoice}/AB${this.numRowTotalNilaiPO}"
+        content.getCell(27).setCellStyle(styleTableHeaderPercent)
+        content.createCell(28)
+        content.getCell(28).setCellStyle(styleTableHeaderPercent)
+        sheet.addMergedRegion(CellRangeAddress(numRowLocal-1, numRowLocal-1, 1,2))
+
+        content = sheet.createRow(numRowLocal++)
+        cell3 = content.createCell(3)
+        cell5 = content.createCell(5)
+        cell7 = content.createCell(7)
+        cell9 = content.createCell(9)
+        cell11 = content.createCell(11)
+        cell13 = content.createCell(13)
+        cell15 = content.createCell(15)
+        cell17 = content.createCell(17)
+        cell19 = content.createCell(19)
+        cell21 = content.createCell(21)
+        cell23 = content.createCell(23)
+        cell25 = content.createCell(25)
+        cell27 = content.createCell(27)
+
+        content.createCell(1).setCellValue("Realisasi Budget vs Nilai PO")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        content.createCell(2).setCellValue("")
+        content.getCell(2).setCellStyle(styleTableHeader)
+        cell3.cellFormula = "D${this.numRowTotalRealisasi}/D${this.numRowTotalNilaiPO}"
+        content.getCell(3).setCellStyle(styleTableHeaderPercent)
+        content.createCell(4)
+        content.getCell(4).setCellStyle(styleTableHeaderPercent)
+        cell5.cellFormula = "F${this.numRowTotalRealisasi}/F${this.numRowTotalNilaiPO}"
+        content.getCell(5).setCellStyle(styleTableHeaderPercent)
+        content.createCell(6)
+        content.getCell(6).setCellStyle(styleTableHeaderPercent)
+        cell7.cellFormula = "H${this.numRowTotalRealisasi}/H${this.numRowTotalNilaiPO}"
+        content.getCell(7).setCellStyle(styleTableHeaderPercent)
+        content.createCell(8)
+        content.getCell(8).setCellStyle(styleTableHeaderPercent)
+        cell9.cellFormula = "J${this.numRowTotalRealisasi}/J${this.numRowTotalNilaiPO}"
+        content.getCell(9).setCellStyle(styleTableHeaderPercent)
+        content.createCell(10)
+        content.getCell(10).setCellStyle(styleTableHeaderPercent)
+        cell11.cellFormula = "L${this.numRowTotalRealisasi}/L${this.numRowTotalNilaiPO}"
+        content.getCell(11).setCellStyle(styleTableHeaderPercent)
+        content.createCell(12)
+        content.getCell(12).setCellStyle(styleTableHeaderPercent)
+        cell13.cellFormula = "N${this.numRowTotalRealisasi}/N${this.numRowTotalNilaiPO}"
+        content.getCell(13).setCellStyle(styleTableHeaderPercent)
+        content.createCell(14)
+        content.getCell(14).setCellStyle(styleTableHeaderPercent)
+        cell15.cellFormula = "P${this.numRowTotalRealisasi}/P${this.numRowTotalNilaiPO}"
+        content.getCell(15).setCellStyle(styleTableHeaderPercent)
+        content.createCell(16)
+        content.getCell(16).setCellStyle(styleTableHeaderPercent)
+        cell17.cellFormula = "R${this.numRowTotalRealisasi}/R${this.numRowTotalNilaiPO}"
+        content.getCell(17).setCellStyle(styleTableHeaderPercent)
+        content.createCell(18)
+        content.getCell(18).setCellStyle(styleTableHeaderPercent)
+        cell19.cellFormula = "T${this.numRowTotalRealisasi}/T${this.numRowTotalNilaiPO}"
+        content.getCell(19).setCellStyle(styleTableHeaderPercent)
+        content.createCell(20)
+        content.getCell(20).setCellStyle(styleTableHeaderPercent)
+        cell21.cellFormula = "V${this.numRowTotalRealisasi}/V${this.numRowTotalNilaiPO}"
+        content.getCell(21).setCellStyle(styleTableHeaderPercent)
+        content.createCell(22)
+        content.getCell(22).setCellStyle(styleTableHeaderPercent)
+        cell23.cellFormula = "X${this.numRowTotalRealisasi}/X${this.numRowTotalNilaiPO}"
+        content.getCell(23).setCellStyle(styleTableHeaderPercent)
+        content.createCell(24)
+        content.getCell(24).setCellStyle(styleTableHeaderPercent)
+        cell25.cellFormula = "Z${this.numRowTotalRealisasi}/Z${this.numRowTotalNilaiPO}"
+        content.getCell(25).setCellStyle(styleTableHeaderPercent)
+        content.createCell(26)
+        content.getCell(26).setCellStyle(styleTableHeaderPercent)
+        cell27.cellFormula = "AB${this.numRowTotalRealisasi}/AB${this.numRowTotalNilaiPO}"
+        content.getCell(27).setCellStyle(styleTableHeaderPercent)
+        content.createCell(28)
+        content.getCell(28).setCellStyle(styleTableHeaderPercent)
+        sheet.addMergedRegion(CellRangeAddress(numRowLocal-1, numRowLocal-1, 1,2))
+
+        content = sheet.createRow(numRowLocal++)
+        cell3 = content.createCell(3)
+        cell5 = content.createCell(5)
+        cell7 = content.createCell(7)
+        cell9 = content.createCell(9)
+        cell11 = content.createCell(11)
+        cell13 = content.createCell(13)
+        cell15 = content.createCell(15)
+        cell17 = content.createCell(17)
+        cell19 = content.createCell(19)
+        cell21 = content.createCell(21)
+        cell23 = content.createCell(23)
+        cell25 = content.createCell(25)
+        cell27 = content.createCell(27)
+
+        content.createCell(1).setCellValue("Budget vs PO")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        content.createCell(2).setCellValue("")
+        content.getCell(2).setCellStyle(styleTableHeader)
+        cell3.cellFormula = "D${this.numRowTotalBudget}/D${this.numRowTotalNilaiPO}"
+        content.getCell(3).setCellStyle(styleTableHeaderPercent)
+        content.createCell(4)
+        content.getCell(4).setCellStyle(styleTableHeaderPercent)
+        cell5.cellFormula = "F${this.numRowTotalBudget}/F${this.numRowTotalNilaiPO}"
+        content.getCell(5).setCellStyle(styleTableHeaderPercent)
+        content.createCell(6)
+        content.getCell(6).setCellStyle(styleTableHeaderPercent)
+        cell7.cellFormula = "H${this.numRowTotalBudget}/H${this.numRowTotalNilaiPO}"
+        content.getCell(7).setCellStyle(styleTableHeaderPercent)
+        content.createCell(8)
+        content.getCell(8).setCellStyle(styleTableHeaderPercent)
+        cell9.cellFormula = "J${this.numRowTotalBudget}/J${this.numRowTotalNilaiPO}"
+        content.getCell(9).setCellStyle(styleTableHeaderPercent)
+        content.createCell(10)
+        content.getCell(10).setCellStyle(styleTableHeaderPercent)
+        cell11.cellFormula = "L${this.numRowTotalBudget}/L${this.numRowTotalNilaiPO}"
+        content.getCell(11).setCellStyle(styleTableHeaderPercent)
+        content.createCell(12)
+        content.getCell(12).setCellStyle(styleTableHeaderPercent)
+        cell13.cellFormula = "N${this.numRowTotalBudget}/N${this.numRowTotalNilaiPO}"
+        content.getCell(13).setCellStyle(styleTableHeaderPercent)
+        content.createCell(14)
+        content.getCell(14).setCellStyle(styleTableHeaderPercent)
+        cell15.cellFormula = "P${this.numRowTotalBudget}/P${this.numRowTotalNilaiPO}"
+        content.getCell(15).setCellStyle(styleTableHeaderPercent)
+        content.createCell(16)
+        content.getCell(16).setCellStyle(styleTableHeaderPercent)
+        cell17.cellFormula = "R${this.numRowTotalBudget}/R${this.numRowTotalNilaiPO}"
+        content.getCell(17).setCellStyle(styleTableHeaderPercent)
+        content.createCell(18)
+        content.getCell(18).setCellStyle(styleTableHeaderPercent)
+        cell19.cellFormula = "T${this.numRowTotalBudget}/T${this.numRowTotalNilaiPO}"
+        content.getCell(19).setCellStyle(styleTableHeaderPercent)
+        content.createCell(20)
+        content.getCell(20).setCellStyle(styleTableHeaderPercent)
+        cell21.cellFormula = "V${this.numRowTotalBudget}/V${this.numRowTotalNilaiPO}"
+        content.getCell(21).setCellStyle(styleTableHeaderPercent)
+        content.createCell(22)
+        content.getCell(22).setCellStyle(styleTableHeaderPercent)
+        cell23.cellFormula = "X${this.numRowTotalBudget}/X${this.numRowTotalNilaiPO}"
+        content.getCell(23).setCellStyle(styleTableHeaderPercent)
+        content.createCell(24)
+        content.getCell(24).setCellStyle(styleTableHeaderPercent)
+        cell25.cellFormula = "Z${this.numRowTotalBudget}/Z${this.numRowTotalNilaiPO}"
+        content.getCell(25).setCellStyle(styleTableHeaderPercent)
+        content.createCell(26)
+        content.getCell(26).setCellStyle(styleTableHeaderPercent)
+        cell27.cellFormula = "AB${this.numRowTotalBudget}/AB${this.numRowTotalNilaiPO}"
+        content.getCell(27).setCellStyle(styleTableHeaderPercent)
+        content.createCell(28)
+        content.getCell(28).setCellStyle(styleTableHeaderPercent)
+        sheet.addMergedRegion(CellRangeAddress(numRowLocal-1, numRowLocal-1, 1,2))
+
+//        this.numRowTotalRealisasi = numRowLocal
+//        this.numRow = ++numRowLocal
+
     }
 
     @RequestMapping("/preventive/download/xls")
@@ -941,6 +1361,7 @@ class PreventiveController{
         createInvoicePreventiveXls(workbook, sheet, preventiveDetailDataList)
         createBudgetPreventiveXls(workbook, sheet, preventiveDetailDataList)
         createRealisasiPreventiveXls(workbook, sheet, preventiveDetailDataList)
+        createSummaryPreventiveXls(workbook, sheet, preventiveDetailDataList)
 
         val out = response.outputStream
         workbook.write(out)
