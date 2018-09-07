@@ -1,6 +1,7 @@
 package com.prasetia.erp.controller.api.preventive
 
 import com.prasetia.erp.model.preventive.PreventiveSaleOrder
+import com.prasetia.erp.model.preventive.PreventiveSaleOrderInvoice
 import com.prasetia.erp.pojo.preventive.*
 import com.prasetia.erp.repository.preventive.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +27,48 @@ class PreventiveDetailController{
     @Autowired
     lateinit var repositoryRealisasiBudget: PreventiveBudgetRealisasiRepository
 
+    @Autowired
+    lateinit var repositorySaleOrderInvoice: PreventiveSaleOrderInvoiceRepository
+
+    fun getPreventivePOInvoice(order_line_id:Int, data:Iterable<PreventiveSaleOrderInvoice>):MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice>{
+        val preventiveSaleOrderInvoice:MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice> = mutableListOf()
+        data.forEach {
+            item->
+            if(item.order_line_id == order_line_id.toLong()){
+                val i = if(item.month_invoice == 1.toLong()) item.nilai_invoice else 0
+                val ii = if(item.month_invoice == 2.toLong()) item.nilai_invoice else 0
+                val iii = if(item.month_invoice == 3.toLong()) item.nilai_invoice else 0
+                val iv = if(item.month_invoice == 4.toLong()) item.nilai_invoice else 0
+                val v = if(item.month_invoice == 5.toLong()) item.nilai_invoice else 0
+                val vi = if(item.month_invoice == 6.toLong()) item.nilai_invoice else 0
+                val vii = if(item.month_invoice == 7.toLong()) item.nilai_invoice else 0
+                val viii = if(item.month_invoice == 8.toLong()) item.nilai_invoice else 0
+                val ix = if(item.month_invoice == 9.toLong()) item.nilai_invoice else 0
+                val x = if(item.month_invoice == 10.toLong()) item.nilai_invoice else 0
+                val xi = if(item.month_invoice == 11.toLong()) item.nilai_invoice else 0
+                val xii = if(item.month_invoice == 12.toLong()) item.nilai_invoice else 0
+                val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
+                val i_val = if(item.month_invoice == 1.toLong()) item.name else ""
+                val ii_val = if(item.month_invoice == 2.toLong()) item.name else ""
+                val iii_val = if(item.month_invoice == 3.toLong()) item.name else ""
+                val iv_val = if(item.month_invoice == 4.toLong()) item.name else ""
+                val v_val = if(item.month_invoice == 5.toLong()) item.name else ""
+                val vi_val = if(item.month_invoice == 6.toLong()) item.name else ""
+                val vii_val = if(item.month_invoice == 7.toLong()) item.name else ""
+                val viii_val = if(item.month_invoice == 8.toLong()) item.name else ""
+                val ix_val = if(item.month_invoice == 9.toLong()) item.name else ""
+                val x_val = if(item.month_invoice == 10.toLong()) item.name else ""
+                val xi_val = if(item.month_invoice == 11.toLong()) item.name else ""
+                val xii_val = if(item.month_invoice == 12.toLong()) item.name else ""
+
+                preventiveSaleOrderInvoice.add(com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice(item.id, i, ii, iii,
+                        iv, v, vi, vii, viii, ix, x, xi, xii, i_val, ii_val, iii_val, iv_val,
+                        v_val, vi_val, vii_val, viii_val, ix_val, x_val, xi_val, xii_val, total))
+            }
+        }
+        return preventiveSaleOrderInvoice
+    }
+
     @RequestMapping("/api/preventive_by_customer_year_area/{customer_id}/{tahun}/{area_id}")
     fun getDataByCustomerYearArea(@PathVariable("customer_id") customer_id: Int,
                                   @PathVariable("tahun") tahun: String, @PathVariable("area_id") area_id:String): MutableList<PreventiveCustomerDetailHeader> {
@@ -35,6 +78,7 @@ class PreventiveDetailController{
         val dataPreventiveInvoice = if (area_id != "null") repositoryPreventiveInvoice.getPreventiveInvoice(customer_id, tahun, area_id.toInt()) else repositoryPreventiveInvoice.getPreventiveInvoiceNullArea(customer_id, tahun)
         val dataPreventiveBudget = if (area_id != "null") repositoryBudget.getPreventiveBudget(customer_id, tahun, area_id.toInt()) else repositoryBudget.getPreventiveBudgetNullArea(customer_id, tahun)
         val dataPreventiveRealisasiBudget = if (area_id != "null") repositoryRealisasiBudget.getPreventiveRealisasiBudget(customer_id, tahun, area_id.toInt()) else repositoryRealisasiBudget.getPreventiveRealisasiBudgetNullArea(customer_id, tahun)
+        val dataPreventiveSaleOrderInvoice = if(area_id != "null") repositorySaleOrderInvoice.getPreventiveSaleOrderInvoice(customer_id, tahun, area_id.toInt()) else repositorySaleOrderInvoice.getPreventiveSaleOrderInvoiceNullArea(customer_id, tahun)
 
         var headerGroup: MutableList<PreventiveCustomerDetailHeader> = mutableListOf()
         var id:Long=1
@@ -42,7 +86,7 @@ class PreventiveDetailController{
             item->
             headerGroup.add(PreventiveCustomerDetailHeader(id++, item.customer_id,
                     item.customer_name, item.area, item.area_id, item.tahun.toString(),
-                    getPreventiveSaleOrder(customer_id, tahun, area_id, dataPreventiveSaleOrder),
+                    getPreventiveSaleOrder(customer_id, tahun, area_id, dataPreventiveSaleOrder, dataPreventiveSaleOrderInvoice),
                     getPreventiveInvoice(customer_id, tahun, area_id, dataPreventiveInvoice),
                     getPreventiveBudgetArea(customer_id, tahun, area_id, dataPreventiveBudget),
                     getPreventiveRealisasiBudgetArea(customer_id, tahun, area_id, dataPreventiveRealisasiBudget)))
@@ -50,7 +94,7 @@ class PreventiveDetailController{
         return headerGroup
     }
 
-    fun getPreventiveSaleOrder(customer_id: Int, tahun: String, area_id: String, data:Iterable<PreventiveSaleOrder>): MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrder>{
+    fun getPreventiveSaleOrder(customer_id: Int, tahun: String, area_id: String, data:Iterable<PreventiveSaleOrder>, dataSaleOrder:Iterable<PreventiveSaleOrderInvoice>): MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrder>{
         val preventiveSaleOrder:MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrder> = mutableListOf()
         data.forEach {
             item->
@@ -83,7 +127,7 @@ class PreventiveDetailController{
                             iv, v, vi,
                             vii, viii, ix,
                             x, xi, xii,
-                            total))
+                            total, getPreventivePOInvoice(item.id.toInt(), dataSaleOrder)))
                 }
 
             }

@@ -34,9 +34,10 @@ class PreventiveSaleOrder(
         val x:Long?,
         val xi:Long?,
         val xii:Long?,
-        val total: Long?
+        val total: Long?,
+        var sale_order_invoice: MutableList<PreventiveSaleOrderInvoice>?
 ){
-    constructor(): this(0, "", 0, 0,0,0,0,0,0,0,0,0,0,0, 0)
+    constructor(): this(0, "", 0, 0,0,0,0,0,0,0,0,0,0,0, 0, null)
 }
 
 class PreventiveInvoice(
@@ -118,4 +119,38 @@ class PreventiveRealisasiBudget(
         val total: Long?
 ){
     constructor(): this(0, "", 0, 0,0,0,0,0,0,0,0,0,0,0, 0)
+}
+
+class PreventiveSaleOrderInvoice(
+        @Id
+        val id:Long,
+        val i:Long?,
+        val ii:Long?,
+        val iii:Long?,
+        val iv:Long?,
+        val v:Long?,
+        val vi:Long?,
+        val vii:Long?,
+        val viii:Long?,
+        val ix:Long?,
+        val x:Long?,
+        val xi:Long?,
+        val xii:Long?,
+        val i_val:String,
+        val ii_val:String,
+        val iii_val:String,
+        val iv_val:String,
+        val v_val:String,
+        val vi_val:String,
+        val vii_val:String,
+        val viii_val:String,
+        val ix_val:String,
+        val x_val:String,
+        val xi_val:String,
+        val xii_val:String,
+        val total: Long?
+){
+    constructor(): this(0,0,0,0,0,
+            0,0,0,0,0,0,0,0,"","",
+            "","","","","","","","","","", 0)
 }

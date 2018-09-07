@@ -1354,10 +1354,6 @@ class PreventiveController{
                       @PathVariable("tahun") tahun: Int,
                       @PathVariable("area_id") area_id: String){
 
-//        val customer_id = 1101
-//        val tahun = 2018
-//        val area_id = "1"
-
         val objectMapper = ObjectMapper()
         val url = URL(BASE_URL + "api/preventive_by_customer_year_area/%d/%d/%s".format(customer_id,tahun,area_id))
         val preventiveDetailDataList:List<PreventiveCustomerDetailHeader> = objectMapper.readValue(url)
@@ -1367,6 +1363,8 @@ class PreventiveController{
 
         val workbook = HSSFWorkbook()
         val sheet = workbook.createSheet("Preventive")
+        val sheet2 = workbook.createSheet("PO & INV")
+
         this.numRow = 8
 
         setColWidth(sheet)
@@ -1376,6 +1374,9 @@ class PreventiveController{
         createBudgetPreventiveXls(workbook, sheet, preventiveDetailDataList)
         createRealisasiPreventiveXls(workbook, sheet, preventiveDetailDataList)
         createSummaryPreventiveXls(workbook, sheet, preventiveDetailDataList)
+
+        val content = sheet2.createRow(1)
+        content.createCell(1).setCellValue("Test")
 
         val out = response.outputStream
         workbook.write(out)
