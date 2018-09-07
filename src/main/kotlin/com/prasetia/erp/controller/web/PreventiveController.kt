@@ -150,9 +150,19 @@ class PreventiveController{
         return styleTableContentNumber
     }
 
-    fun createHeaderPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet){
+    fun createHeaderPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet, preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
         val styleHeader = styleHeader(workbook)
         val styleTableHeader = styleTableHeader(workbook)
+
+        lateinit var customer: String
+        lateinit var tahun: String
+        lateinit var area: String
+
+        preventiveDetailDataList.forEach {
+            customer = it.customer_name.toString()
+            tahun = it.tahun
+            area = it.area.toString()
+        }
 
         var header = sheet.createRow(1)
         header.createCell(1).setCellValue("Tipe Proyek")
@@ -163,19 +173,19 @@ class PreventiveController{
         header = sheet.createRow(2)
         header.createCell(1).setCellValue("Customer")
         header.getCell(1).setCellStyle(styleHeader)
-        header.createCell(2).setCellValue("DMT")
+        header.createCell(2).setCellValue("$customer")
         header.getCell(2).setCellStyle(styleHeader)
 
         header = sheet.createRow(3)
         header.createCell(1).setCellValue("Periode")
         header.getCell(1).setCellStyle(styleHeader)
-        header.createCell(2).setCellValue("Januari - Desember 2018")
+        header.createCell(2).setCellValue("Januari - Desember $tahun")
         header.getCell(2).setCellStyle(styleHeader)
 
         header = sheet.createRow(4)
         header.createCell(1).setCellValue("Area")
         header.getCell(1).setCellStyle(styleHeader)
-        header.createCell(2).setCellValue("Sulmapua")
+        header.createCell(2).setCellValue("$area")
         header.getCell(2).setCellStyle(styleHeader)
 
         sheet.addMergedRegion(CellRangeAddress(7, 7, 3,4))
@@ -1339,24 +1349,28 @@ class PreventiveController{
 
     }
 
-    @RequestMapping("/preventive/download/xls")
-    fun downloadExcel(model:Model, response: HttpServletResponse){
-        val customer_id = 1101
-        val tahun = 2018
-        val area_id = "1"
+    @RequestMapping("/preventive/download/xls/{customer_id}/{tahun}/{area_id}")
+    fun downloadExcel(model:Model, response: HttpServletResponse,@PathVariable("customer_id") customer_id: Int,
+                      @PathVariable("tahun") tahun: Int,
+                      @PathVariable("area_id") area_id: String){
+
+//        val customer_id = 1101
+//        val tahun = 2018
+//        val area_id = "1"
 
         val objectMapper = ObjectMapper()
         val url = URL(BASE_URL + "api/preventive_by_customer_year_area/%d/%d/%s".format(customer_id,tahun,area_id))
         val preventiveDetailDataList:List<PreventiveCustomerDetailHeader> = objectMapper.readValue(url)
 
         response.contentType = "application/vnd.ms-excel"
-        response.setHeader("Content-Disposition", "attachment; filename=\"budget-preventive-file.xls\"")
+        response.setHeader("Content-Disposition", "attachment; filename=\"budget-preventive-file-$customer_id-$tahun-$area_id.xls\"")
 
         val workbook = HSSFWorkbook()
         val sheet = workbook.createSheet("Preventive")
+        this.numRow = 8
 
         setColWidth(sheet)
-        createHeaderPreventiveXls(workbook, sheet)
+        createHeaderPreventiveXls(workbook, sheet, preventiveDetailDataList)
         createPOPreventiveXls(workbook, sheet, preventiveDetailDataList)
         createInvoicePreventiveXls(workbook, sheet, preventiveDetailDataList)
         createBudgetPreventiveXls(workbook, sheet, preventiveDetailDataList)
