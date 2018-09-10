@@ -61,9 +61,23 @@ class PreventiveDetailController{
                 val xi_val = if(item.month_invoice == 11.toLong()) item.name else ""
                 val xii_val = if(item.month_invoice == 12.toLong()) item.name else ""
 
-                preventiveSaleOrderInvoice.add(com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice(item.id, i, ii, iii,
+                val i_state = if(item.month_invoice == 1.toLong()) item.state else ""
+                val ii_state = if(item.month_invoice == 2.toLong()) item.state else ""
+                val iii_state = if(item.month_invoice == 3.toLong()) item.state else ""
+                val iv_state = if(item.month_invoice == 4.toLong()) item.state else ""
+                val v_state = if(item.month_invoice == 5.toLong()) item.state else ""
+                val vi_state = if(item.month_invoice == 6.toLong()) item.state else ""
+                val vii_state = if(item.month_invoice == 7.toLong()) item.state else ""
+                val viii_state = if(item.month_invoice == 8.toLong()) item.state else ""
+                val ix_state = if(item.month_invoice == 9.toLong()) item.state else ""
+                val x_state = if(item.month_invoice == 10.toLong()) item.state else ""
+                val xi_state = if(item.month_invoice == 11.toLong()) item.state else ""
+                val xii_state = if(item.month_invoice == 12.toLong()) item.state else ""
+
+                preventiveSaleOrderInvoice.add(com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice(item.id, item.state, i, ii, iii,
                         iv, v, vi, vii, viii, ix, x, xi, xii, i_val, ii_val, iii_val, iv_val,
-                        v_val, vi_val, vii_val, viii_val, ix_val, x_val, xi_val, xii_val, total))
+                        v_val, vi_val, vii_val, viii_val, ix_val, x_val, xi_val, xii_val, i_state, ii_state, iii_state, iv_state,
+                        v_state, vi_state, vii_state, viii_state, ix_state, x_state, xi_state, xii_state, total))
             }
         }
         return preventiveSaleOrderInvoice

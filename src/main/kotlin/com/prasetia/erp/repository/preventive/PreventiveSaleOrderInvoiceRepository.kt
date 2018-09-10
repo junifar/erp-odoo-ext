@@ -14,10 +14,11 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                             SELECT
                                 ROW_NUMBER() OVER (ORDER BY "public".sale_order_line."id") AS id,
                                 "public".sale_order_line."id" AS order_line_id,
-                                    A.NAME,
-                                    A.month_invoice,
-                                    A.year_invoice,
-                                A.nilai_invoice
+                                A.NAME,
+                                A.month_invoice,
+                                A.year_invoice,
+                                A.nilai_invoice,
+                                A.state
                             FROM
                                 "public".sale_order_line
                                 LEFT JOIN "public".sale_order ON "public".sale_order_line.order_id = "public".sale_order."id"
@@ -29,6 +30,7 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                                                                         "public".sale_order_line_invoice_rel.order_line_id,
                                                                         Sum("public".account_invoice_line.price_subtotal) AS nilai_invoice,
                                                                         "public".account_invoice."name",
+                                                                        "public".account_invoice."state",
                                                                         EXTRACT(MONTH FROM "public".account_invoice.date_invoice) AS month_invoice,
                                                                         EXTRACT(YEAR FROM "public".account_invoice.date_invoice) AS year_invoice
                                                                         FROM
@@ -42,6 +44,7 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                                                                         GROUP BY
                                                                                         "public".sale_order_line_invoice_rel.order_line_id,
                                                                                         "public".account_invoice."name",
+                                                                                        "public".account_invoice."state",
                                                                                         EXTRACT(MONTH FROM "public".account_invoice.date_invoice),
                                                                                         EXTRACT(YEAR FROM "public".account_invoice.date_invoice)
                                                                     ) AS A ON A.order_line_id = "public".sale_order_line."id"

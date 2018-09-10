@@ -124,6 +124,7 @@ class PreventiveRealisasiBudget(
 class PreventiveSaleOrderInvoice(
         @Id
         val id:Long,
+        val state:String,
         val i:Long?,
         val ii:Long?,
         val iii:Long?,
@@ -148,9 +149,23 @@ class PreventiveSaleOrderInvoice(
         val x_val:String,
         val xi_val:String,
         val xii_val:String,
+        val i_state:String,
+        val ii_state:String,
+        val iii_state:String,
+        val iv_state:String,
+        val v_state:String,
+        val vi_state:String,
+        val vii_state:String,
+        val viii_state:String,
+        val ix_state:String,
+        val x_state:String,
+        val xi_state:String,
+        val xii_state:String,
         val total: Long?
 ){
-    constructor(): this(0,0,0,0,0,
+    constructor(): this(0, "",0,0,0,0,
             0,0,0,0,0,0,0,0,"","",
-            "","","","","","","","","","", 0)
+            "","","","","","","","","","",
+            "","","","","","","","","",
+            "","","", 0)
 }

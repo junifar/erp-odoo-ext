@@ -10,8 +10,9 @@ class PreventiveSaleOrderInvoice(
         val order_line_id:Long,
         val nilai_invoice:Long,
         val name:String,
+        val state:String,
         val month_invoice:Long,
         val year_invoice:Long
 ){
-    constructor(): this(0, 0, 0, "", 0, 0)
+    constructor(): this(0, 0, 0, "", "", 0, 0)
 }
