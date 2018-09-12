@@ -7,6 +7,7 @@ import javax.persistence.Id
 class PreventiveSaleOrderInvoice(
         @Id
         val id:Long,
+        val client_order_ref:String,
         val order_line_id:Long,
         val nilai_invoice:Long,
         val name:String,
@@ -14,5 +15,5 @@ class PreventiveSaleOrderInvoice(
         val month_invoice:Long,
         val year_invoice:Long
 ){
-    constructor(): this(0, 0, 0, "", "", 0, 0)
+    constructor(): this(0, "", 0, 0, "", "", 0, 0)
 }

@@ -30,54 +30,86 @@ class PreventiveDetailController{
     @Autowired
     lateinit var repositorySaleOrderInvoice: PreventiveSaleOrderInvoiceRepository
 
-    fun getPreventivePOInvoice(order_line_id:Int, data:Iterable<PreventiveSaleOrderInvoice>):MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice>{
+    fun getPreventivePOInvoiceSaleOrder(data:Iterable<PreventiveSaleOrderInvoice>, clientOrderRef: String, month:Int): Long{
+        var value:Long = 0
+        data.forEach {
+            if ((it.client_order_ref == clientOrderRef) and (it.month_invoice == month.toLong())) value += it.nilai_invoice
+        }
+        return value
+    }
+
+    fun getPreventivePOInvoiceSaleOrderVal(data:Iterable<PreventiveSaleOrderInvoice>, clientOrderRef: String, month:Int): String{
+        var value:String = ""
+        data.forEach {
+            if ((it.client_order_ref == clientOrderRef) and (it.month_invoice == month.toLong())) value += " ${it.name};"
+        }
+        return value
+    }
+
+    fun getPreventivePOInvoiceSaleOrderState(data:Iterable<PreventiveSaleOrderInvoice>, clientOrderRef: String, month:Int): String{
+        var value:String = ""
+        data.forEach {
+            if ((it.client_order_ref == clientOrderRef) and (it.month_invoice == month.toLong())) value += " ${it.state};"
+        }
+        return value
+    }
+
+    fun getPreventivePOInvoice(clientOrderRef: String, data:Iterable<PreventiveSaleOrderInvoice>):MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice>{
         val preventiveSaleOrderInvoice:MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice> = mutableListOf()
         data.forEach {
             item->
-            if(item.order_line_id == order_line_id.toLong()){
-                val i = if(item.month_invoice == 1.toLong()) item.nilai_invoice else 0
-                val ii = if(item.month_invoice == 2.toLong()) item.nilai_invoice else 0
-                val iii = if(item.month_invoice == 3.toLong()) item.nilai_invoice else 0
-                val iv = if(item.month_invoice == 4.toLong()) item.nilai_invoice else 0
-                val v = if(item.month_invoice == 5.toLong()) item.nilai_invoice else 0
-                val vi = if(item.month_invoice == 6.toLong()) item.nilai_invoice else 0
-                val vii = if(item.month_invoice == 7.toLong()) item.nilai_invoice else 0
-                val viii = if(item.month_invoice == 8.toLong()) item.nilai_invoice else 0
-                val ix = if(item.month_invoice == 9.toLong()) item.nilai_invoice else 0
-                val x = if(item.month_invoice == 10.toLong()) item.nilai_invoice else 0
-                val xi = if(item.month_invoice == 11.toLong()) item.nilai_invoice else 0
-                val xii = if(item.month_invoice == 12.toLong()) item.nilai_invoice else 0
-                val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
-                val i_val = if(item.month_invoice == 1.toLong()) item.name else ""
-                val ii_val = if(item.month_invoice == 2.toLong()) item.name else ""
-                val iii_val = if(item.month_invoice == 3.toLong()) item.name else ""
-                val iv_val = if(item.month_invoice == 4.toLong()) item.name else ""
-                val v_val = if(item.month_invoice == 5.toLong()) item.name else ""
-                val vi_val = if(item.month_invoice == 6.toLong()) item.name else ""
-                val vii_val = if(item.month_invoice == 7.toLong()) item.name else ""
-                val viii_val = if(item.month_invoice == 8.toLong()) item.name else ""
-                val ix_val = if(item.month_invoice == 9.toLong()) item.name else ""
-                val x_val = if(item.month_invoice == 10.toLong()) item.name else ""
-                val xi_val = if(item.month_invoice == 11.toLong()) item.name else ""
-                val xii_val = if(item.month_invoice == 12.toLong()) item.name else ""
+            if(item.client_order_ref == clientOrderRef){
+                var found = false
 
-                val i_state = if(item.month_invoice == 1.toLong()) item.state else ""
-                val ii_state = if(item.month_invoice == 2.toLong()) item.state else ""
-                val iii_state = if(item.month_invoice == 3.toLong()) item.state else ""
-                val iv_state = if(item.month_invoice == 4.toLong()) item.state else ""
-                val v_state = if(item.month_invoice == 5.toLong()) item.state else ""
-                val vi_state = if(item.month_invoice == 6.toLong()) item.state else ""
-                val vii_state = if(item.month_invoice == 7.toLong()) item.state else ""
-                val viii_state = if(item.month_invoice == 8.toLong()) item.state else ""
-                val ix_state = if(item.month_invoice == 9.toLong()) item.state else ""
-                val x_state = if(item.month_invoice == 10.toLong()) item.state else ""
-                val xi_state = if(item.month_invoice == 11.toLong()) item.state else ""
-                val xii_state = if(item.month_invoice == 12.toLong()) item.state else ""
+                preventiveSaleOrderInvoice.forEach {
+                    if(it.client_order_ref == clientOrderRef) found = true
+                }
 
-                preventiveSaleOrderInvoice.add(com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice(item.id, item.state, i, ii, iii,
-                        iv, v, vi, vii, viii, ix, x, xi, xii, i_val, ii_val, iii_val, iv_val,
-                        v_val, vi_val, vii_val, viii_val, ix_val, x_val, xi_val, xii_val, i_state, ii_state, iii_state, iv_state,
-                        v_state, vi_state, vii_state, viii_state, ix_state, x_state, xi_state, xii_state, total))
+                if(!found){
+                    val i = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 1)
+                    val ii = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 2)
+                    val iii = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 3)
+                    val iv = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 4)
+                    val v = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 5)
+                    val vi = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 6)
+                    val vii = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 7)
+                    val viii = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 8)
+                    val ix = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 9)
+                    val x = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 10)
+                    val xi = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 11)
+                    val xii = getPreventivePOInvoiceSaleOrder(data, clientOrderRef, 12)
+                    val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
+                    val i_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 1)
+                    val ii_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 2)
+                    val iii_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 3)
+                    val iv_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 4)
+                    val v_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 5)
+                    val vi_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 6)
+                    val vii_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 7)
+                    val viii_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 8)
+                    val ix_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 9)
+                    val x_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 10)
+                    val xi_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 11)
+                    val xii_val = getPreventivePOInvoiceSaleOrderVal(data, clientOrderRef, 12)
+
+                    val i_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 1)
+                    val ii_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 2)
+                    val iii_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 3)
+                    val iv_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 4)
+                    val v_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 5)
+                    val vi_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 6)
+                    val vii_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 7)
+                    val viii_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 8)
+                    val ix_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 9)
+                    val x_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 10)
+                    val xi_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 11)
+                    val xii_state = getPreventivePOInvoiceSaleOrderState(data, clientOrderRef, 12)
+
+                    preventiveSaleOrderInvoice.add(com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice(item.id, item.client_order_ref, item.state, i, ii, iii,
+                            iv, v, vi, vii, viii, ix, x, xi, xii, i_val, ii_val, iii_val, iv_val,
+                            v_val, vi_val, vii_val, viii_val, ix_val, x_val, xi_val, xii_val, i_state, ii_state, iii_state, iv_state,
+                            v_state, vi_state, vii_state, viii_state, ix_state, x_state, xi_state, xii_state, total))
+                }
             }
         }
         return preventiveSaleOrderInvoice
@@ -141,7 +173,7 @@ class PreventiveDetailController{
                             iv, v, vi,
                             vii, viii, ix,
                             x, xi, xii,
-                            total, getPreventivePOInvoice(item.id.toInt(), dataSaleOrder)))
+                            total, getPreventivePOInvoice(item.client_order_ref, dataSaleOrder)))
                 }
 
             }

@@ -14,6 +14,7 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                             SELECT
                                 ROW_NUMBER() OVER (ORDER BY "public".sale_order_line."id") AS id,
                                 "public".sale_order_line."id" AS order_line_id,
+                                "public".sale_order.client_order_ref,
                                 A.NAME,
                                 A.month_invoice,
                                 A.year_invoice,
