@@ -33,7 +33,7 @@ class PreventiveDetailController{
     fun getPreventivePOInvoiceSaleOrder(data:Iterable<PreventiveSaleOrderInvoice>, clientOrderRef: String, month:Int): Long{
         var value:Long = 0
         data.forEach {
-            if ((it.client_order_ref == clientOrderRef) and (it.month_invoice == month.toLong())) value += it.nilai_invoice
+            if ((it.client_order_ref == clientOrderRef) and (it.bulan_po == month.toLong())) value += it.nilai_invoice
         }
         return value
     }
@@ -41,7 +41,7 @@ class PreventiveDetailController{
     fun getPreventivePOInvoiceSaleOrderVal(data:Iterable<PreventiveSaleOrderInvoice>, clientOrderRef: String, month:Int): String{
         var value:String = ""
         data.forEach {
-            if ((it.client_order_ref == clientOrderRef) and (it.month_invoice == month.toLong())) value += " ${it.name};"
+            if ((it.client_order_ref == clientOrderRef) and (it.bulan_po == month.toLong())) value += " ${it.name} "
         }
         return value
     }
@@ -49,7 +49,7 @@ class PreventiveDetailController{
     fun getPreventivePOInvoiceSaleOrderState(data:Iterable<PreventiveSaleOrderInvoice>, clientOrderRef: String, month:Int): String{
         var value:String = ""
         data.forEach {
-            if ((it.client_order_ref == clientOrderRef) and (it.month_invoice == month.toLong())) value += " ${it.state};"
+            if ((it.client_order_ref == clientOrderRef) and (it.bulan_po == month.toLong())) value += " ${it.state} "
         }
         return value
     }
