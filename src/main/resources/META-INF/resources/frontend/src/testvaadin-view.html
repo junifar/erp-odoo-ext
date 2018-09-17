@@ -1,0 +1,17 @@
+<!-- Dependency resources -->
+<link rel="import" href="./bower_components/polymer/polymer-element.html">
+
+<dom-module id="testvaadin-view">
+    <template>
+        <vaadin-text-field id="search"></vaadin-text-field>
+    </template>
+
+    <script>
+        class TestVaadinView extends Polymer.Element{
+            static get is(){
+                return 'testvaadin-view'
+            }
+        }
+        customElements.define(TestVaadinView.is, TestVaadinView);
+    </script>
+</dom-module>
