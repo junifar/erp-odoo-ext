@@ -2,12 +2,14 @@ package com.prasetia.erp.view.ui
 
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Tag
+import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.html.Label
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.polymertemplate.Id
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate
 import com.vaadin.flow.component.textfield.TextField
+import com.vaadin.flow.data.value.ValueChangeMode
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.templatemodel.TemplateModel
 import com.vaadin.flow.theme.Theme
@@ -27,16 +29,23 @@ import com.vaadin.flow.theme.lumo.Lumo
 
 @Tag("testvaadin-view")
 @HtmlImport("src/testvaadin-view.html")
-@Route("ui")
+@Route("ui", layout = MainLayout::class)
 class TestVaadinView: PolymerTemplate<TestVaadinView.ExampleModel>(){
   interface ExampleModel : TemplateModel{
       var value:String
   }
+
     @Id("search")
-    lateinit var search:TextField
+    lateinit var search: TextField
+
+    @Id("newReview")
+    lateinit var addReview: Button
 
     init {
-        search.label = "Uji COba"
-        search.value = "Value DIsini"
+        search.placeholder = "Search reviews"
+        search.addValueChangeListener {}
+        search.valueChangeMode = ValueChangeMode.EAGER
+
+        addReview.addClickListener {  }
     }
 }
