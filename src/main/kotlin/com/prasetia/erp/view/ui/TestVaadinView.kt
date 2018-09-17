@@ -13,30 +13,30 @@ import com.vaadin.flow.templatemodel.TemplateModel
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
 
-@Route("ui")
-@HtmlImport("styles/shared-styles.html")
-@Theme(Lumo::class)
-class TestVaadinView: VerticalLayout() {
-
-    init {
-        val helloWorld = Label("Hello World")
-        add(helloWorld)
-        className = "main-layout"
-    }
-}
-
-//@Tag("testvaadin-view")
-//@HtmlImport("src/testvaadin-view.html")
 //@Route("ui")
-//class TestVaadinView: PolymerTemplate<TestVaadinView.ExampleModel>(){
-//  interface ExampleModel : TemplateModel{
-//      var value:String
-//  }
-//    @Id("search")
-//    lateinit var search:TextField
+//@HtmlImport("styles/shared-styles.html")
+//@Theme(Lumo::class)
+//class TestVaadinView: VerticalLayout() {
 //
 //    init {
-//        search.label = "Uji COba"
-//        search.value = "Value DIsini"
+//        val helloWorld = Label("Hello World")
+//        add(helloWorld)
+//        className = "main-layout"
 //    }
 //}
+
+@Tag("testvaadin-view")
+@HtmlImport("src/testvaadin-view.html")
+@Route("ui")
+class TestVaadinView: PolymerTemplate<TestVaadinView.ExampleModel>(){
+  interface ExampleModel : TemplateModel{
+      var value:String
+  }
+    @Id("search")
+    lateinit var search:TextField
+
+    init {
+        search.label = "Uji COba"
+        search.value = "Value DIsini"
+    }
+}
