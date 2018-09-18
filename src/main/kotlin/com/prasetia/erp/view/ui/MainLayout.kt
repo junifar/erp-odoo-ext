@@ -53,8 +53,6 @@ class MainLayout : Div(), RouterLayout, PageConfigurator {
         navigation.addClassName("main-layout__nav")
 
         val header = Div(title, navigation)
-//        val header = Div(header_title, navigation)
-//        val header = Div(title)
         header.addClassName("main-layout__header")
         add(header)
 
