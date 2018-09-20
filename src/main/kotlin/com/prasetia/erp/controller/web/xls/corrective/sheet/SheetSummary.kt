@@ -1,6 +1,5 @@
 package com.prasetia.erp.controller.web.xls.corrective.sheet
 
-import com.prasetia.erp.pojo.corrective.CorrectiveCustomerSummaryData
 import com.prasetia.erp.pojo.corrective.CorrectiveYearData
 import org.apache.poi.hssf.usermodel.*
 import org.apache.poi.hssf.util.HSSFColor
@@ -99,6 +98,23 @@ class SheetSummary(workbook:HSSFWorkbook, data: List<CorrectiveYearData>){
         return styleTableHeader
     }
 
+    fun styleTableHeaderPercent(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableHeader = workbook.createCellStyle()
+        val fontCalibriTableHeader = workbook.createFont()
+        fontCalibriTableHeader.fontName = "Calibri"
+        fontCalibriTableHeader.fontHeightInPoints = 11
+        fontCalibriTableHeader.bold = true
+        styleTableHeader.dataFormat = HSSFDataFormat.getBuiltinFormat("0.00%")
+        styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+        styleTableHeader.fillForegroundColor = HSSFColor.GREY_25_PERCENT.index
+        styleTableHeader.setBorderBottom(BorderStyle.THIN)
+        styleTableHeader.setBorderTop(BorderStyle.THIN)
+        styleTableHeader.setBorderLeft(BorderStyle.THIN)
+        styleTableHeader.setBorderRight(BorderStyle.THIN)
+        styleTableHeader.setFont(fontCalibriTableHeader)
+        return styleTableHeader
+    }
+
     fun createHeaderXls(workbook: HSSFWorkbook, sheet:HSSFSheet, year:String){
         val styleHeader = styleHeader(workbook)
         val styleTableHeader = styleTableHeader(workbook)
@@ -150,6 +166,7 @@ class SheetSummary(workbook:HSSFWorkbook, data: List<CorrectiveYearData>){
         val styleTableContent = styleTableContent(workbook)
         val styleTableContentNumber = styleTableContentNumber(workbook)
         val styleTableHeader = styleTableHeader(workbook)
+        val styleTableHeaderPercent = styleTableHeaderPercent(workbook)
         val styleTableHeaderNumber = styleTableHeaderNumber(workbook)
         val styleTableContentPercent = styleTableContentPercent(workbook)
 
@@ -164,6 +181,10 @@ class SheetSummary(workbook:HSSFWorkbook, data: List<CorrectiveYearData>){
             val cell6 = content.createCell(6)
             val cell5 = content.createCell(5)
             cell5.setCellType(CellType.FORMULA)
+            val cell7 = content.createCell(7)
+            cell7.setCellType(CellType.FORMULA)
+            val cell8 = content.createCell(8)
+            cell7.setCellType(CellType.FORMULA)
 
             content.createCell(1).setCellValue(it.code)
             content.getCell(1).setCellStyle(styleTableContent)
@@ -173,17 +194,47 @@ class SheetSummary(workbook:HSSFWorkbook, data: List<CorrectiveYearData>){
             content.getCell(3).setCellStyle(styleTableContentNumber)
             it.nilai_inv?.toDouble()?.let {  it1-> cell4.setCellValue(it1)}
             content.getCell(4).setCellStyle(styleTableContentNumber)
-//            content.createCell(5).setCellValue("%")
             cell5.cellFormula = "E$numRow/D$numRow"
             content.getCell(5).setCellStyle(styleTableContentPercent)
             it.realisasi_budget?.toDouble()?.let {  it1-> cell6.setCellValue(it1)}
             content.getCell(6).setCellStyle(styleTableContentNumber)
-            content.createCell(7).setCellValue("Laba / Rugi")
-            content.getCell(7).setCellStyle(styleTableContent)
-            content.createCell(8).setCellValue("% Laba / Rugi")
-            content.getCell(8).setCellStyle(styleTableContent)
+            cell7.cellFormula = "E$numRow-G$numRow"
+            content.getCell(7).setCellStyle(styleTableContentNumber)
+            cell8.cellFormula = "H$numRow/G$numRow"
+            content.getCell(8).setCellStyle(styleTableContentPercent)
         }
-
+        content = sheet.createRow(numRow)
+        val cell2 = content.createCell(2)
+        cell2.setCellType(CellType.FORMULA)
+        val cell3 = content.createCell(3)
+        cell3.setCellType(CellType.FORMULA)
+        val cell4 = content.createCell(4)
+        cell4.setCellType(CellType.FORMULA)
+        val cell6 = content.createCell(6)
+        cell6.setCellType(CellType.FORMULA)
+        val cell5 = content.createCell(5)
+        cell5.setCellType(CellType.FORMULA)
+        val cell7 = content.createCell(7)
+        cell7.setCellType(CellType.FORMULA)
+        val cell8 = content.createCell(8)
+        cell7.setCellType(CellType.FORMULA)
+        content.createCell(1).setCellValue("Total")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        cell2.cellFormula = "SUM(C${this.numRow+1}:C$numRow)"
+        content.getCell(2).setCellStyle(styleTableHeaderNumber)
+        cell3.cellFormula = "SUM(D${this.numRow+1}:D$numRow)"
+        content.getCell(3).setCellStyle(styleTableHeaderNumber)
+        cell4.cellFormula = "SUM(E${this.numRow+1}:E$numRow)"
+        content.getCell(4).setCellStyle(styleTableHeaderNumber)
+        cell5.cellFormula = "E${numRow+1}/D${numRow+1}"
+        content.getCell(5).setCellStyle(styleTableHeaderPercent)
+        cell6.cellFormula = "SUM(G${this.numRow+1}:G$numRow)"
+        content.getCell(6).setCellStyle(styleTableHeaderNumber)
+        cell7.cellFormula = "SUM(H${this.numRow+1}:H$numRow)"
+        content.getCell(7).setCellStyle(styleTableHeaderNumber)
+        cell8.cellFormula = "H${numRow+1}/G${numRow+1}"
+        content.getCell(8).setCellStyle(styleTableHeaderPercent)
+        numRow += 1
     }
 
     fun setColWidth(sheet: HSSFSheet):HSSFSheet{
