@@ -28,10 +28,10 @@ class CorrectiveController{
     @RequestMapping("/corrective/xls/{tahun}")
     fun downloadCorrective(model: Model, response:HttpServletResponse, @PathVariable("tahun") tahun:String){
         response.contentType = "application/vnd.ms-excel"
-        response.setHeader("Content-Disposition", "attachment; filename=\"budget-preventive-file.xls\"")
+        response.setHeader("Content-Disposition", "attachment; filename=\"budget-preventive-file-$tahun.xls\"")
         val objectMapper = ObjectMapper()
         val url = URL(BASE_URL + "api/corrective_year/$tahun")
         val correctiveYearDataList: List<CorrectiveYearData> = objectMapper.readValue(url)
-        XlsCorrective(response, correctiveYearDataList)
+        XlsCorrective(response, tahun, correctiveYearDataList)
     }
 }
