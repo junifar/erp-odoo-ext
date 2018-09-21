@@ -86,10 +86,6 @@ class CorrectiveController{
         correctiveProjectDataRepository = repositoryCorrectiveProject.getCorrectiveProject(tahun)
         correctiveBudgetUsedDataRepository = repositoryCorrectiveBudgetUsed.getCorrectiveBudgetUsed(tahun)
         correctiveAdvanceDataRepository = repositoryCorrectiveAdvance.getCorrectiveAdvance(tahun)
-        println("Test")
-        correctiveAdvanceDataRepository.forEach {
-            println("${it.year_project} - ${it.project_id}")
-        }
         val correctiveYearData:MutableList<CorrectiveYearData> = mutableListOf()
         data.forEach {
             correctiveYearData.add((CorrectiveYearData(it.id, it.customer_id, it.code, it.jumlah_site, it.year_project,
