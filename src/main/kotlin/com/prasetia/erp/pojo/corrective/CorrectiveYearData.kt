@@ -60,7 +60,8 @@ class CorrectiveAdvanceData(
         val pic:String,
         val penerima_dana:String,
         val tanggal: Date?,
-        val ca_id: Long
+        val ca_id: Long,
+        val no_mi: String?
 ){
-    constructor(): this(0, "", 0, 0, "","", "", "", null, 0)
+    constructor(): this(0, "", 0, 0, "","", "", "", null, 0, "")
 }

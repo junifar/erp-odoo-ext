@@ -1,10 +1,7 @@
 package com.prasetia.erp.controller.web.xls.corrective.sheet
 
 import com.prasetia.erp.pojo.corrective.CorrectiveYearData
-import org.apache.poi.hssf.usermodel.HSSFCellStyle
-import org.apache.poi.hssf.usermodel.HSSFRow
-import org.apache.poi.hssf.usermodel.HSSFSheet
-import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import org.apache.poi.hssf.usermodel.*
 import org.apache.poi.hssf.util.HSSFColor
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.FillPatternType
@@ -13,7 +10,7 @@ import org.apache.poi.ss.util.CellRangeAddress
 
 class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<CorrectiveYearData>){
     var sheet: HSSFSheet = workbook.createSheet("Summary $tahun")
-    var numRow:Int = 4
+    var numRow:Int = 5
 
     fun setColWidth(sheet: HSSFSheet):HSSFSheet{
         sheet.setColumnWidth(0, 1560)
@@ -61,6 +58,92 @@ class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<Corre
         styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND)
         styleTableHeader.fillForegroundColor = HSSFColor.GREY_25_PERCENT.index
         styleTableHeader.setAlignment(HorizontalAlignment.CENTER)
+        styleTableHeader.setBorderBottom(BorderStyle.THIN)
+        styleTableHeader.setBorderTop(BorderStyle.THIN)
+        styleTableHeader.setBorderLeft(BorderStyle.THIN)
+        styleTableHeader.setBorderRight(BorderStyle.THIN)
+        styleTableHeader.setFont(fontCalibriTableHeader)
+        return styleTableHeader
+    }
+
+    fun fontCalibriTableContent(workbook: HSSFWorkbook): HSSFFont {
+        val fontCalibriTableContent = workbook.createFont()
+        fontCalibriTableContent.fontName = "Calibri"
+        fontCalibriTableContent.fontHeightInPoints = 11
+        fontCalibriTableContent.bold = false
+        return fontCalibriTableContent
+    }
+
+    fun styleTableContent(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableContent = workbook.createCellStyle()
+        val fontCalibriTableContent = fontCalibriTableContent(workbook)
+        styleTableContent.setBorderBottom(BorderStyle.THIN)
+        styleTableContent.setBorderTop(BorderStyle.THIN)
+        styleTableContent.setBorderLeft(BorderStyle.THIN)
+        styleTableContent.setBorderRight(BorderStyle.THIN)
+        styleTableContent.setFont(fontCalibriTableContent)
+        return styleTableContent
+    }
+
+    fun styleTableContentNumber(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableContentNumber = workbook.createCellStyle()
+        styleTableContentNumber.dataFormat = HSSFDataFormat.getBuiltinFormat("#,##0.00")
+        styleTableContentNumber.setBorderBottom(BorderStyle.THIN)
+        styleTableContentNumber.setBorderTop(BorderStyle.THIN)
+        styleTableContentNumber.setBorderLeft(BorderStyle.THIN)
+        styleTableContentNumber.setBorderRight(BorderStyle.THIN)
+        styleTableContentNumber.setFont(fontCalibriTableContent(workbook))
+        return styleTableContentNumber
+    }
+
+    fun styleTableContentDate(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableContentNumber = workbook.createCellStyle()
+        styleTableContentNumber.dataFormat = HSSFDataFormat.getBuiltinFormat("d-mmm-yy")
+        styleTableContentNumber.setBorderBottom(BorderStyle.THIN)
+        styleTableContentNumber.setBorderTop(BorderStyle.THIN)
+        styleTableContentNumber.setBorderLeft(BorderStyle.THIN)
+        styleTableContentNumber.setBorderRight(BorderStyle.THIN)
+        styleTableContentNumber.setFont(fontCalibriTableContent(workbook))
+        return styleTableContentNumber
+    }
+
+    fun styleTableContentPercent(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableContentNumber = workbook.createCellStyle()
+        styleTableContentNumber.dataFormat = HSSFDataFormat.getBuiltinFormat("0.00%")
+        styleTableContentNumber.setBorderBottom(BorderStyle.THIN)
+        styleTableContentNumber.setBorderTop(BorderStyle.THIN)
+        styleTableContentNumber.setBorderLeft(BorderStyle.THIN)
+        styleTableContentNumber.setBorderRight(BorderStyle.THIN)
+        styleTableContentNumber.setFont(fontCalibriTableContent(workbook))
+        return styleTableContentNumber
+    }
+
+    fun styleTableHeaderNumber(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableHeader = workbook.createCellStyle()
+        val fontCalibriTableHeader = workbook.createFont()
+        fontCalibriTableHeader.fontName = "Calibri"
+        fontCalibriTableHeader.fontHeightInPoints = 11
+        fontCalibriTableHeader.bold = true
+        styleTableHeader.dataFormat = HSSFDataFormat.getBuiltinFormat("#,##0.00")
+        styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+        styleTableHeader.fillForegroundColor = HSSFColor.GREY_25_PERCENT.index
+        styleTableHeader.setBorderBottom(BorderStyle.THIN)
+        styleTableHeader.setBorderTop(BorderStyle.THIN)
+        styleTableHeader.setBorderLeft(BorderStyle.THIN)
+        styleTableHeader.setBorderRight(BorderStyle.THIN)
+        styleTableHeader.setFont(fontCalibriTableHeader)
+        return styleTableHeader
+    }
+
+    fun styleTableHeaderPercent(workbook: HSSFWorkbook):HSSFCellStyle{
+        val styleTableHeader = workbook.createCellStyle()
+        val fontCalibriTableHeader = workbook.createFont()
+        fontCalibriTableHeader.fontName = "Calibri"
+        fontCalibriTableHeader.fontHeightInPoints = 11
+        fontCalibriTableHeader.bold = true
+        styleTableHeader.dataFormat = HSSFDataFormat.getBuiltinFormat("0.00%")
+        styleTableHeader.setFillPattern(FillPatternType.SOLID_FOREGROUND)
+        styleTableHeader.fillForegroundColor = HSSFColor.GREY_25_PERCENT.index
         styleTableHeader.setBorderBottom(BorderStyle.THIN)
         styleTableHeader.setBorderTop(BorderStyle.THIN)
         styleTableHeader.setBorderLeft(BorderStyle.THIN)
@@ -121,8 +204,66 @@ class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<Corre
         header.getCell(22).setCellStyle(styleTableHeader)
     }
 
+    fun createDataXls(workbook: HSSFWorkbook, sheet: HSSFSheet, data: List<CorrectiveYearData>){
+        val styleTableContent = styleTableContent(workbook)
+        val styleTableContentNumber = styleTableContentNumber(workbook)
+        val styleTableContentDate = styleTableContentDate(workbook)
+        val styleTableHeader = styleTableHeader(workbook)
+        val styleTableHeaderPercent = styleTableHeaderPercent(workbook)
+        val styleTableHeaderNumber = styleTableHeaderNumber(workbook)
+        val styleTableContentPercent = styleTableContentPercent(workbook)
+
+        var content:HSSFRow
+        var numRow = this.numRow
+        var numRec:Double = 1.00
+
+        data.forEach {
+            items ->
+            items.projects?.forEach {
+                projects->
+                projects.cash_advance?.forEach {
+                    cash_advance->
+                    content = sheet.createRow(numRow++)
+                    content.createCell(0).setCellValue(numRec++)
+                    content.getCell(0).setCellStyle(styleTableContent)
+                    content.createCell(1).setCellValue(cash_advance.narration)
+                    content.getCell(1).setCellStyle(styleTableContent)
+                    content.createCell(2).setCellValue(cash_advance.pic)
+                    content.getCell(2).setCellStyle(styleTableContent)
+                    content.createCell(3).setCellValue(cash_advance.penerima_dana)
+                    content.getCell(3).setCellStyle(styleTableContent)
+                    content.createCell(4).setCellValue(cash_advance.tanggal)
+                    content.getCell(4).setCellStyle(styleTableContentDate)
+                    content.createCell(5).setCellValue(cash_advance.ref)
+                    content.getCell(5).setCellStyle(styleTableContent)
+                    content.createCell(6).setCellValue("-")
+                    content.getCell(6).setCellStyle(styleTableContent)
+                    content.createCell(7).setCellValue(0.00)
+                    content.getCell(7).setCellStyle(styleTableContentNumber)
+                    content.createCell(8).setCellValue(0.00)
+                    content.getCell(8).setCellStyle(styleTableContentNumber)
+                    content.createCell(9).setCellValue(0.00)
+                    content.getCell(9).setCellStyle(styleTableContentNumber)
+                    content.createCell(10).setCellValue(0.00)
+                    content.getCell(10).setCellStyle(styleTableContentNumber)
+                    content.createCell(11).setCellValue(projects.site_name)
+                    content.getCell(11).setCellStyle(styleTableContent)
+                    content.createCell(12).setCellValue(cash_advance.no_mi)
+                    content.getCell(12).setCellStyle(styleTableContent)
+                    content.createCell(13).setCellValue("-")
+                    content.getCell(13).setCellStyle(styleTableContent)
+                    content.createCell(14).setCellValue("-")
+                    content.getCell(14).setCellStyle(styleTableContent)
+                    content.createCell(15).setCellValue(projects.customer)
+                    content.getCell(15).setCellStyle(styleTableContent)
+                }
+            }
+        }
+    }
+
     init {
         setColWidth(sheet)
         createHeaderXls(workbook, sheet)
+        createDataXls(workbook, sheet, data)
     }
 }

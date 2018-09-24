@@ -75,7 +75,7 @@ class CorrectiveController{
         data.forEach {
             if((it.year_project == tahun) and (it.project_id == project_id))
                 correctiveAdvanceData.add(CorrectiveAdvanceData(it.id, it.year_project, it.project_id, it.amount,
-                        it.narration, it.ref, it.pic, it.penerima_dana, it.tanggal, it.ca_id))
+                        it.narration, it.ref, it.pic, it.penerima_dana, it.tanggal, it.ca_id, it.no_mi))
         }
         return correctiveAdvanceData
     }

@@ -39,7 +39,7 @@
                                             <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.profit, 1, 'POINT', 2, 'COMMA')}">0.00</td>
                                             <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.profit_precentage, 1, 'POINT', 2, 'COMMA')}">0.00</td>
                                             <td class="text-right small">
-                                                <a th:href="@{'/corrective/download/xls/' + ${dataRow.year_project}}">Download</a>
+                                                <a th:href="@{'/corrective/xls/' + ${dataRow.year_project}}">Download</a>
                                             </td>
                                         </tr>
                                         </tbody>
