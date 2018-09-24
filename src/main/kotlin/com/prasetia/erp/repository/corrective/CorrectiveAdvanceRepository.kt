@@ -22,7 +22,9 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                 A.ca_id,
                                 A.penerima_dana,
                                 A.pic,
-                                    A.no_mi
+                                    A.no_mi,
+                                    A.no_po,
+                                    A.nilai_po
                             FROM (
                                     SELECT
                                     "public".project_project.year_project,
@@ -34,7 +36,11 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                     "public".cash_advance."id" AS ca_id,
                                     "public".hr_employee.name_related AS penerima_dana,
                                     "public".res_partner."name" AS pic,
-                                            "public".sale_memo_internal."name" AS no_mi
+                                    "public".sale_memo_internal."name" AS no_mi,
+                                    --Sum("public".sale_order_line.price_unit * "public".sale_order_line.product_uom_qty) AS nilai_po,
+                                    --string_agg("public".sale_order.client_order_ref, '; ') AS no_po
+                                    MAX("public".sale_order_line.price_unit * "public".sale_order_line.product_uom_qty) AS nilai_po,
+                                    MAX("public".sale_order.client_order_ref) AS no_po
                                     FROM
                                     "public".cash_advance_line
                                     LEFT JOIN "public".cash_advance ON "public".cash_advance_line.voucher_id = "public".cash_advance."id"
@@ -45,6 +51,8 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                     LEFT JOIN "public".res_users ON "public".cash_advance.user_id = "public".res_users."id"
                                     LEFT JOIN "public".res_partner ON "public".res_users.partner_id = "public".res_partner."id"
                                             LEFT JOIN "public".sale_memo_internal ON "public".budget_plan.mi_id = "public".sale_memo_internal."id"
+                                            LEFT JOIN "public".sale_order_line ON "public".sale_order_line.project_id = "public".project_project."id"
+                                            LEFT JOIN "public".sale_order ON "public".sale_order_line.order_id = "public".sale_order."id"
                                     WHERE
                                     "public".cash_advance."state" = 'close'
                                     GROUP BY
@@ -68,7 +76,11 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                         "public".cash_advance."id" AS ca_id,
                                         "public".hr_employee.name_related AS penerima_dana,
                                         "public".res_partner."name" AS pic,
-                                                    "public".sale_memo_internal."name" AS no_mi
+                                        "public".sale_memo_internal."name" AS no_mi,
+                                        --Sum("public".sale_order_line.price_unit * "public".sale_order_line.product_uom_qty) AS nilai_po,
+                                        --string_agg("public".sale_order.client_order_ref, '; ') AS no_po
+                                        MAX("public".sale_order_line.price_unit * "public".sale_order_line.product_uom_qty) AS nilai_po,
+                                        MAX("public".sale_order.client_order_ref) AS no_po
                                     FROM
                                         "public".cash_settlement_line
                                         LEFT JOIN "public".cash_settlement ON "public".cash_settlement_line.voucher_id = "public".cash_settlement."id"
@@ -80,6 +92,8 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                         LEFT JOIN "public".res_users ON "public".cash_advance.user_id = "public".res_users."id"
                                         LEFT JOIN "public".res_partner ON "public".res_users.partner_id = "public".res_partner."id"
                                                     LEFT JOIN "public".sale_memo_internal ON "public".budget_plan.mi_id = "public".sale_memo_internal."id"
+                                                    LEFT JOIN "public".sale_order_line ON "public".sale_order_line.project_id = "public".project_project."id"
+                                                    LEFT JOIN "public".sale_order ON "public".sale_order_line.order_id = "public".sale_order."id"
                                     WHERE
                                         "public".cash_advance."state" = 'lunas'
                                     GROUP BY

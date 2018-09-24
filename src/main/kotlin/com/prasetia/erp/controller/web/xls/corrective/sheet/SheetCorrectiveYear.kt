@@ -224,6 +224,7 @@ class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<Corre
                 projects.cash_advance?.forEach {
                     cash_advance->
                     content = sheet.createRow(numRow++)
+                    val cell17 = content.createCell(17)
                     content.createCell(0).setCellValue(numRec++)
                     content.getCell(0).setCellStyle(styleTableContent)
                     content.createCell(1).setCellValue(cash_advance.narration)
@@ -256,6 +257,10 @@ class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<Corre
                     content.getCell(14).setCellStyle(styleTableContent)
                     content.createCell(15).setCellValue(projects.customer)
                     content.getCell(15).setCellStyle(styleTableContent)
+                    content.createCell(16).setCellValue(cash_advance.no_po)
+                    content.getCell(16).setCellStyle(styleTableContent)
+                    cash_advance.nilai_po?.toDouble()?.let {cell17.setCellValue(it)}
+                    content.getCell(17).setCellStyle(styleTableContentNumber)
                 }
             }
         }

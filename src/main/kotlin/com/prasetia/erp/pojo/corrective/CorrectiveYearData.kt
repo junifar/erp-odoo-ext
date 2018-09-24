@@ -61,7 +61,9 @@ class CorrectiveAdvanceData(
         val penerima_dana:String,
         val tanggal: Date?,
         val ca_id: Long,
-        val no_mi: String?
+        val no_mi: String?,
+        val no_po:String?,
+        val nilai_po:Long?
 ){
-    constructor(): this(0, "", 0, 0, "","", "", "", null, 0, "")
+    constructor(): this(0, "", 0, 0, "","", "", "", null, 0, "", "", 0)
 }
