@@ -63,7 +63,19 @@ class CorrectiveAdvanceData(
         val ca_id: Long,
         val no_mi: String?,
         val no_po:String?,
-        val nilai_po:Long?
+        val nilai_po:Long?,
+        var advance_invoice:List<CorrectiveAdvanceInvoiceData>?
 ){
-    constructor(): this(0, "", 0, 0, "","", "", "", null, 0, "", "", 0)
+    constructor(): this(0, "", 0, 0, "","", "", "", null, 0, "", "", 0, null)
+}
+
+class CorrectiveAdvanceInvoiceData(
+        @Id
+        val id:Long,
+        val nilai_invoice:Long,
+        val invoice_state:String,
+        val no_inv:String,
+        val year_project:String
+){
+    constructor(): this(0, 0, "", "","")
 }

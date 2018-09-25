@@ -26,11 +26,16 @@ class CorrectiveController{
     @Autowired
     lateinit var repositoryCorrectiveAdvance: CorrectiveAdvanceRepository
 
+    @Autowired
+    lateinit var repositoryCorrectiveAdvanceInvoice: CorrectiveAdvanceInvoiceRepository
+
     lateinit var correctiveProjectDataRepository: Iterable<CorrectiveProject>
 
     lateinit var correctiveBudgetUsedDataRepository: Iterable<CorrectiveBudgetUsed>
 
     lateinit var correctiveAdvanceDataRepository: Iterable<CorrectiveAdvance>
+
+    lateinit var correctiveAdvanceInvoiceDataRepository: Iterable<CorrectiveAdvanceInvoice>
 
     @RequestMapping("/api/corrective_summary")
 //    fun getAllData(): Iterable<CorrectiveSummary> = repository.getCorrectiveSummary()
@@ -69,13 +74,24 @@ class CorrectiveController{
         return correctiveBudgetUsedData
     }
 
+    fun getCorrectiveAdvanceInvoice(tahun: String, project_id: Long):MutableList<CorrectiveAdvanceInvoiceData>{
+        val data = correctiveAdvanceInvoiceDataRepository
+        val correctiveAdvanceInvoiceData:MutableList<CorrectiveAdvanceInvoiceData> = mutableListOf()
+        data.forEach {
+            if((it.year_project == tahun) and (it.id == project_id))
+                correctiveAdvanceInvoiceData.add(CorrectiveAdvanceInvoiceData(it.id, it.nilai_invoice, it.invoice_state, it.no_inv, it.year_project))
+        }
+        return correctiveAdvanceInvoiceData
+    }
+
     fun getCorrectiveAdvance(tahun: String, project_id: Long): MutableList<CorrectiveAdvanceData>{
         val data = correctiveAdvanceDataRepository
         val correctiveAdvanceData: MutableList<CorrectiveAdvanceData> = mutableListOf()
         data.forEach {
             if((it.year_project == tahun) and (it.project_id == project_id))
                 correctiveAdvanceData.add(CorrectiveAdvanceData(it.id, it.year_project, it.project_id, it.amount,
-                        it.narration, it.ref, it.pic, it.penerima_dana, it.tanggal, it.ca_id, it.no_mi, it.no_po, it.nilai_po))
+                        it.narration, it.ref, it.pic, it.penerima_dana, it.tanggal, it.ca_id, it.no_mi, it.no_po,
+                        it.nilai_po, getCorrectiveAdvanceInvoice(tahun, project_id)))
         }
         return correctiveAdvanceData
     }
@@ -86,6 +102,7 @@ class CorrectiveController{
         correctiveProjectDataRepository = repositoryCorrectiveProject.getCorrectiveProject(tahun)
         correctiveBudgetUsedDataRepository = repositoryCorrectiveBudgetUsed.getCorrectiveBudgetUsed(tahun)
         correctiveAdvanceDataRepository = repositoryCorrectiveAdvance.getCorrectiveAdvance(tahun)
+        correctiveAdvanceInvoiceDataRepository = repositoryCorrectiveAdvanceInvoice.getCorrectiveAdvanceInvoice(tahun)
         val correctiveYearData:MutableList<CorrectiveYearData> = mutableListOf()
         data.forEach {
             correctiveYearData.add((CorrectiveYearData(it.id, it.customer_id, it.code, it.jumlah_site, it.year_project,

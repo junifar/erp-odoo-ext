@@ -15,16 +15,16 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                 ROW_NUMBER() OVER (ORDER BY A.project_id) AS id,
                                 A.year_project,
                                 A.project_id,
-                                A.amount,
+                                SUM(A.amount) AS amount,
                                 A.narration,
                                 A.ref,
                                 A.tanggal,
                                 A.ca_id,
                                 A.penerima_dana,
                                 A.pic,
-                                    A.no_mi,
-                                    A.no_po,
-                                    A.nilai_po
+                                A.no_mi,
+                                A.no_po,
+                                A.nilai_po
                             FROM (
                                     SELECT
                                     "public".project_project.year_project,
@@ -109,6 +109,18 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                 ) AS A
                             WHERE
                                  A.year_project = :tahun
+                            GROUP BY
+                                A.year_project,
+                                A.project_id,
+                                A.narration,
+                                A.ref,
+                                A.tanggal,
+                                A.ca_id,
+                                A.penerima_dana,
+                                A.pic,
+                                A.no_mi,
+                                A.no_po,
+                                A.nilai_po
                         """
     }
 
