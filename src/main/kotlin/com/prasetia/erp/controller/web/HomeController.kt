@@ -10,4 +10,9 @@ class HomeController{
     fun home(model:Model): String{
         return "home"
     }
+
+    @RequestMapping("/sample")
+    fun sample(model:Model): String{
+        return "sample/index"
+    }
 }
