@@ -11,13 +11,13 @@ function store(name, val) {
       e.preventDefault();
         var currentStyle = $(this).attr('data-theme');
         store('theme', currentStyle);
-        $('#theme').attr({href: 'css/colors/'+currentStyle+'.css'})
+        $('#theme').attr({href: '/themes/material-pro/css/colors/'+currentStyle+'.css'})
     });
 
     var currentTheme =  localStorage.getItem('theme');
     if(currentTheme)
     {
-      $('#theme').attr({href: 'css/colors/'+currentTheme+'.css'});
+      $('#theme').attr({href: '/themes/material-pro/css/colors/'+currentTheme+'.css'});
     }
     // color selector
     $('#themecolors').on('click', 'a', function(){
