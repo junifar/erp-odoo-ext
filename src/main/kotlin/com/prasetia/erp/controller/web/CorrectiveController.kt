@@ -25,6 +25,16 @@ class CorrectiveController{
         return "corrective/index"
     }
 
+    @RequestMapping("/corrective1")
+    fun indexCorrective1(model: Model): String{
+        val objectMapper = ObjectMapper()
+        val url = URL(BASE_URL + "api/corrective_summary")
+        val correctiveSummaryDataList: List<CorrectiveCustomerSummaryData> = objectMapper.readValue(url)
+        model.addAttribute("correctiveSummaryDataList", correctiveSummaryDataList)
+        return "corrective/index2"
+    }
+
+
     @RequestMapping("/corrective/xls/{tahun}")
     fun downloadCorrective(model: Model, response:HttpServletResponse, @PathVariable("tahun") tahun:String){
         response.contentType = "application/vnd.ms-excel"
