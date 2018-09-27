@@ -4,6 +4,7 @@ import com.prasetia.erp.pojo.corrective.CorrectiveYearData
 import org.apache.poi.hssf.usermodel.*
 import org.apache.poi.hssf.util.HSSFColor
 import org.apache.poi.ss.usermodel.BorderStyle
+import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.HorizontalAlignment
 
@@ -224,8 +225,13 @@ class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<Corre
                     cash_advance->
                     content = sheet.createRow(numRow++)
                     val cell110 = content.createCell(10)
+                    val cell13 = content.createCell(13)
                     val cell17 = content.createCell(17)
                     val cell19 = content.createCell(19)
+                    val cell20 = content.createCell(20)
+                    cell20.setCellType(CellType.FORMULA)
+                    val cell21 = content.createCell(21)
+                    cell20.setCellType(CellType.FORMULA)
                     content.createCell(0).setCellValue(numRec++)
                     content.getCell(0).setCellStyle(styleTableContent)
                     content.createCell(1).setCellValue(cash_advance.narration)
@@ -248,14 +254,14 @@ class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<Corre
                     content.getCell(9).setCellStyle(styleTableContentNumber)
 //                    content.createCell(10).setCellValue(0.00)
 //                    content.getCell(10).setCellStyle(styleTableContentNumber)
-                    cash_advance.amount?.toDouble()?.let {cell110.setCellValue(it)}
+                    cash_advance.amount.toDouble().let {cell110.setCellValue(it)}
                     content.getCell(10).setCellStyle(styleTableContentNumber)
                     content.createCell(11).setCellValue(projects.site_name)
                     content.getCell(11).setCellStyle(styleTableContent)
                     content.createCell(12).setCellValue(cash_advance.no_mi)
                     content.getCell(12).setCellStyle(styleTableContent)
-                    content.createCell(13).setCellValue("-")
-                    content.getCell(13).setCellStyle(styleTableContent)
+                    cash_advance.amount.toDouble().let {cell13.setCellValue(it)}
+                    content.getCell(13).setCellStyle(styleTableContentNumber)
                     content.createCell(14).setCellValue("-")
                     content.getCell(14).setCellStyle(styleTableContent)
                     content.createCell(15).setCellValue(projects.customer)
@@ -276,6 +282,10 @@ class SheetCorrectiveYear(workbook: HSSFWorkbook, tahun: String, data:List<Corre
                     content.getCell(18).setCellStyle(styleTableContent)
                     nilaiInvoice.toDouble().let {cell19.setCellValue(it)}
                     content.getCell(19).setCellStyle(styleTableContentNumber)
+                    cell20.cellFormula = "T$numRow-N$numRow"
+                    content.getCell(20).setCellStyle(styleTableContentNumber)
+                    cell21.cellFormula = "U$numRow/N$numRow"
+                    content.getCell(21).setCellStyle(styleTableContentPercent)
                     content.createCell(22).setCellValue(invoiceState)
                     content.getCell(22).setCellStyle(styleTableContent)
                 }
