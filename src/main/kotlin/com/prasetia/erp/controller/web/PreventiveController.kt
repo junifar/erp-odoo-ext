@@ -1768,6 +1768,16 @@ class PreventiveController{
         return "preventive/index"
     }
 
+    @RequestMapping("/preventive2")
+    fun indexPreventive2(model:Model): String{
+        val objectMapper = ObjectMapper()
+        val url = URL(BASE_URL + "api/preventive_customer")
+        val preventiveDataList: List<PreventiveCustomerYear> = objectMapper.readValue(url)
+        model.addAttribute("total", getTotalPreventiveCustomer(preventiveDataList))
+        model.addAttribute("preventiveDataList", preventiveDataList)
+        return "preventive/index2"
+    }
+
     fun getTotalPO(data:List<PreventiveCustomerDetailHeader>, month:String):Long{
         var total:Long = 0
         data.forEach {

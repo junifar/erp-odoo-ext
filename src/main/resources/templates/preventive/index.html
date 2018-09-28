@@ -33,7 +33,7 @@
                                         <tbody>
                                         <span th:each="dataRow : ${preventiveDataList}">
                                         <tr>
-                                            <td colspan="811"><h6 th:text="${'Periode : ' + dataRow.tahun}" ></h6></td>
+                                            <td colspan="11"><h6 th:text="${'Periode : ' + dataRow.tahun}" ></h6></td>
                                         </tr>
                                         <span th:each="dataRowDetail : ${dataRow.detail}">
                                         <span th:each="dataRowSubDetail : ${dataRowDetail.detail}">
