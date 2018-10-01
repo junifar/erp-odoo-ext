@@ -14,7 +14,8 @@ interface CorrectiveAdvanceInvoiceRepository:CrudRepository<CorrectiveAdvanceInv
                             Sum("public".account_invoice_line.price_subtotal) AS nilai_invoice,
                             string_agg("public".account_invoice."state", ';') AS invoice_state,
                             string_agg("public".account_invoice."number", '; ') AS no_inv,
-                            "public".project_project.year_project
+                            --"public".project_project.year_project
+                            EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) AS year_project
                             FROM
                             "public".sale_order_line
                             LEFT JOIN "public".sale_order ON "public".sale_order_line.order_id = "public".sale_order."id"
@@ -26,14 +27,16 @@ interface CorrectiveAdvanceInvoiceRepository:CrudRepository<CorrectiveAdvanceInv
                             "public".sale_order."state" NOT IN ('draft', 'cancel') AND
                             "public".account_invoice."state" NOT IN ('draft', 'cancel') AND
                             "public".project_project.site_type_id = 8 AND
-                            "public".project_project.year_project = :tahun
+                            --"public".project_project.year_project = :tahun
+                            EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) = :tahun
                             GROUP BY
                             "public".sale_order_line.project_id,
-                            "public".project_project.year_project
+                            --"public".project_project.year_project
+                            EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas)
                             """
     }
 
     @Async
     @Query(QUERY, nativeQuery = true)
-    fun getCorrectiveAdvanceInvoice(@PathParam("tahun") tahun:String): Iterable<CorrectiveAdvanceInvoice>
+    fun getCorrectiveAdvanceInvoice(@PathParam("tahun") tahun:Long): Iterable<CorrectiveAdvanceInvoice>
 }

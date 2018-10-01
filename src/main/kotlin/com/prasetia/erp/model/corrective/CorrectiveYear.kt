@@ -10,7 +10,7 @@ class CorrectiveYear(
         val customer_id:Long,
         val code:String,
         val jumlah_site: Long?,
-        val year_project: Long?,
+        val year_project: String?,
         val nilai_po: Long?,
         val nilai_inv: Long?,
         val realisasi_budget: Long?,
@@ -18,5 +18,5 @@ class CorrectiveYear(
         val profit:Long?,
         val profit_percentage:Float?
 ){
-    constructor(): this(0,  0, "",0, 0, 0, 0, 0, 0f,0,0f)
+    constructor(): this(0,  0, "",0, "", 0, 0, 0, 0f,0,0f)
 }

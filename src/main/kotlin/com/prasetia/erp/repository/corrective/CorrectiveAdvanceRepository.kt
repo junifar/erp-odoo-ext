@@ -27,7 +27,8 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                 A.nilai_po
                             FROM (
                                     SELECT
-                                    "public".project_project.year_project,
+                                    --"public".project_project.year_project,
+                                    EXTRACT (YEAR FROM "public".project_project.tanggal_surat_tugas) AS year_project,
                                     "public".budget_plan.project_id,
                                     Sum("public".cash_advance_line.price_unit * "public".cash_advance_line.quantity) AS amount,
                                     string_agg("public".cash_advance_line."name", '; ') AS narration,
@@ -59,7 +60,7 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                     "public".cash_advance_line.budget_item_id,
                                     "public".cash_advance."number",
                                     "public".budget_plan.project_id,
-                                    "public".project_project.year_project,
+                                    EXTRACT (YEAR FROM "public".project_project.tanggal_surat_tugas),
                                     "public".cash_advance."date",
                                     "public".cash_advance."id",
                                     "public".hr_employee.name_related,
@@ -67,7 +68,8 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                             "public".sale_memo_internal."name"
                                     UNION
                                     SELECT
-                                        "public".project_project.year_project,
+                                        --"public".project_project.year_project,
+                                        EXTRACT (YEAR FROM "public".project_project.tanggal_surat_tugas) AS year_project,
                                         "public".budget_plan.project_id,
                                         Sum("public".cash_settlement_line.price_unit * "public".cash_settlement_line.quantity) AS amount,
                                         string_agg("public".cash_settlement_line."name", '; ') AS narration,
@@ -100,7 +102,8 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
                                         "public".cash_settlement_line.budget_item_id,
                                         "public".cash_advance."number",
                                         "public".budget_plan.project_id,
-                                        "public".project_project.year_project,
+                                        --"public".project_project.year_project,
+                                        EXTRACT (YEAR FROM "public".project_project.tanggal_surat_tugas),
                                         "public".cash_advance."date",
                                         "public".cash_advance."id",
                                         "public".hr_employee.name_related,
@@ -126,5 +129,5 @@ interface CorrectiveAdvanceRepository:CrudRepository<CorrectiveAdvance, Long>{
 
     @Async
     @Query(QUERY, nativeQuery = true)
-    fun getCorrectiveAdvance(@PathParam("tahun") tahun:String): Iterable<CorrectiveAdvance>
+    fun getCorrectiveAdvance(@PathParam("tahun") tahun:Long): Iterable<CorrectiveAdvance>
 }

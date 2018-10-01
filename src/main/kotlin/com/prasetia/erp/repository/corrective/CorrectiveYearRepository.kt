@@ -16,7 +16,8 @@ interface CorrectiveYearRepository:CrudRepository<CorrectiveYear, Long>{
                                 "public".res_partner."id" AS customer_id,
                                 "public".res_partner.code,
                                 Count("public".project_project."id") AS jumlah_site,
-                                "public".project_project.year_project,
+                                --"public".project_project.year_project,
+                                EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) as year_project,
                                 Sum(A.nilai_po) AS nilai_po,
                                 Sum(B.nilai_inv) AS nilai_inv,
                                 round(Sum(B.nilai_inv)/Sum(A.nilai_po),2) AS percentage,
@@ -136,11 +137,11 @@ interface CorrectiveYearRepository:CrudRepository<CorrectiveYear, Long>{
                             WHERE
                                 "public".project_project.site_type_id = 8 AND
                                 "public".project_site.customer_id IS NOT NULL AND
-                                    "public".project_project.year_project = :tahun
+                                EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) = :tahun
                             GROUP BY
                                 "public".res_partner."id",
                                 "public".res_partner.code,
-                                "public".project_project.year_project
+                                EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas)
                             ORDER BY
                                 "public".res_partner."id" ASC
                             """
@@ -148,5 +149,5 @@ interface CorrectiveYearRepository:CrudRepository<CorrectiveYear, Long>{
 
     @Async
     @Query(QUERY, nativeQuery = true)
-    fun getCorrectiveYear(@PathParam("tahun") tahun: String): Iterable<CorrectiveYear>
+    fun getCorrectiveYear(@PathParam("tahun") tahun: Long): Iterable<CorrectiveYear>
 }

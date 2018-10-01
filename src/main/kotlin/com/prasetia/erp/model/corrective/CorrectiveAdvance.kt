@@ -14,7 +14,7 @@ class CorrectiveAdvance(
         val narration:String,
         val ref:String,
         val pic:String,
-        val penerima_dana:String,
+        val penerima_dana:String?,
         val tanggal: Date?,
         val ca_id: Long,
         val no_mi: String?,

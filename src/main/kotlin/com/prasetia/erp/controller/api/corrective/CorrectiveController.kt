@@ -97,7 +97,7 @@ class CorrectiveController{
     }
 
     @RequestMapping("/api/corrective_year/{tahun}")
-    fun getDetailData(@PathVariable("tahun") tahun:String): MutableList<CorrectiveYearData> {
+    fun getDetailData(@PathVariable("tahun") tahun:Long): MutableList<CorrectiveYearData> {
         val data = repositoryCorrectiveYear.getCorrectiveYear(tahun)
         correctiveProjectDataRepository = repositoryCorrectiveProject.getCorrectiveProject(tahun)
         correctiveBudgetUsedDataRepository = repositoryCorrectiveBudgetUsed.getCorrectiveBudgetUsed(tahun)
@@ -107,7 +107,7 @@ class CorrectiveController{
         data.forEach {
             correctiveYearData.add((CorrectiveYearData(it.id, it.customer_id, it.code, it.jumlah_site, it.year_project,
                     it.nilai_po, it.nilai_inv, it.realisasi_budget, it.percentage,
-                    it.profit, it.profit_percentage, getCorrectiveProject(tahun, it.code))))
+                    it.profit, it.profit_percentage, getCorrectiveProject(tahun.toString(), it.code))))
         }
         return correctiveYearData
     }

@@ -8,13 +8,13 @@ import javax.persistence.Id
 class CorrectiveBudgetUsed(
         @Id
         val id:Long,
-        val year_project:String,
+        val year_project:String?,
         val project_id:Long,
         val amount:Long,
-        val narration:String,
-        val ref:String,
-        val pic:String,
-        val penerima_dana:String,
+        val narration:String?,
+        val ref:String?,
+        val pic:String?,
+        val penerima_dana:String?,
         val tanggal:Date?
 
 ){

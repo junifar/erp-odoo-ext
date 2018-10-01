@@ -9,7 +9,7 @@ class CorrectiveYearData(
         val customer_id:Long,
         val code:String,
         val jumlah_site: Long?,
-        val year_project: Long?,
+        val year_project: String?,
         val nilai_po: Long?,
         val nilai_inv: Long?,
         val realisasi_budget: Long?,
@@ -18,7 +18,7 @@ class CorrectiveYearData(
         val profit_precentage: Float?,
         var projects : MutableList<CorrectiveProjectData>?
 ){
-    constructor(): this(0,  0, "",0, 0, 0, 0, 0,
+    constructor(): this(0,  0, "",0, "", 0, 0, 0,
             0f,0,0f, null)
 }
 
@@ -37,13 +37,13 @@ class CorrectiveProjectData(
 class CorrectiveBudgetUsedData(
         @Id
         val id:Long,
-        val year_project:String,
+        val year_project:String?,
         val project_id:Long,
         val amount:Long,
-        val narration:String,
-        val ref:String,
-        val pic:String,
-        val penerima_dana:String,
+        val narration:String?,
+        val ref:String?,
+        val pic:String?,
+        val penerima_dana:String?,
         val tanggal: Date?
 ){
     constructor(): this(0, "", 0, 0, "","", "", "", null)
@@ -58,7 +58,7 @@ class CorrectiveAdvanceData(
         val narration:String?,
         val ref:String,
         val pic:String,
-        val penerima_dana:String,
+        val penerima_dana:String?,
         val tanggal: Date?,
         val ca_id: Long,
         val no_mi: String?,

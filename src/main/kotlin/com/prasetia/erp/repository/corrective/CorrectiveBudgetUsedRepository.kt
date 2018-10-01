@@ -13,7 +13,8 @@ interface CorrectiveBudgetUsedRepository:CrudRepository<CorrectiveBudgetUsed, Lo
         const val QUERY = """
                         SELECT
                         ROW_NUMBER() OVER (ORDER BY "public".budget_plan.project_id) AS id,
-                        "public".project_project.year_project,
+                        --"public".project_project.year_project,
+                        EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) AS year_project,
                         "public".budget_plan.project_id,
                         "public".account_move_line.debit - "public".account_move_line.credit AS amount,
                         "public".account_move.narration,
@@ -40,11 +41,12 @@ interface CorrectiveBudgetUsedRepository:CrudRepository<CorrectiveBudgetUsed, Lo
                         "public".settlement_move_rel.settlement_id IS NULL AND
                         "public".account_move_line."id" IS NOT NULL AND
                         "public".budget_plan.project_id IS NOT NULL AND
-                        "public".project_project.year_project = :tahun
+                        EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) = :tahun
+                        --"public".project_project.year_project = :tahun
                     """
     }
 
     @Async
     @Query(QUERY, nativeQuery = true)
-    fun getCorrectiveBudgetUsed(@PathParam("tahun") tahun:String):Iterable<CorrectiveBudgetUsed>
+    fun getCorrectiveBudgetUsed(@PathParam("tahun") tahun:Long):Iterable<CorrectiveBudgetUsed>
 }

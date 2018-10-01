@@ -12,9 +12,11 @@ interface CorrectiveSummaryRepository:CrudRepository<CorrectiveSummary, Long>{
 
         const val QUERY = """
                             SELECT
-                            ROW_NUMBER() OVER (ORDER BY "public".project_project.year_project) AS id,
+                            --ROW_NUMBER() OVER (ORDER BY "public".project_project.year_project) AS id,
+                            ROW_NUMBER() OVER (ORDER BY EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas)) AS id,
                             Count("public".project_project."id") AS jumlah_site,
-                            "public".project_project.year_project,
+                            --"public".project_project.year_project,
+                            EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) AS year_project,
                             Sum(A.nilai_po) AS nilai_po,
                             Sum(B.nilai_inv) AS nilai_inv,
                             round(Sum(B.nilai_inv)/Sum(A.nilai_po),2) AS percentage,
@@ -135,8 +137,8 @@ interface CorrectiveSummaryRepository:CrudRepository<CorrectiveSummary, Long>{
                             "public".project_project.site_type_id = 8 AND
                             "public".project_site.customer_id IS NOT NULL
                             GROUP BY
-                            "public".project_project.year_project
-
+                            EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas)
+                            --"public".project_project.year_project
                         """
 
         const val QUERY_OLD = """

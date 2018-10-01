@@ -13,7 +13,8 @@ interface CorrectiveProjectRepository:CrudRepository<CorrectiveProject, Long>{
         const val QUERY = """
                         SELECT
                         "public".project_project."id",
-                        "public".project_project.year_project,
+                        --"public".project_project.year_project,
+                        EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) as year_project,
                         "public".project_site."name" AS site_name,
                         "public".res_partner.code AS customer
                         FROM
@@ -22,11 +23,11 @@ interface CorrectiveProjectRepository:CrudRepository<CorrectiveProject, Long>{
                         LEFT JOIN "public".res_partner ON "public".project_site.customer_id = "public".res_partner."id"
                         WHERE
                         "public".project_project.site_type_id = 8 AND
-                        "public".project_project.year_project = :tahun
+                        EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) = :tahun
                         """
     }
 
     @Async
     @Query(QUERY, nativeQuery = true)
-    fun getCorrectiveProject(@PathParam("tahun") tahun:String):Iterable<CorrectiveProject>
+    fun getCorrectiveProject(@PathParam("tahun") tahun:Long):Iterable<CorrectiveProject>
 }
