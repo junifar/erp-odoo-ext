@@ -30,46 +30,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="small">2018</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
+                                            <tr th:each="dataRow: ${cmeSummaryYearDataList}">
+                                                <td class="small" th:text="${dataRow.year_project}">2018</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.jumlah_site, 1, 'POINT', 2, 'COMMA')}">999</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.site_cancel, 1, 'POINT', 2, 'COMMA')}">999</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.estimate_po, 1, 'POINT', 2, 'COMMA')}">999</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.nilai_po, 1, 'POINT', 2, 'COMMA')}">999</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.nilai_invoice, 1, 'POINT', 2, 'COMMA')}">999</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.nilai_budget, 1, 'POINT', 2, 'COMMA')}">999</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.realisasi_budget, 1, 'POINT', 2, 'COMMA')}">999</td>
+                                                <td class="text-right small" th:text="${#numbers.formatDecimal(dataRow.profit_loss, 1, 'POINT', 2, 'COMMA')}">999</td>
                                                 <td class="text-right small">
-                                                    <a href="#">Download</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small">2017</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">
-                                                    <a href="#">Download</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="small">2016</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">999</td>
-                                                <td class="text-right small">
-                                                    <a href="#">Download</a>
+                                                    <a href="#">Detail</a>
                                                 </td>
                                             </tr>
                                         </tbody>
