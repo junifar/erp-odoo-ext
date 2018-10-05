@@ -19,7 +19,8 @@ interface CmeSummaryYearProjectTypeRepository:CrudRepository<CmeSummaryYearProje
                             COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE B.nilai_invoice END), 0) AS nilai_invoice,
                             COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE C.nilai_budget END), 0) AS nilai_budget,
                             COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE D.realisasi_budget END), 0) AS realisasi_budget,
-                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE E.estimate_po END), 0) AS estimate_po
+                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE E.estimate_po END), 0) AS estimate_po,
+                            "public".project_project.site_type_id
                             FROM
                             "public".project_project
                             LEFT JOIN (
@@ -155,7 +156,8 @@ interface CmeSummaryYearProjectTypeRepository:CrudRepository<CmeSummaryYearProje
                             EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas) = :tahun
                             GROUP BY
                             EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas),
-                            "public".project_site_type."name"
+                            "public".project_site_type."name",
+                            "public".project_project.site_type_id
                             ORDER BY
                             EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas) DESC
                             """

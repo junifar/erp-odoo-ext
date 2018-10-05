@@ -14,6 +14,7 @@ class CmeSummaryYearProjectTypeData(
         val nilai_budget: Long,
         val realisasi_budget: Long,
         val estimate_po: Long,
+        val site_type_id: Long?,
         val percentage: Float,
         val remaining_invoice: Long,
         val percentage_realization: Float,
@@ -22,6 +23,6 @@ class CmeSummaryYearProjectTypeData(
         val percentage_profit_po: Float
 ){
     constructor(): this(0,0,0, "",0,0,0,0,
-            0, 0, 0f, 0, 0f, 0,
+            0, 0, 0, 0f, 0, 0f, 0,
             0f, 0f)
 }

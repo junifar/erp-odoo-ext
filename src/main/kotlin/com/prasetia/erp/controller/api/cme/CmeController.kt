@@ -50,7 +50,7 @@ class CmeController{
             val percentageProfitPO = if(it.nilai_po == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.nilai_po)
 
             cmeSummaryYearProjectTypeData.add(CmeSummaryYearProjectTypeData(it.id, it.year_project, it.jumlah_site, it.project_type, it.site_cancel,
-                    it.nilai_po, it.nilai_invoice, it.nilai_budget, it.realisasi_budget, it.estimate_po, percentage, remainingInvoice,
+                    it.nilai_po, it.nilai_invoice, it.nilai_budget, it.realisasi_budget, it.estimate_po, it.site_type_id, percentage, remainingInvoice,
                     percentageRealization, profitLoss, percentageProfitRealization, percentageProfitPO))
         }
         return cmeSummaryYearProjectTypeData
