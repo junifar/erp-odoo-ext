@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.prasetia.erp.constant.GlobalConstant
 import com.prasetia.erp.pojo.cme.CmeSummaryYearData
+import com.prasetia.erp.pojo.cme.CmeSummaryYearProjectTypeData
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import java.net.URL
 
@@ -19,5 +21,15 @@ class CmeController{
         val cmeSummaryYearDataList: List<CmeSummaryYearData> = objectMapper.readValue(url)
         model.addAttribute("cmeSummaryYearDataList", cmeSummaryYearDataList)
         return "project/index"
+    }
+
+    @RequestMapping("/project/{tahun}")
+    fun yearCME(model: Model, @PathVariable("tahun") tahun: String): String{
+        val objectMapper = ObjectMapper()
+        val url = URL(GlobalConstant.BASE_URL + "api/project_summary_year/$tahun")
+        val cmeSummaryYearProjectTypeDataList: List<CmeSummaryYearProjectTypeData> = objectMapper.readValue(url)
+        model.addAttribute("cmeSummaryYearProjectTypeDataList", cmeSummaryYearProjectTypeDataList)
+        model.addAttribute("year_project", tahun)
+        return "project/project_by_year"
     }
 }
