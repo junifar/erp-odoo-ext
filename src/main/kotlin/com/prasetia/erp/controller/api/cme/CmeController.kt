@@ -1,8 +1,11 @@
 package com.prasetia.erp.controller.api.cme
 
+import com.prasetia.erp.model.cme.CmeProjectDetail
 import com.prasetia.erp.pojo.cme.CmeSummaryYearData
 import com.prasetia.erp.pojo.cme.CmeSummaryYearProjectTypeCustData
 import com.prasetia.erp.pojo.cme.CmeSummaryYearProjectTypeData
+import com.prasetia.erp.pojo.cme.CmeYearProjectTypeCustProjectDetailData
+import com.prasetia.erp.repository.cme.CmeProjectDetailRepository
 import com.prasetia.erp.repository.cme.CmeSummaryYearProjectTypeCustRepository
 import com.prasetia.erp.repository.cme.CmeSummaryYearProjectTypeRepository
 import com.prasetia.erp.repository.cme.CmeSummaryYearRepository
@@ -22,6 +25,11 @@ class CmeController{
 
     @Autowired
     lateinit var repositoryCmeSummaryYearProjectTypeCust: CmeSummaryYearProjectTypeCustRepository
+
+    @Autowired
+    lateinit var repositoryCmeProjectDetail: CmeProjectDetailRepository
+
+    lateinit var cmeProjectDetailDataRepository: Iterable<CmeProjectDetail>
 
     @RequestMapping("/api/project_summary_year")
     fun getSummaryCmeByYear():MutableList<CmeSummaryYearData>{
@@ -65,6 +73,9 @@ class CmeController{
     fun getSummaryCmeByYearProjectTypeCust(@PathVariable("tahun") tahun:Long, @PathVariable("site_type_id") site_type_id: Long): MutableList<CmeSummaryYearProjectTypeCustData>{
         val data = repositoryCmeSummaryYearProjectTypeCust.getCmeSummaryYearProjectTypeCust(tahun, site_type_id)
         val cmeSummaryYearProjectTypeCustData:MutableList<CmeSummaryYearProjectTypeCustData> = mutableListOf()
+
+        cmeProjectDetailDataRepository = repositoryCmeProjectDetail.getCmeProjectDetailRepository(tahun, site_type_id)
+
         data.forEach {
             val percentage= if (it.nilai_po == 0.toLong()) 0.toFloat() else it.nilai_invoice.toFloat().div(it.nilai_po.toFloat())
             val remainingInvoice = it.nilai_po - it.nilai_invoice
@@ -75,8 +86,20 @@ class CmeController{
             cmeSummaryYearProjectTypeCustData.add(CmeSummaryYearProjectTypeCustData(it.id, it.year_project, it.jumlah_site, it.project_type,
                     it.site_cancel, it.nilai_po, it.nilai_invoice, it.nilai_budget, it.realisasi_budget, it.estimate_po,
                     it.site_type_id, it.customer, it.customer_id, percentage, remainingInvoice, percentageRealization,
-                    profitLoss, percentageProfitRealization, percentageProfitPO))
+                    profitLoss, percentageProfitRealization, percentageProfitPO, getCmeProjectDetail(tahun, site_type_id, it.customer_id)))
         }
         return cmeSummaryYearProjectTypeCustData
+    }
+
+    fun getCmeProjectDetail(tahun:Long, site_type_id: Long, customer_id: Long?): MutableList<CmeYearProjectTypeCustProjectDetailData>{
+        val data = cmeProjectDetailDataRepository
+        val cmeYearProjectTypeCustProjectDetailData: MutableList<CmeYearProjectTypeCustProjectDetailData> = mutableListOf()
+        data.forEach {
+            if((it.year_project == tahun) and (it.site_type_id == site_type_id) and (it.customer_id == customer_id))
+                cmeYearProjectTypeCustProjectDetailData.add(CmeYearProjectTypeCustProjectDetailData(it.id,
+                        it.name, it.year_project, it.project_type, it.project_id, it.nilai_po, it.no_po, it.nilai_invoice,
+                        it.nilai_budget, it.realisasi_budget, it.estimate_po, it.customer, it.customer_id, it.site_type_id))
+        }
+        return cmeYearProjectTypeCustProjectDetailData
     }
 }

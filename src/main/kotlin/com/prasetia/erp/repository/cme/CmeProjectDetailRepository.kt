@@ -1,6 +1,6 @@
 package com.prasetia.erp.repository.cme
 
-import com.prasetia.erp.model.cme.CmeSummaryYearProjectTypeCust
+import com.prasetia.erp.model.cme.CmeProjectDetail
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.scheduling.annotation.Async
@@ -8,29 +8,31 @@ import org.springframework.stereotype.Repository
 import javax.websocket.server.PathParam
 
 @Repository
-interface CmeSummaryYearProjectTypeCustRepository:CrudRepository<CmeSummaryYearProjectTypeCust, Long>{
+interface CmeProjectDetailRepository:CrudRepository<CmeProjectDetail, Long>{
     companion object {
         const val QUERY = """
                             SELECT
-                            ROW_NUMBER() OVER (ORDER BY EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas)) AS id,
+                            "public".project_project."id",
+                            "public".project_site."name",
                             EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas) AS year_project,
-                            Count("public".project_project."id") AS jumlah_site,
                             "public".project_site_type."name" AS project_type,
-                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 1 ELSE 0 END), 0) AS site_cancel,
-                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE A.nilai_po END), 0) AS nilai_po,
-                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE B.nilai_invoice END), 0) AS nilai_invoice,
-                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE C.nilai_budget END), 0) AS nilai_budget,
-                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE D.realisasi_budget END), 0) AS realisasi_budget,
-                            COALESCE(Sum(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE E.estimate_po END), 0) AS estimate_po,
-                            "public".project_project.site_type_id,
+                            "public".account_analytic_account."name" AS project_id,
+                            COALESCE(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE A.nilai_po END, 0) AS nilai_po,
+                            CASE WHEN "public".project_project."state" = 'cancelled' THEN '' ELSE A.no_po END AS no_po,
+                            COALESCE(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE B.nilai_invoice END, 0) AS nilai_invoice,
+                            COALESCE(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE C.nilai_budget END, 0) AS nilai_budget,
+                            COALESCE(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE D.realisasi_budget END, 0) AS realisasi_budget,
+                            COALESCE(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE E.estimate_po END, 0) AS estimate_po,
                             "public".res_partner.code AS customer,
-                            "public".project_site.customer_id
+                            "public".project_site.customer_id,
+                            "public".project_project.site_type_id
                             FROM
                             "public".project_project
                             LEFT JOIN (
                                             SELECT DISTINCT
                                             "public".sale_order_line.project_id,
-                                            Sum("public".sale_order_line.price_unit * "public".sale_order_line.product_uom_qty) AS nilai_po
+                                            Sum("public".sale_order_line.price_unit * "public".sale_order_line.product_uom_qty) AS nilai_po,
+                                                            String_agg("public".sale_order.client_order_ref, '; ') AS no_po
                                             FROM
                                             "public".sale_order_line
                                             LEFT JOIN "public".sale_order ON "public".sale_order_line.order_id = "public".sale_order."id"
@@ -155,25 +157,19 @@ interface CmeSummaryYearProjectTypeCustRepository:CrudRepository<CmeSummaryYearP
                             LEFT JOIN "public".project_site_type ON "public".project_project.site_type_id = "public".project_site_type."id"
                             LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
                             LEFT JOIN "public".res_partner ON "public".project_site.customer_id = "public".res_partner."id"
+                            LEFT JOIN "public".account_analytic_account ON "public".project_project.analytic_account_id = "public".account_analytic_account."id"
                             WHERE
                             "public".project_project.site_type_id IN (1, 2, 61, 5, 6, 3) AND
                             "public".project_project."state" NOT IN ('draft', 'cancelled') AND
                             "public".project_project.tanggal_surat_tugas IS NOT NULL AND
                             EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas) = :tahun AND
                             "public".project_site_type."id" = :site_type_id
-                            GROUP BY
-                            EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas),
-                            "public".project_site_type."name",
-                            "public".project_project.site_type_id,
-                            "public".res_partner.code,
-                            "public".project_site.customer_id
                             ORDER BY
                             EXTRACT( YEAR FROM "public".project_project.tanggal_surat_tugas) DESC
-
                         """
     }
 
     @Async
     @Query(QUERY, nativeQuery = true)
-    fun getCmeSummaryYearProjectTypeCust(@PathParam("tahun") tahun:Long, @PathParam("site_type_id") site_type_id: Long):Iterable<CmeSummaryYearProjectTypeCust>
+    fun getCmeProjectDetailRepository(@PathParam("tahun") tahun:Long, @PathParam("site_type_id") site_type_id: Long):Iterable<CmeProjectDetail>
 }

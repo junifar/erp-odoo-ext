@@ -22,9 +22,29 @@ class CmeSummaryYearProjectTypeCustData(
         val percentage_realization: Float,
         val profit_loss: Long,
         val percentage_profit_realization: Float,
-        val percentage_profit_po: Float
+        val percentage_profit_po: Float,
+        var project_list: List<CmeYearProjectTypeCustProjectDetailData>?
 ){
     constructor(): this(0,0,0,"",0,0,0,0,
             0,0, 0, "", 0, 0f, 0,
-            0f, 0, 0f, 0f)
+            0f, 0, 0f, 0f, null)
+}
+class CmeYearProjectTypeCustProjectDetailData(@Id
+                                              val id: Long,
+                                              val name:String,
+                                              val year_project: Long,
+                                              val project_type: String,
+                                              val project_id: String,
+                                              val nilai_po: Long,
+                                              val no_po: String?,
+                                              val nilai_invoice: Long,
+                                              val nilai_budget: Long,
+                                              val realisasi_budget: Long,
+                                              val estimate_po: Long,
+                                              val customer:String?,
+                                              val customer_id:Long?,
+                                              val site_type_id: Long?
+){
+    constructor(): this(0,"",0,"","",0,"",
+            0,0,0,0,"", 0, 0)
 }
