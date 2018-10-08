@@ -4,8 +4,10 @@ import com.prasetia.erp.model.cme.CmeSummaryYearProjectType
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.scheduling.annotation.Async
+import org.springframework.stereotype.Repository
 import javax.websocket.server.PathParam
 
+@Repository
 interface CmeSummaryYearProjectTypeRepository:CrudRepository<CmeSummaryYearProjectType, Long>{
     companion object {
         const val QUERY = """
