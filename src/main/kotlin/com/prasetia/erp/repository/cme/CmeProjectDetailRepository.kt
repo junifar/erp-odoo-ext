@@ -25,7 +25,8 @@ interface CmeProjectDetailRepository:CrudRepository<CmeProjectDetail, Long>{
                             COALESCE(CASE WHEN "public".project_project."state" = 'cancelled' THEN 0 ELSE E.estimate_po END, 0) AS estimate_po,
                             "public".res_partner.code AS customer,
                             "public".project_site.customer_id,
-                            "public".project_project.site_type_id
+                            "public".project_project.site_type_id,
+                            "public".project_area.name AS area
                             FROM
                             "public".project_project
                             LEFT JOIN (
@@ -158,6 +159,7 @@ interface CmeProjectDetailRepository:CrudRepository<CmeProjectDetail, Long>{
                             LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
                             LEFT JOIN "public".res_partner ON "public".project_site.customer_id = "public".res_partner."id"
                             LEFT JOIN "public".account_analytic_account ON "public".project_project.analytic_account_id = "public".account_analytic_account."id"
+                            LEFT JOIN "public".project_area ON "public".project_site.area_id = "public".project_area."id"
                             WHERE
                             "public".project_project.site_type_id IN (1, 2, 61, 5, 6, 3) AND
                             "public".project_project."state" NOT IN ('draft', 'cancelled') AND

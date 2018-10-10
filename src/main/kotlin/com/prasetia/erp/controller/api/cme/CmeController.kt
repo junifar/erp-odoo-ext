@@ -98,7 +98,7 @@ class CmeController{
             if((it.year_project == tahun) and (it.site_type_id == site_type_id) and (it.customer_id == customer_id))
                 cmeYearProjectTypeCustProjectDetailData.add(CmeYearProjectTypeCustProjectDetailData(it.id,
                         it.name, it.year_project, it.project_type, it.project_id, it.nilai_po, it.no_po, it.nilai_invoice,
-                        it.nilai_budget, it.realisasi_budget, it.estimate_po, it.customer, it.customer_id, it.site_type_id))
+                        it.nilai_budget, it.realisasi_budget, it.estimate_po, it.customer, it.customer_id, it.site_type_id, it.area))
         }
         return cmeYearProjectTypeCustProjectDetailData
     }

@@ -19,8 +19,9 @@ class CmeProjectDetail(
         val estimate_po: Long,
         val customer:String?,
         val customer_id:Long?,
-        val site_type_id: Long?
+        val site_type_id: Long?,
+        val area: String?
 ){
     constructor(): this(0,"",0,"","",0,"",
-            0,0,0,0,"", 0, 0)
+            0,0,0,0,"", 0, 0, "")
 }

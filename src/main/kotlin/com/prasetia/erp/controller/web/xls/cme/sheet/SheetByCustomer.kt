@@ -4,6 +4,7 @@ import com.prasetia.erp.pojo.cme.CmeYearProjectTypeCustProjectDetailData
 import org.apache.poi.hssf.usermodel.*
 import org.apache.poi.hssf.util.HSSFColor
 import org.apache.poi.ss.usermodel.BorderStyle
+import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.HorizontalAlignment
 
@@ -132,6 +133,15 @@ class SheetByCustomer(workbook: HSSFWorkbook, customer_id:Long, customer:String,
         var rowNumber = 1
         data?.forEach {
             content = sheet.createRow(numRow++)
+            val cell8 = content.createCell(8)
+            val cell9 = content.createCell(9)
+            val cell10 = content.createCell(10)
+            cell10.setCellType(CellType.FORMULA)
+            val cell11 = content.createCell(11)
+            cell11.setCellType(CellType.FORMULA)
+            val cell12 = content.createCell(12)
+            val cell14 = content.createCell(14)
+
             content.createCell(1).setCellValue(rowNumber++.toDouble())
             content.getCell(1).setCellStyle(styleTableContent)
             content.createCell(2).setCellValue(it.name)
@@ -144,6 +154,22 @@ class SheetByCustomer(workbook: HSSFWorkbook, customer_id:Long, customer:String,
             content.getCell(5).setCellStyle(styleTableContent)
             content.createCell(6).setCellValue(it.project_id)
             content.getCell(6).setCellStyle(styleTableContent)
+            content.createCell(7).setCellValue(it.area)
+            content.getCell(7).setCellStyle(styleTableContent)
+            it.estimate_po.toDouble().let { it1-> cell8.setCellValue(it1)}
+            content.getCell(8).setCellStyle(styleTableContentNumber)
+            it.nilai_budget.toDouble().let { it1-> cell9.setCellValue(it1)}
+            content.getCell(9).setCellStyle(styleTableContentNumber)
+            cell10.cellFormula = "I$numRow-J$numRow"
+            content.getCell(10).setCellStyle(styleTableContentNumber)
+            cell11.cellFormula = "K$numRow/i$numRow"
+            content.getCell(11).setCellStyle(styleTableContentPercent)
+            it.realisasi_budget.toDouble().let { it1-> cell12.setCellValue(it1)}
+            content.getCell(12).setCellStyle(styleTableContentNumber)
+            content.createCell(13).setCellValue(it.no_po)
+            content.getCell(13).setCellStyle(styleTableContent)
+            it.nilai_po.toDouble().let { it1-> cell14.setCellValue(it1)}
+            content.getCell(14).setCellStyle(styleTableContentNumber)
         }
     }
 
