@@ -266,7 +266,7 @@ class SheetByCustomer(workbook: HSSFWorkbook, customer_id:Long, customer:String,
         header.getCell(20).setCellStyle(styleTableHeader)
     }
 
-    fun setColWidth(sheet: HSSFSheet): HSSFSheet {
+    private fun setColWidth(sheet: HSSFSheet): HSSFSheet {
         sheet.setColumnWidth(0, 520)
         sheet.setColumnWidth(1, 1300)
         sheet.setColumnWidth(2, 6500)

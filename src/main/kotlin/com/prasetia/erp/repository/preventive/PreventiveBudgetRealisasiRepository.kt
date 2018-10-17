@@ -94,6 +94,7 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                             "public".project_site.tahun IS NOT NULL AND
                             "public".budget_plan."state" NOT IN ('draft', 'cancel') AND
                             "public".budget_plan_line.parent_id IS NOT NULL AND
+                            "public".budget_plan.budget_type_maintenance NOT IN ('stock', 'capex') AND
                             "public".project_site.customer_id = :partner_id AND
                             "public".project_site.area_id  = :area_id AND
                             "public".project_site.tahun = :tahun
@@ -193,6 +194,7 @@ interface PreventiveBudgetRealisasiRepository: CrudRepository<PreventiveRealisas
                             "public".project_site.tahun IS NOT NULL AND
                             "public".budget_plan."state" NOT IN ('draft', 'cancel') AND
                             "public".budget_plan_line.parent_id IS NOT NULL AND
+                            "public".budget_plan.budget_type_maintenance NOT IN ('stock', 'capex') AND
                             "public".project_site.customer_id = :partner_id AND
                             "public".project_site.area_id IS NULL AND
                             "public".project_site.tahun = :tahun

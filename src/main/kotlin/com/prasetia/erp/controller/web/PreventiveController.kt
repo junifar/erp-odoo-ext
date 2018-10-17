@@ -5,6 +5,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.prasetia.erp.constant.GlobalConstant.Companion.BASE_URL
 import com.prasetia.erp.pojo.PreventiveCustomerYear
 import com.prasetia.erp.pojo.preventive.PreventiveCustomerDetailHeader
+import com.prasetia.erp.pojo.preventive.PreventiveInvoice
+import com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice
 import org.apache.poi.hssf.usermodel.*
 import org.apache.poi.hssf.util.HSSFColor
 import org.apache.poi.ss.usermodel.*
@@ -14,6 +16,8 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import java.net.URL
+import java.text.NumberFormat
+import java.util.*
 import javax.servlet.http.HttpServletResponse
 
 @Controller("Preventive Web Controller")
@@ -197,6 +201,62 @@ class PreventiveController{
         return styleTableContentNumber
     }
 
+    fun addComment(sheet: HSSFSheet, cell:HSSFCell, message:String, col:Short, row:Int){
+        val patriachDrawing:HSSFPatriarch = sheet.createDrawingPatriarch()
+        val comment:HSSFComment = patriachDrawing.createComment(HSSFClientAnchor(0,0,0,0,0,5,10,15))
+        comment.string = HSSFRichTextString(message)
+        cell.cellComment = comment
+    }
+
+    fun checkValueNullMessageValue(value:Int, invoice:String, invoice_state:String): String {
+        var retVal = ""
+        val valueString = NumberFormat.getNumberInstance(Locale.US).format(value)
+        if(value >0)
+            retVal = "$invoice - $valueString ($invoice_state);\n"
+        return retVal
+    }
+
+    fun addCommentCell(column:Int,sheet: HSSFSheet, cell:HSSFCell, value:Long?, data:List<PreventiveSaleOrderInvoice>?){
+        if (value != null) {
+            if(value > 0){
+                var messageValue = ""
+                data?.forEach {
+                    if (it.i != null){
+                        messageValue += checkValueNullMessageValue(it.i.toInt(), it.i_val, it.i_state)
+                    }
+                }
+                addComment(sheet, cell, messageValue, 4, 4)
+            }
+
+        }
+    }
+
+    fun addCommentCell(column:Int,sheet: HSSFSheet, cell:HSSFCell, value:Long?, month:Int, data:List<PreventiveSaleOrderInvoice>?){
+        if (value != null) {
+            if(value > 0){
+                var messageValue = ""
+                data?.forEach {
+                    when(month){
+                        1 -> messageValue += it.i?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.i_val, it.i_state) }
+                        2 -> messageValue += it.ii?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.ii_val, it.ii_state) }
+                        3 -> messageValue += it.iii?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.iii_val, it.iii_state) }
+                        4 -> messageValue += it.iv?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.iv_val, it.iv_state) }
+                        5 -> messageValue += it.v?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.v_val, it.v_state) }
+                        6 -> messageValue += it.vi?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.vi_val, it.vi_state) }
+                        7 -> messageValue += it.vii?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.vii_val, it.vii_state) }
+                        8 -> messageValue += it.viii?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.viii_val, it.viii_state) }
+                        9 -> messageValue += it.ix?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.ix_val, it.ix_state) }
+                        10 -> messageValue += it.x?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.x_val, it.x_state) }
+                        11 -> messageValue += it.xi?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.xi_val, it.xi_state) }
+                        12 -> messageValue += it.xii?.toInt()?.let { it1 -> checkValueNullMessageValue(it1, it.xii_val, it.xii_state) }
+                        else -> messageValue += ""
+                    }
+                }
+                addComment(sheet, cell, messageValue, 4, 4)
+            }
+        }
+    }
+
     fun createHeaderPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet, preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
         val styleHeader = styleHeader(workbook)
         val styleTableHeader = styleTableHeader(workbook)
@@ -214,6 +274,10 @@ class PreventiveController{
         var header = sheet.createRow(1)
         header.createCell(1).setCellValue("Tipe Proyek")
         header.getCell(1).setCellStyle(styleHeader)
+//        val cell = header.createCell(1)
+//        cell.setCellValue("Tipe Proyek")
+//        header.getCell(1).setCellStyle(styleHeader)
+//        addComment(sheet, cell)
         header.createCell(2).setCellValue("FLM (First Line Maintenance)")
         header.getCell(2).setCellStyle(styleHeader)
 
@@ -513,6 +577,32 @@ class PreventiveController{
                 val cell25 = content.createCell(25)
                 val cell27 = content.createCell(27)
                 cell27.setCellType(CellType.FORMULA)
+
+//                addCommentCell(3, sheet, cell3, sale_order_items.i, sale_order_items.sale_order_invoice)
+//                addCommentCell(5, sheet, cell5, sale_order_items.ii, sale_order_items.sale_order_invoice)
+//                addCommentCell(7, sheet, cell7, sale_order_items.iii, sale_order_items.sale_order_invoice)
+//                addCommentCell(9, sheet, cell9, sale_order_items.iv, sale_order_items.sale_order_invoice)
+//                addCommentCell(11, sheet, cell11, sale_order_items.v, sale_order_items.sale_order_invoice)
+//                addCommentCell(13, sheet, cell13, sale_order_items.vi, sale_order_items.sale_order_invoice)
+//                addCommentCell(15, sheet, cell15, sale_order_items.vii, sale_order_items.sale_order_invoice)
+//                addCommentCell(17, sheet, cell17, sale_order_items.viii, sale_order_items.sale_order_invoice)
+//                addCommentCell(19, sheet, cell19, sale_order_items.ix, sale_order_items.sale_order_invoice)
+//                addCommentCell(21, sheet, cell21, sale_order_items.x, sale_order_items.sale_order_invoice)
+//                addCommentCell(23, sheet, cell23, sale_order_items.xi, sale_order_items.sale_order_invoice)
+//                addCommentCell(25, sheet, cell25, sale_order_items.xii, sale_order_items.sale_order_invoice)
+
+                addCommentCell(3, sheet, cell3, sale_order_items.i,1, sale_order_items.sale_order_invoice)
+                addCommentCell(5, sheet, cell5, sale_order_items.ii,2, sale_order_items.sale_order_invoice)
+                addCommentCell(7, sheet, cell7, sale_order_items.iii,3, sale_order_items.sale_order_invoice)
+                addCommentCell(9, sheet, cell9, sale_order_items.iv,4, sale_order_items.sale_order_invoice)
+                addCommentCell(11, sheet, cell11, sale_order_items.v,5, sale_order_items.sale_order_invoice)
+                addCommentCell(13, sheet, cell13, sale_order_items.vi,6, sale_order_items.sale_order_invoice)
+                addCommentCell(15, sheet, cell15, sale_order_items.vii,7, sale_order_items.sale_order_invoice)
+                addCommentCell(17, sheet, cell17, sale_order_items.viii,8, sale_order_items.sale_order_invoice)
+                addCommentCell(19, sheet, cell19, sale_order_items.ix,9, sale_order_items.sale_order_invoice)
+                addCommentCell(21, sheet, cell21, sale_order_items.x,10, sale_order_items.sale_order_invoice)
+                addCommentCell(23, sheet, cell23, sale_order_items.xi,11, sale_order_items.sale_order_invoice)
+                addCommentCell(25, sheet, cell25, sale_order_items.xii,12, sale_order_items.sale_order_invoice)
 
                 if(firstRowNum){
                     content.createCell(1).setCellValue("Nilai PO / Bln")
