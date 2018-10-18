@@ -136,8 +136,8 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                                                             (
                                                                             SELECT
                                                                         "public".budget_plan_line."id" AS budget_plan_line_id,
-                                                                        "public".account_move_line.debit AS realisasi_debit,
-                                                                        "public".account_move_line.credit AS realisasi_credit,
+                                                                        sum("public".account_move_line.debit) AS realisasi_debit,
+                                                                        sum("public".account_move_line.credit) AS realisasi_credit,
                                                                         "public".account_move.narration,
                                                                         "public".account_move."ref"
                                                                         FROM
@@ -152,6 +152,10 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                                                         "public".settlement_move_rel.settlement_id IS NULL AND
                                                                         "public".account_move_line.debit IS NOT NULL AND
                                                                         "public".account_move_line.credit IS NOT NULL
+                                                                        GROUP BY
+                                                                        "public".budget_plan_line."id",
+                                                                        "public".account_move.narration,
+                                                                        "public".account_move."ref"
 
                                                                         UNION
 
