@@ -5,7 +5,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.prasetia.erp.constant.GlobalConstant.Companion.BASE_URL
 import com.prasetia.erp.pojo.PreventiveCustomerYear
 import com.prasetia.erp.pojo.preventive.PreventiveCustomerDetailHeader
-import com.prasetia.erp.pojo.preventive.PreventiveInvoice
 import com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice
 import org.apache.poi.hssf.usermodel.*
 import org.apache.poi.hssf.util.HSSFColor
@@ -22,6 +21,11 @@ import javax.servlet.http.HttpServletResponse
 
 @Controller("Preventive Web Controller")
 class PreventiveController{
+
+    class SubTotal(
+            val firstRow:Int,
+            val lastRow:Int
+    )
 
     var numRow:Int = 8
     var numRowTotalNilaiPO = 0
@@ -1057,12 +1061,14 @@ class PreventiveController{
         val firstRow = this.numRow+1
         var content:HSSFRow
 //        var firstRowNum = true
+        var subTotalList: MutableList<SubTotal> = mutableListOf()
 
         preventiveDetailDataList.forEach {
             items->
             items.budget_area?.forEach {
                 budget_area_items->
                 var firstRowNum = true
+                val firstRowLocal = numRowLocal + 1
                 budget_area_items.budget?.forEach {
                     budget_items->
                     content = sheet.createRow(numRowLocal++)
@@ -1156,207 +1162,95 @@ class PreventiveController{
                     content.createCell(28)
                     content.getCell(28).setCellStyle(styleTableContent)
                 }
-            }
-        }
 
-        content = sheet.createRow(numRowLocal)
-        val cell3 = content.createCell(3)
-        val cell5 = content.createCell(5)
-        val cell7 = content.createCell(7)
-        val cell9 = content.createCell(9)
-        val cell11 = content.createCell(11)
-        val cell13 = content.createCell(13)
-        val cell15 = content.createCell(15)
-        val cell17 = content.createCell(17)
-        val cell19 = content.createCell(19)
-        val cell21 = content.createCell(21)
-        val cell23 = content.createCell(23)
-        val cell25 = content.createCell(25)
-        val cell27 = content.createCell(27)
-        cell27.setCellType(CellType.FORMULA)
+                content = sheet.createRow(numRowLocal)
+                val cell3 = content.createCell(3)
+                val cell5 = content.createCell(5)
+                val cell7 = content.createCell(7)
+                val cell9 = content.createCell(9)
+                val cell11 = content.createCell(11)
+                val cell13 = content.createCell(13)
+                val cell15 = content.createCell(15)
+                val cell17 = content.createCell(17)
+                val cell19 = content.createCell(19)
+                val cell21 = content.createCell(21)
+                val cell23 = content.createCell(23)
+                val cell25 = content.createCell(25)
+                val cell27 = content.createCell(27)
+                cell27.setCellType(CellType.FORMULA)
 
-        content.createCell(1).setCellValue("")
-        content.getCell(1).setCellStyle(styleTableHeader)
-        content.createCell(2).setCellValue("Total Budget")
-        content.getCell(2).setCellStyle(styleTableHeader)
-        cell3.cellFormula = "SUM(D$firstRow:D$numRowLocal)"
-        content.getCell(3).setCellStyle(styleTableHeaderNumber)
-        content.createCell(4)
-        content.getCell(4).setCellStyle(styleTableHeaderNumber)
-        cell5.cellFormula = "SUM(F$firstRow:F$numRowLocal)"
-        content.getCell(5).setCellStyle(styleTableHeaderNumber)
-        content.createCell(6)
-        content.getCell(6).setCellStyle(styleTableHeaderNumber)
-        cell7.cellFormula = "SUM(H$firstRow:H$numRowLocal)"
-        content.getCell(7).setCellStyle(styleTableHeaderNumber)
-        content.createCell(8)
-        content.getCell(8).setCellStyle(styleTableHeaderNumber)
-        cell9.cellFormula = "SUM(J$firstRow:J$numRowLocal)"
-        content.getCell(9).setCellStyle(styleTableHeaderNumber)
-        content.createCell(10)
-        content.getCell(10).setCellStyle(styleTableHeaderNumber)
-        cell11.cellFormula = "SUM(L$firstRow:L$numRowLocal)"
-        content.getCell(11).setCellStyle(styleTableHeaderNumber)
-        content.createCell(12)
-        content.getCell(12).setCellStyle(styleTableHeaderNumber)
-        cell13.cellFormula = "SUM(N$firstRow:N$numRowLocal)"
-        content.getCell(13).setCellStyle(styleTableHeaderNumber)
-        content.createCell(14)
-        content.getCell(14).setCellStyle(styleTableHeaderNumber)
-        cell15.cellFormula = "SUM(P$firstRow:P$numRowLocal)"
-        content.getCell(15).setCellStyle(styleTableHeaderNumber)
-        content.createCell(16)
-        content.getCell(16).setCellStyle(styleTableHeaderNumber)
-        cell17.cellFormula = "SUM(R$firstRow:R$numRowLocal)"
-        content.getCell(17).setCellStyle(styleTableHeaderNumber)
-        content.createCell(18)
-        content.getCell(18).setCellStyle(styleTableHeaderNumber)
-        cell19.cellFormula = "SUM(T$firstRow:T$numRowLocal)"
-        content.getCell(19).setCellStyle(styleTableHeaderNumber)
-        content.createCell(20)
-        content.getCell(20).setCellStyle(styleTableHeaderNumber)
-        cell21.cellFormula = "SUM(V$firstRow:V$numRowLocal)"
-        content.getCell(21).setCellStyle(styleTableHeaderNumber)
-        content.createCell(22)
-        content.getCell(22).setCellStyle(styleTableHeaderNumber)
-        cell23.cellFormula = "SUM(X$firstRow:X$numRowLocal)"
-        content.getCell(23).setCellStyle(styleTableHeaderNumber)
-        content.createCell(24)
-        content.getCell(24).setCellStyle(styleTableHeaderNumber)
-        cell25.cellFormula = "SUM(Z$firstRow:Z$numRowLocal)"
-        content.getCell(25).setCellStyle(styleTableHeaderNumber)
-        content.createCell(26)
-        content.getCell(26).setCellStyle(styleTableHeaderNumber)
-        cell27.cellFormula = "SUM(AB$firstRow:AB$numRowLocal)"
-        content.getCell(27).setCellStyle(styleTableHeaderNumber)
-        content.createCell(28)
-        content.getCell(28).setCellStyle(styleTableHeaderNumber)
-        this.numRowTotalBudget = numRowLocal + 1
-        this.numRow = ++numRowLocal
+                content.createCell(1).setCellValue("")
+                content.getCell(1).setCellStyle(styleTableHeader)
+                content.createCell(2).setCellValue("Sub Total Budget")
+                content.getCell(2).setCellStyle(styleTableHeader)
+                cell3.cellFormula = "SUM(D$firstRowLocal:D$numRowLocal)"
+                content.getCell(3).setCellStyle(styleTableHeaderNumber)
+                content.createCell(4)
+                content.getCell(4).setCellStyle(styleTableHeaderNumber)
+                cell5.cellFormula = "SUM(F$firstRowLocal:F$numRowLocal)"
+                content.getCell(5).setCellStyle(styleTableHeaderNumber)
+                content.createCell(6)
+                content.getCell(6).setCellStyle(styleTableHeaderNumber)
+                cell7.cellFormula = "SUM(H$firstRowLocal:H$numRowLocal)"
+                content.getCell(7).setCellStyle(styleTableHeaderNumber)
+                content.createCell(8)
+                content.getCell(8).setCellStyle(styleTableHeaderNumber)
+                cell9.cellFormula = "SUM(J$firstRowLocal:J$numRowLocal)"
+                content.getCell(9).setCellStyle(styleTableHeaderNumber)
+                content.createCell(10)
+                content.getCell(10).setCellStyle(styleTableHeaderNumber)
+                cell11.cellFormula = "SUM(L$firstRowLocal:L$numRowLocal)"
+                content.getCell(11).setCellStyle(styleTableHeaderNumber)
+                content.createCell(12)
+                content.getCell(12).setCellStyle(styleTableHeaderNumber)
+                cell13.cellFormula = "SUM(N$firstRowLocal:N$numRowLocal)"
+                content.getCell(13).setCellStyle(styleTableHeaderNumber)
+                content.createCell(14)
+                content.getCell(14).setCellStyle(styleTableHeaderNumber)
+                cell15.cellFormula = "SUM(P$firstRowLocal:P$numRowLocal)"
+                content.getCell(15).setCellStyle(styleTableHeaderNumber)
+                content.createCell(16)
+                content.getCell(16).setCellStyle(styleTableHeaderNumber)
+                cell17.cellFormula = "SUM(R$firstRowLocal:R$numRowLocal)"
+                content.getCell(17).setCellStyle(styleTableHeaderNumber)
+                content.createCell(18)
+                content.getCell(18).setCellStyle(styleTableHeaderNumber)
+                cell19.cellFormula = "SUM(T$firstRowLocal:T$numRowLocal)"
+                content.getCell(19).setCellStyle(styleTableHeaderNumber)
+                content.createCell(20)
+                content.getCell(20).setCellStyle(styleTableHeaderNumber)
+                cell21.cellFormula = "SUM(V$firstRowLocal:V$numRowLocal)"
+                content.getCell(21).setCellStyle(styleTableHeaderNumber)
+                content.createCell(22)
+                content.getCell(22).setCellStyle(styleTableHeaderNumber)
+                cell23.cellFormula = "SUM(X$firstRowLocal:X$numRowLocal)"
+                content.getCell(23).setCellStyle(styleTableHeaderNumber)
+                content.createCell(24)
+                content.getCell(24).setCellStyle(styleTableHeaderNumber)
+                cell25.cellFormula = "SUM(Z$firstRowLocal:Z$numRowLocal)"
+                content.getCell(25).setCellStyle(styleTableHeaderNumber)
+                content.createCell(26)
+                content.getCell(26).setCellStyle(styleTableHeaderNumber)
+                cell27.cellFormula = "SUM(AB$firstRowLocal:AB$numRowLocal)"
+                content.getCell(27).setCellStyle(styleTableHeaderNumber)
+                content.createCell(28)
+                content.getCell(28).setCellStyle(styleTableHeaderNumber)
+                subTotalList.add(SubTotal(firstRowLocal, numRowLocal))
+                numRowLocal++
 
-        for (i in firstRow-1 .. numRowLocal-2){
-//            sheet.getRow(i).getCell(4).cellFormula = "D${i+1}/D$numRowLocal"
-//            sheet.getRow(i).getCell(6).cellFormula = "F${i+1}/F$numRowLocal"
-//            sheet.getRow(i).getCell(8).cellFormula = "H${i+1}/H$numRowLocal"
-//            sheet.getRow(i).getCell(10).cellFormula = "J${i+1}/J$numRowLocal"
-//            sheet.getRow(i).getCell(12).cellFormula = "L${i+1}/L$numRowLocal"
-//            sheet.getRow(i).getCell(14).cellFormula = "N${i+1}/N$numRowLocal"
-//            sheet.getRow(i).getCell(16).cellFormula = "P${i+1}/P$numRowLocal"
-//            sheet.getRow(i).getCell(18).cellFormula = "R${i+1}/R$numRowLocal"
-//            sheet.getRow(i).getCell(20).cellFormula = "T${i+1}/T$numRowLocal"
-//            sheet.getRow(i).getCell(22).cellFormula = "V${i+1}/V$numRowLocal"
-//            sheet.getRow(i).getCell(24).cellFormula = "X${i+1}/X$numRowLocal"
-//            sheet.getRow(i).getCell(26).cellFormula = "Z${i+1}/Z$numRowLocal"
-            sheet.getRow(i).getCell(4).cellFormula = "IF(D$numRowLocal=0,0,D${i+1}/D$numRowLocal)"
-            sheet.getRow(i).getCell(6).cellFormula = "IF(F$numRowLocal=0,0,F${i+1}/F$numRowLocal)"
-            sheet.getRow(i).getCell(8).cellFormula = "IF(H$numRowLocal=0,0,H${i+1}/H$numRowLocal)"
-            sheet.getRow(i).getCell(10).cellFormula = "IF(J$numRowLocal=0,0,J${i+1}/J$numRowLocal)"
-            sheet.getRow(i).getCell(12).cellFormula = "IF(L$numRowLocal=0,0,L${i+1}/L$numRowLocal)"
-            sheet.getRow(i).getCell(14).cellFormula = "IF(N$numRowLocal=0,0,N${i+1}/N$numRowLocal)"
-            sheet.getRow(i).getCell(16).cellFormula = "IF(P$numRowLocal=0,0,P${i+1}/P$numRowLocal)"
-            sheet.getRow(i).getCell(18).cellFormula = "IF(R$numRowLocal=0,0,R${i+1}/R$numRowLocal)"
-            sheet.getRow(i).getCell(20).cellFormula = "IF(T$numRowLocal=0,0,T${i+1}/T$numRowLocal)"
-            sheet.getRow(i).getCell(22).cellFormula = "IF(V$numRowLocal=0,0,V${i+1}/V$numRowLocal)"
-            sheet.getRow(i).getCell(24).cellFormula = "IF(X$numRowLocal=0,0,X${i+1}/X$numRowLocal)"
-            sheet.getRow(i).getCell(26).cellFormula = "IF(Z$numRowLocal=0,0,Z${i+1}/Z$numRowLocal)"
-        }
-    }
-
-    fun createRealisasiPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet,preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
-        val styleTableContent = styleTableContent(workbook)
-        val styleTableContentNumber = styleTableContentNumber(workbook)
-        val styleTableHeader = styleTableHeader(workbook)
-        val styleTableHeaderNumber = styleTableHeaderNumber(workbook)
-
-        var numRowLocal = this.numRow
-        val firstRow = this.numRow+1
-        var content:HSSFRow
-//        var firstRowNum = true
-
-        preventiveDetailDataList.forEach {
-            items->
-            items.realisasi_budget_area?.forEach {
-                realisasi_budget_area_items->
-                var firstRowNum = true
-                realisasi_budget_area_items.realisasi_budget?.forEach {
-                    realisasi_budget_items->
-                    content = sheet.createRow(numRowLocal++)
-                    val cell3 = content.createCell(3)
-                    val cell5 = content.createCell(5)
-                    val cell7 = content.createCell(7)
-                    val cell9 = content.createCell(9)
-                    val cell11 = content.createCell(11)
-                    val cell13 = content.createCell(13)
-                    val cell15 = content.createCell(15)
-                    val cell17 = content.createCell(17)
-                    val cell19 = content.createCell(19)
-                    val cell21 = content.createCell(21)
-                    val cell23 = content.createCell(23)
-                    val cell25 = content.createCell(25)
-                    val cell27 = content.createCell(27)
-                    cell27.setCellType(CellType.FORMULA)
-
-                    if(firstRowNum){
-                        content.createCell(1).setCellValue("Realisasi Budget ${realisasi_budget_area_items.area_detail}")
-                        firstRowNum = false
-                    }else{
-                        content.createCell(1).setCellValue("")
-                    }
-                    content.getCell(1).setCellStyle(styleTableContent)
-                    content.createCell(2).setCellValue(realisasi_budget_items.name)
-                    content.getCell(2).setCellStyle(styleTableContent)
-                    realisasi_budget_items.i?.toDouble()?.let { cell3.setCellValue(it) }
-                    content.getCell(3).setCellStyle(styleTableContentNumber)
-                    content.createCell(4)
-                    content.getCell(4).setCellStyle(styleTableContent)
-                    realisasi_budget_items.ii?.toDouble()?.let { cell5.setCellValue(it) }
-                    content.getCell(5).setCellStyle(styleTableContentNumber)
-                    content.createCell(6)
-                    content.getCell(6).setCellStyle(styleTableContent)
-                    realisasi_budget_items.iii?.toDouble()?.let { cell7.setCellValue(it) }
-                    content.getCell(7).setCellStyle(styleTableContentNumber)
-                    content.createCell(8)
-                    content.getCell(8).setCellStyle(styleTableContent)
-                    realisasi_budget_items.iv?.toDouble()?.let { cell9.setCellValue(it) }
-                    content.getCell(9).setCellStyle(styleTableContentNumber)
-                    content.createCell(10)
-                    content.getCell(10).setCellStyle(styleTableContent)
-                    realisasi_budget_items.v?.toDouble()?.let { cell11.setCellValue(it) }
-                    content.getCell(11).setCellStyle(styleTableContentNumber)
-                    content.createCell(12)
-                    content.getCell(12).setCellStyle(styleTableContent)
-                    realisasi_budget_items.vi?.toDouble()?.let { cell13.setCellValue(it) }
-                    content.getCell(13).setCellStyle(styleTableContentNumber)
-                    content.createCell(14)
-                    content.getCell(14).setCellStyle(styleTableContent)
-                    realisasi_budget_items.vii?.toDouble()?.let { cell15.setCellValue(it) }
-                    content.getCell(15).setCellStyle(styleTableContentNumber)
-                    content.createCell(16)
-                    content.getCell(16).setCellStyle(styleTableContent)
-                    realisasi_budget_items.viii?.toDouble()?.let { cell17.setCellValue(it) }
-                    content.getCell(17).setCellStyle(styleTableContentNumber)
-                    content.createCell(18)
-                    content.getCell(18).setCellStyle(styleTableContent)
-                    realisasi_budget_items.ix?.toDouble()?.let { cell19.setCellValue(it) }
-                    content.getCell(19).setCellStyle(styleTableContentNumber)
-                    content.createCell(20)
-                    content.getCell(20).setCellStyle(styleTableContent)
-                    realisasi_budget_items.x?.toDouble()?.let { cell21.setCellValue(it) }
-                    content.getCell(21).setCellStyle(styleTableContentNumber)
-                    content.createCell(22)
-                    content.getCell(22).setCellStyle(styleTableContent)
-                    realisasi_budget_items.xi?.toDouble()?.let { cell23.setCellValue(it) }
-                    content.getCell(23).setCellStyle(styleTableContentNumber)
-                    content.createCell(24)
-                    content.getCell(24).setCellStyle(styleTableContent)
-                    realisasi_budget_items.xii?.toDouble()?.let { cell25.setCellValue(it) }
-                    content.getCell(25).setCellStyle(styleTableContentNumber)
-                    content.createCell(26)
-                    content.getCell(26).setCellStyle(styleTableContent)
-                    cell27.cellFormula = "SUM(D$numRowLocal+F$numRowLocal+H$numRowLocal+J$numRowLocal+L$numRowLocal+N$numRowLocal+P$numRowLocal+R$numRowLocal+T$numRowLocal+V$numRowLocal+X$numRowLocal+Z$numRowLocal)"
-                    content.getCell(27).setCellStyle(styleTableContentNumber)
-                    content.createCell(28)
-                    content.getCell(28).setCellStyle(styleTableContent)
+                for (i in firstRowLocal-1 .. numRowLocal-2){
+                    sheet.getRow(i).getCell(4).cellFormula = "IF(D$numRowLocal=0,0,D${i+1}/D$numRowLocal)"
+                    sheet.getRow(i).getCell(6).cellFormula = "IF(F$numRowLocal=0,0,F${i+1}/F$numRowLocal)"
+                    sheet.getRow(i).getCell(8).cellFormula = "IF(H$numRowLocal=0,0,H${i+1}/H$numRowLocal)"
+                    sheet.getRow(i).getCell(10).cellFormula = "IF(J$numRowLocal=0,0,J${i+1}/J$numRowLocal)"
+                    sheet.getRow(i).getCell(12).cellFormula = "IF(L$numRowLocal=0,0,L${i+1}/L$numRowLocal)"
+                    sheet.getRow(i).getCell(14).cellFormula = "IF(N$numRowLocal=0,0,N${i+1}/N$numRowLocal)"
+                    sheet.getRow(i).getCell(16).cellFormula = "IF(P$numRowLocal=0,0,P${i+1}/P$numRowLocal)"
+                    sheet.getRow(i).getCell(18).cellFormula = "IF(R$numRowLocal=0,0,R${i+1}/R$numRowLocal)"
+                    sheet.getRow(i).getCell(20).cellFormula = "IF(T$numRowLocal=0,0,T${i+1}/T$numRowLocal)"
+                    sheet.getRow(i).getCell(22).cellFormula = "IF(V$numRowLocal=0,0,V${i+1}/V$numRowLocal)"
+                    sheet.getRow(i).getCell(24).cellFormula = "IF(X$numRowLocal=0,0,X${i+1}/X$numRowLocal)"
+                    sheet.getRow(i).getCell(26).cellFormula = "IF(Z$numRowLocal=0,0,Z${i+1}/Z$numRowLocal)"
                 }
             }
         }
@@ -1381,60 +1275,407 @@ class PreventiveController{
         content.getCell(1).setCellStyle(styleTableHeader)
         content.createCell(2).setCellValue("Total Budget")
         content.getCell(2).setCellStyle(styleTableHeader)
-        cell3.cellFormula = "SUM(D$firstRow:D$numRowLocal)"
+        cell3.cellFormula = formulaValue(subTotalList, "D")
         content.getCell(3).setCellStyle(styleTableHeaderNumber)
         content.createCell(4)
         content.getCell(4).setCellStyle(styleTableHeaderNumber)
-        cell5.cellFormula = "SUM(F$firstRow:F$numRowLocal)"
+        cell5.cellFormula = formulaValue(subTotalList, "F")
         content.getCell(5).setCellStyle(styleTableHeaderNumber)
         content.createCell(6)
         content.getCell(6).setCellStyle(styleTableHeaderNumber)
-        cell7.cellFormula = "SUM(H$firstRow:H$numRowLocal)"
+        cell7.cellFormula = formulaValue(subTotalList, "H")
         content.getCell(7).setCellStyle(styleTableHeaderNumber)
         content.createCell(8)
         content.getCell(8).setCellStyle(styleTableHeaderNumber)
-        cell9.cellFormula = "SUM(J$firstRow:J$numRowLocal)"
+        cell9.cellFormula = formulaValue(subTotalList, "J")
         content.getCell(9).setCellStyle(styleTableHeaderNumber)
         content.createCell(10)
         content.getCell(10).setCellStyle(styleTableHeaderNumber)
-        cell11.cellFormula = "SUM(L$firstRow:L$numRowLocal)"
+        cell11.cellFormula = formulaValue(subTotalList, "L")
         content.getCell(11).setCellStyle(styleTableHeaderNumber)
         content.createCell(12)
         content.getCell(12).setCellStyle(styleTableHeaderNumber)
-        cell13.cellFormula = "SUM(N$firstRow:N$numRowLocal)"
+        cell13.cellFormula = formulaValue(subTotalList, "N")
         content.getCell(13).setCellStyle(styleTableHeaderNumber)
         content.createCell(14)
         content.getCell(14).setCellStyle(styleTableHeaderNumber)
-        cell15.cellFormula = "SUM(P$firstRow:P$numRowLocal)"
+        cell15.cellFormula = formulaValue(subTotalList, "P")
         content.getCell(15).setCellStyle(styleTableHeaderNumber)
         content.createCell(16)
         content.getCell(16).setCellStyle(styleTableHeaderNumber)
-        cell17.cellFormula = "SUM(R$firstRow:R$numRowLocal)"
+        cell17.cellFormula = formulaValue(subTotalList, "R")
         content.getCell(17).setCellStyle(styleTableHeaderNumber)
         content.createCell(18)
         content.getCell(18).setCellStyle(styleTableHeaderNumber)
-        cell19.cellFormula = "SUM(T$firstRow:T$numRowLocal)"
+        cell19.cellFormula = formulaValue(subTotalList, "T")
         content.getCell(19).setCellStyle(styleTableHeaderNumber)
         content.createCell(20)
         content.getCell(20).setCellStyle(styleTableHeaderNumber)
-        cell21.cellFormula = "SUM(V$firstRow:V$numRowLocal)"
+        cell21.cellFormula = formulaValue(subTotalList, "V")
         content.getCell(21).setCellStyle(styleTableHeaderNumber)
         content.createCell(22)
         content.getCell(22).setCellStyle(styleTableHeaderNumber)
-        cell23.cellFormula = "SUM(X$firstRow:X$numRowLocal)"
+        cell23.cellFormula = formulaValue(subTotalList, "X")
         content.getCell(23).setCellStyle(styleTableHeaderNumber)
         content.createCell(24)
         content.getCell(24).setCellStyle(styleTableHeaderNumber)
-        cell25.cellFormula = "SUM(Z$firstRow:Z$numRowLocal)"
+        cell25.cellFormula = formulaValue(subTotalList, "Z")
         content.getCell(25).setCellStyle(styleTableHeaderNumber)
         content.createCell(26)
         content.getCell(26).setCellStyle(styleTableHeaderNumber)
-        cell27.cellFormula = "SUM(AB$firstRow:AB$numRowLocal)"
+        cell27.cellFormula = formulaValue(subTotalList, "AB")
+        content.getCell(27).setCellStyle(styleTableHeaderNumber)
+        content.createCell(28)
+        content.getCell(28).setCellStyle(styleTableHeaderNumber)
+        this.numRowTotalBudget = numRowLocal + 1
+        this.numRow = ++numRowLocal
+
+//        for (i in firstRow-1 .. numRowLocal-2){
+////            sheet.getRow(i).getCell(4).cellFormula = "D${i+1}/D$numRowLocal"
+////            sheet.getRow(i).getCell(6).cellFormula = "F${i+1}/F$numRowLocal"
+////            sheet.getRow(i).getCell(8).cellFormula = "H${i+1}/H$numRowLocal"
+////            sheet.getRow(i).getCell(10).cellFormula = "J${i+1}/J$numRowLocal"
+////            sheet.getRow(i).getCell(12).cellFormula = "L${i+1}/L$numRowLocal"
+////            sheet.getRow(i).getCell(14).cellFormula = "N${i+1}/N$numRowLocal"
+////            sheet.getRow(i).getCell(16).cellFormula = "P${i+1}/P$numRowLocal"
+////            sheet.getRow(i).getCell(18).cellFormula = "R${i+1}/R$numRowLocal"
+////            sheet.getRow(i).getCell(20).cellFormula = "T${i+1}/T$numRowLocal"
+////            sheet.getRow(i).getCell(22).cellFormula = "V${i+1}/V$numRowLocal"
+////            sheet.getRow(i).getCell(24).cellFormula = "X${i+1}/X$numRowLocal"
+////            sheet.getRow(i).getCell(26).cellFormula = "Z${i+1}/Z$numRowLocal"
+//            sheet.getRow(i).getCell(4).cellFormula = "IF(D$numRowLocal=0,0,D${i+1}/D$numRowLocal)"
+//            sheet.getRow(i).getCell(6).cellFormula = "IF(F$numRowLocal=0,0,F${i+1}/F$numRowLocal)"
+//            sheet.getRow(i).getCell(8).cellFormula = "IF(H$numRowLocal=0,0,H${i+1}/H$numRowLocal)"
+//            sheet.getRow(i).getCell(10).cellFormula = "IF(J$numRowLocal=0,0,J${i+1}/J$numRowLocal)"
+//            sheet.getRow(i).getCell(12).cellFormula = "IF(L$numRowLocal=0,0,L${i+1}/L$numRowLocal)"
+//            sheet.getRow(i).getCell(14).cellFormula = "IF(N$numRowLocal=0,0,N${i+1}/N$numRowLocal)"
+//            sheet.getRow(i).getCell(16).cellFormula = "IF(P$numRowLocal=0,0,P${i+1}/P$numRowLocal)"
+//            sheet.getRow(i).getCell(18).cellFormula = "IF(R$numRowLocal=0,0,R${i+1}/R$numRowLocal)"
+//            sheet.getRow(i).getCell(20).cellFormula = "IF(T$numRowLocal=0,0,T${i+1}/T$numRowLocal)"
+//            sheet.getRow(i).getCell(22).cellFormula = "IF(V$numRowLocal=0,0,V${i+1}/V$numRowLocal)"
+//            sheet.getRow(i).getCell(24).cellFormula = "IF(X$numRowLocal=0,0,X${i+1}/X$numRowLocal)"
+//            sheet.getRow(i).getCell(26).cellFormula = "IF(Z$numRowLocal=0,0,Z${i+1}/Z$numRowLocal)"
+//        }
+    }
+
+    private fun formulaValue(subTotalList: MutableList<SubTotal>, sColumn:String): String {
+        var formulaValue = "SUM("
+        subTotalList.forEach {
+            formulaValue += "$sColumn${it.firstRow}:$sColumn${it.lastRow},"
+        }
+        formulaValue += ")"
+        return formulaValue
+    }
+
+    fun createRealisasiPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet,preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
+        val styleTableContent = styleTableContent(workbook)
+        val styleTableContentNumber = styleTableContentNumber(workbook)
+        val styleTableHeader = styleTableHeader(workbook)
+        val styleTableHeaderNumber = styleTableHeaderNumber(workbook)
+        val styleTableContentPercent  = styleTableContentPercent(workbook)
+
+        var numRowLocal = this.numRow
+        val firstRow = this.numRow+1
+        var content:HSSFRow
+//        var firstRowNum = true
+        var subTotalList: MutableList<SubTotal> = mutableListOf()
+
+        preventiveDetailDataList.forEach {
+            items->
+            items.realisasi_budget_area?.forEach {
+                realisasi_budget_area_items->
+                var firstRowNum = true
+                val firstRowLocal = numRowLocal + 1
+
+                realisasi_budget_area_items.realisasi_budget?.forEach {
+                    realisasi_budget_items->
+                    content = sheet.createRow(numRowLocal++)
+                    val cell3 = content.createCell(3)
+                    val cell5 = content.createCell(5)
+                    val cell7 = content.createCell(7)
+                    val cell9 = content.createCell(9)
+                    val cell11 = content.createCell(11)
+                    val cell13 = content.createCell(13)
+                    val cell15 = content.createCell(15)
+                    val cell17 = content.createCell(17)
+                    val cell19 = content.createCell(19)
+                    val cell21 = content.createCell(21)
+                    val cell23 = content.createCell(23)
+                    val cell25 = content.createCell(25)
+                    val cell27 = content.createCell(27)
+                    cell27.setCellType(CellType.FORMULA)
+
+                    if(firstRowNum){
+                        content.createCell(1).setCellValue("Realisasi Budget ${realisasi_budget_area_items.area_detail}")
+                        firstRowNum = false
+                    }else{
+                        content.createCell(1).setCellValue("")
+                    }
+
+                    val cell4 = content.createCell(4)
+                    content.getCell(4).setCellStyle(styleTableContentPercent)
+                    cell4.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.i, realisasi_budget_items.id, 1))
+                    val cell6 = content.createCell(6)
+                    content.getCell(6).setCellStyle(styleTableContentPercent)
+                    cell6.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.ii, realisasi_budget_items.id, 2))
+//                    cell6.setCellType(CellType.FORMULA)
+                    val cell8 = content.createCell(8)
+                    content.getCell(8).setCellStyle(styleTableContentPercent)
+                    cell8.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.iii, realisasi_budget_items.id, 3))
+//                    cell8.setCellType(CellType.FORMULA)
+                    val cell10 = content.createCell(10)
+                    content.getCell(10).setCellStyle(styleTableContentPercent)
+                    cell8.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.iv, realisasi_budget_items.id, 4))
+//                    cell10.setCellType(CellType.FORMULA)
+                    val cell12 = content.createCell(12)
+                    content.getCell(12).setCellStyle(styleTableContentPercent)
+                    cell12.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.v, realisasi_budget_items.id, 5))
+//                    cell12.setCellType(CellType.FORMULA)
+                    val cell14 = content.createCell(14)
+                    content.getCell(14).setCellStyle(styleTableContentPercent)
+                    cell14.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.vi, realisasi_budget_items.id, 6))
+//                    cell14.setCellType(CellType.FORMULA)
+                    val cell16 = content.createCell(16)
+                    content.getCell(16).setCellStyle(styleTableContentPercent)
+                    cell16.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.vii, realisasi_budget_items.id, 7))
+//                    cell16.setCellType(CellType.FORMULA)
+                    val cell18 = content.createCell(18)
+                    content.getCell(18).setCellStyle(styleTableContentPercent)
+                    cell18.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.viii, realisasi_budget_items.id, 8))
+//                    cell18.setCellType(CellType.FORMULA)
+                    val cell20 = content.createCell(20)
+                    content.getCell(20).setCellStyle(styleTableContentPercent)
+                    cell20.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.ix, realisasi_budget_items.id, 9))
+//                    cell20.setCellType(CellType.FORMULA)
+                    val cell22 = content.createCell(22)
+                    content.getCell(22).setCellStyle(styleTableContentPercent)
+                    cell22.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.x, realisasi_budget_items.id, 10))
+//                    cell22.setCellType(CellType.FORMULA)
+                    val cell24 = content.createCell(24)
+                    content.getCell(24).setCellStyle(styleTableContentPercent)
+                    cell24.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.xi, realisasi_budget_items.id, 11))
+//                    cell24.setCellType(CellType.FORMULA)
+                    val cell26 = content.createCell(26)
+                    content.getCell(26).setCellStyle(styleTableContentPercent)
+                    cell26.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.xii, realisasi_budget_items.id, 12))
+//                    cell26.setCellType(CellType.FORMULA)
+
+                    content.getCell(1).setCellStyle(styleTableContent)
+                    content.createCell(2).setCellValue(realisasi_budget_items.name)
+                    content.getCell(2).setCellStyle(styleTableContent)
+                    realisasi_budget_items.i?.toDouble()?.let { cell3.setCellValue(it) }
+                    content.getCell(3).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.ii?.toDouble()?.let { cell5.setCellValue(it) }
+                    content.getCell(5).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.iii?.toDouble()?.let { cell7.setCellValue(it) }
+                    content.getCell(7).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.iv?.toDouble()?.let { cell9.setCellValue(it) }
+                    content.getCell(9).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.v?.toDouble()?.let { cell11.setCellValue(it) }
+                    content.getCell(11).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.vi?.toDouble()?.let { cell13.setCellValue(it) }
+                    content.getCell(13).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.vii?.toDouble()?.let { cell15.setCellValue(it) }
+                    content.getCell(15).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.viii?.toDouble()?.let { cell17.setCellValue(it) }
+                    content.getCell(17).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.ix?.toDouble()?.let { cell19.setCellValue(it) }
+                    content.getCell(19).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.x?.toDouble()?.let { cell21.setCellValue(it) }
+                    content.getCell(21).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.xi?.toDouble()?.let { cell23.setCellValue(it) }
+                    content.getCell(23).setCellStyle(styleTableContentNumber)
+                    realisasi_budget_items.xii?.toDouble()?.let { cell25.setCellValue(it) }
+                    content.getCell(25).setCellStyle(styleTableContentNumber)
+                    cell27.cellFormula = "SUM(D$numRowLocal+F$numRowLocal+H$numRowLocal+J$numRowLocal+L$numRowLocal+N$numRowLocal+P$numRowLocal+R$numRowLocal+T$numRowLocal+V$numRowLocal+X$numRowLocal+Z$numRowLocal)"
+                    content.getCell(27).setCellStyle(styleTableContentNumber)
+                    content.createCell(28)
+                    content.getCell(28).setCellStyle(styleTableContent)
+                }
+
+                content = sheet.createRow(numRowLocal)
+                val cell3 = content.createCell(3)
+                val cell5 = content.createCell(5)
+                val cell7 = content.createCell(7)
+                val cell9 = content.createCell(9)
+                val cell11 = content.createCell(11)
+                val cell13 = content.createCell(13)
+                val cell15 = content.createCell(15)
+                val cell17 = content.createCell(17)
+                val cell19 = content.createCell(19)
+                val cell21 = content.createCell(21)
+                val cell23 = content.createCell(23)
+                val cell25 = content.createCell(25)
+                val cell27 = content.createCell(27)
+                cell27.setCellType(CellType.FORMULA)
+
+                content.createCell(1).setCellValue("")
+                content.getCell(1).setCellStyle(styleTableHeader)
+                content.createCell(2).setCellValue("Sub Total Budget")
+                content.getCell(2).setCellStyle(styleTableHeader)
+                cell3.cellFormula = "SUM(D$firstRowLocal:D$numRowLocal)"
+                content.getCell(3).setCellStyle(styleTableHeaderNumber)
+                content.createCell(4)
+                content.getCell(4).setCellStyle(styleTableHeaderNumber)
+                cell5.cellFormula = "SUM(F$firstRowLocal:F$numRowLocal)"
+                content.getCell(5).setCellStyle(styleTableHeaderNumber)
+                content.createCell(6)
+                content.getCell(6).setCellStyle(styleTableHeaderNumber)
+                cell7.cellFormula = "SUM(H$firstRowLocal:H$numRowLocal)"
+                content.getCell(7).setCellStyle(styleTableHeaderNumber)
+                content.createCell(8)
+                content.getCell(8).setCellStyle(styleTableHeaderNumber)
+                cell9.cellFormula = "SUM(J$firstRowLocal:J$numRowLocal)"
+                content.getCell(9).setCellStyle(styleTableHeaderNumber)
+                content.createCell(10)
+                content.getCell(10).setCellStyle(styleTableHeaderNumber)
+                cell11.cellFormula = "SUM(L$firstRowLocal:L$numRowLocal)"
+                content.getCell(11).setCellStyle(styleTableHeaderNumber)
+                content.createCell(12)
+                content.getCell(12).setCellStyle(styleTableHeaderNumber)
+                cell13.cellFormula = "SUM(N$firstRowLocal:N$numRowLocal)"
+                content.getCell(13).setCellStyle(styleTableHeaderNumber)
+                content.createCell(14)
+                content.getCell(14).setCellStyle(styleTableHeaderNumber)
+                cell15.cellFormula = "SUM(P$firstRowLocal:P$numRowLocal)"
+                content.getCell(15).setCellStyle(styleTableHeaderNumber)
+                content.createCell(16)
+                content.getCell(16).setCellStyle(styleTableHeaderNumber)
+                cell17.cellFormula = "SUM(R$firstRowLocal:R$numRowLocal)"
+                content.getCell(17).setCellStyle(styleTableHeaderNumber)
+                content.createCell(18)
+                content.getCell(18).setCellStyle(styleTableHeaderNumber)
+                cell19.cellFormula = "SUM(T$firstRowLocal:T$numRowLocal)"
+                content.getCell(19).setCellStyle(styleTableHeaderNumber)
+                content.createCell(20)
+                content.getCell(20).setCellStyle(styleTableHeaderNumber)
+                cell21.cellFormula = "SUM(V$firstRowLocal:V$numRowLocal)"
+                content.getCell(21).setCellStyle(styleTableHeaderNumber)
+                content.createCell(22)
+                content.getCell(22).setCellStyle(styleTableHeaderNumber)
+                cell23.cellFormula = "SUM(X$firstRowLocal:X$numRowLocal)"
+                content.getCell(23).setCellStyle(styleTableHeaderNumber)
+                content.createCell(24)
+                content.getCell(24).setCellStyle(styleTableHeaderNumber)
+                cell25.cellFormula = "SUM(Z$firstRowLocal:Z$numRowLocal)"
+                content.getCell(25).setCellStyle(styleTableHeaderNumber)
+                content.createCell(26)
+                content.getCell(26).setCellStyle(styleTableHeaderNumber)
+                cell27.cellFormula = "SUM(AB$firstRowLocal:AB$numRowLocal)"
+                content.getCell(27).setCellStyle(styleTableHeaderNumber)
+                content.createCell(28)
+                content.getCell(28).setCellStyle(styleTableHeaderNumber)
+                subTotalList.add(SubTotal(firstRowLocal, numRowLocal))
+                numRowLocal++
+            }
+        }
+
+        content = sheet.createRow(numRowLocal)
+        val cell3 = content.createCell(3)
+        val cell5 = content.createCell(5)
+        val cell7 = content.createCell(7)
+        val cell9 = content.createCell(9)
+        val cell11 = content.createCell(11)
+        val cell13 = content.createCell(13)
+        val cell15 = content.createCell(15)
+        val cell17 = content.createCell(17)
+        val cell19 = content.createCell(19)
+        val cell21 = content.createCell(21)
+        val cell23 = content.createCell(23)
+        val cell25 = content.createCell(25)
+        val cell27 = content.createCell(27)
+        cell27.setCellType(CellType.FORMULA)
+
+        content.createCell(1).setCellValue("")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        content.createCell(2).setCellValue("Total Budget")
+        content.getCell(2).setCellStyle(styleTableHeader)
+        cell3.cellFormula = formulaValue(subTotalList, "D")
+        content.getCell(3).setCellStyle(styleTableHeaderNumber)
+        content.createCell(4)
+        content.getCell(4).setCellStyle(styleTableHeaderNumber)
+        cell5.cellFormula = formulaValue(subTotalList, "F")
+        content.getCell(5).setCellStyle(styleTableHeaderNumber)
+        content.createCell(6)
+        content.getCell(6).setCellStyle(styleTableHeaderNumber)
+        cell7.cellFormula = formulaValue(subTotalList, "H")
+        content.getCell(7).setCellStyle(styleTableHeaderNumber)
+        content.createCell(8)
+        content.getCell(8).setCellStyle(styleTableHeaderNumber)
+        cell9.cellFormula = formulaValue(subTotalList, "J")
+        content.getCell(9).setCellStyle(styleTableHeaderNumber)
+        content.createCell(10)
+        content.getCell(10).setCellStyle(styleTableHeaderNumber)
+        cell11.cellFormula = formulaValue(subTotalList, "L")
+        content.getCell(11).setCellStyle(styleTableHeaderNumber)
+        content.createCell(12)
+        content.getCell(12).setCellStyle(styleTableHeaderNumber)
+        cell13.cellFormula = formulaValue(subTotalList, "N")
+        content.getCell(13).setCellStyle(styleTableHeaderNumber)
+        content.createCell(14)
+        content.getCell(14).setCellStyle(styleTableHeaderNumber)
+        cell15.cellFormula = formulaValue(subTotalList, "P")
+        content.getCell(15).setCellStyle(styleTableHeaderNumber)
+        content.createCell(16)
+        content.getCell(16).setCellStyle(styleTableHeaderNumber)
+        cell17.cellFormula = formulaValue(subTotalList, "R")
+        content.getCell(17).setCellStyle(styleTableHeaderNumber)
+        content.createCell(18)
+        content.getCell(18).setCellStyle(styleTableHeaderNumber)
+        cell19.cellFormula = formulaValue(subTotalList, "T")
+        content.getCell(19).setCellStyle(styleTableHeaderNumber)
+        content.createCell(20)
+        content.getCell(20).setCellStyle(styleTableHeaderNumber)
+        cell21.cellFormula = formulaValue(subTotalList, "V")
+        content.getCell(21).setCellStyle(styleTableHeaderNumber)
+        content.createCell(22)
+        content.getCell(22).setCellStyle(styleTableHeaderNumber)
+        cell23.cellFormula = formulaValue(subTotalList, "X")
+        content.getCell(23).setCellStyle(styleTableHeaderNumber)
+        content.createCell(24)
+        content.getCell(24).setCellStyle(styleTableHeaderNumber)
+        cell25.cellFormula = formulaValue(subTotalList, "Z")
+        content.getCell(25).setCellStyle(styleTableHeaderNumber)
+        content.createCell(26)
+        content.getCell(26).setCellStyle(styleTableHeaderNumber)
+        cell27.cellFormula = formulaValue(subTotalList, "AB")
         content.getCell(27).setCellStyle(styleTableHeaderNumber)
         content.createCell(28)
         content.getCell(28).setCellStyle(styleTableHeaderNumber)
         this.numRowTotalRealisasi = numRowLocal+1
         this.numRow = ++numRowLocal
+    }
+
+    private fun getRealizationPercentage(preventiveDetailDataList: List<PreventiveCustomerDetailHeader>,
+                                         realisasi_budget_items: Long?, realisasi_budget_items_id: Long, month:Int): Double {
+        var percents = 0.0
+        preventiveDetailDataList.forEach { a ->
+            a.budget_area?.forEach { b ->
+                b.budget?.forEach { c ->
+                    val budgetValue = when(month){
+                        1-> c.i
+                        2-> c.ii
+                        3-> c.iii
+                        4-> c.iv
+                        5-> c.v
+                        6-> c.vi
+                        7-> c.vii
+                        8-> c.viii
+                        9-> c.ix
+                        10-> c.x
+                        11-> c.xi
+                        12-> c.xii
+                        else -> 0
+                    }
+
+                    if (c.id == realisasi_budget_items_id)
+                        if (budgetValue != null)
+                            if (realisasi_budget_items != null)
+                                percents = if (budgetValue > 0) realisasi_budget_items.toDouble().div(budgetValue) else 0.00
+                }
+            }
+        }
+        return percents
     }
 
     fun createSummaryPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet, preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
