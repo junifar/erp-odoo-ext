@@ -1053,7 +1053,7 @@ class PreventiveController{
     fun createBudgetPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet, preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
         val styleTableContent = styleTableContent(workbook)
         val styleTableContentNumber = styleTableContentNumber(workbook)
-        val styleTableContentPercent = styleTableHeaderPercent(workbook)
+        val styleTableContentPercent = styleTableContentPercent(workbook)
         val styleTableHeader = styleTableHeader(workbook)
         val styleTableHeaderNumber = styleTableHeaderNumber(workbook)
 
@@ -1414,50 +1414,62 @@ class PreventiveController{
 
                     val cell4 = content.createCell(4)
                     content.getCell(4).setCellStyle(styleTableContentPercent)
-                    cell4.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.i, realisasi_budget_items.id, 1))
+                    cell4.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.i, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 1))
                     val cell6 = content.createCell(6)
                     content.getCell(6).setCellStyle(styleTableContentPercent)
-                    cell6.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.ii, realisasi_budget_items.id, 2))
+                    cell6.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.ii, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 2))
 //                    cell6.setCellType(CellType.FORMULA)
                     val cell8 = content.createCell(8)
                     content.getCell(8).setCellStyle(styleTableContentPercent)
-                    cell8.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.iii, realisasi_budget_items.id, 3))
+                    cell8.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.iii, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 3))
 //                    cell8.setCellType(CellType.FORMULA)
                     val cell10 = content.createCell(10)
                     content.getCell(10).setCellStyle(styleTableContentPercent)
-                    cell8.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.iv, realisasi_budget_items.id, 4))
+                    cell8.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.iv, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 4))
 //                    cell10.setCellType(CellType.FORMULA)
                     val cell12 = content.createCell(12)
                     content.getCell(12).setCellStyle(styleTableContentPercent)
-                    cell12.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.v, realisasi_budget_items.id, 5))
+                    cell12.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.v, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 5))
 //                    cell12.setCellType(CellType.FORMULA)
                     val cell14 = content.createCell(14)
                     content.getCell(14).setCellStyle(styleTableContentPercent)
-                    cell14.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.vi, realisasi_budget_items.id, 6))
+                    cell14.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.vi, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 6))
 //                    cell14.setCellType(CellType.FORMULA)
                     val cell16 = content.createCell(16)
                     content.getCell(16).setCellStyle(styleTableContentPercent)
-                    cell16.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.vii, realisasi_budget_items.id, 7))
+                    cell16.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.vii, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 7))
 //                    cell16.setCellType(CellType.FORMULA)
                     val cell18 = content.createCell(18)
                     content.getCell(18).setCellStyle(styleTableContentPercent)
-                    cell18.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.viii, realisasi_budget_items.id, 8))
+                    cell18.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.viii, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 8))
 //                    cell18.setCellType(CellType.FORMULA)
                     val cell20 = content.createCell(20)
                     content.getCell(20).setCellStyle(styleTableContentPercent)
-                    cell20.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.ix, realisasi_budget_items.id, 9))
+                    cell20.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.ix, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 9))
 //                    cell20.setCellType(CellType.FORMULA)
                     val cell22 = content.createCell(22)
                     content.getCell(22).setCellStyle(styleTableContentPercent)
-                    cell22.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.x, realisasi_budget_items.id, 10))
+                    cell22.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.x, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 10))
 //                    cell22.setCellType(CellType.FORMULA)
                     val cell24 = content.createCell(24)
                     content.getCell(24).setCellStyle(styleTableContentPercent)
-                    cell24.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.xi, realisasi_budget_items.id, 11))
+                    cell24.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.xi, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 11))
 //                    cell24.setCellType(CellType.FORMULA)
                     val cell26 = content.createCell(26)
                     content.getCell(26).setCellStyle(styleTableContentPercent)
-                    cell26.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.xii, realisasi_budget_items.id, 12))
+                    cell26.setCellValue(getRealizationPercentage(preventiveDetailDataList, realisasi_budget_items.xii, realisasi_budget_items.id,
+                            realisasi_budget_items.name, 12))
 //                    cell26.setCellType(CellType.FORMULA)
 
                     content.getCell(1).setCellStyle(styleTableContent)
@@ -1647,7 +1659,7 @@ class PreventiveController{
     }
 
     private fun getRealizationPercentage(preventiveDetailDataList: List<PreventiveCustomerDetailHeader>,
-                                         realisasi_budget_items: Long?, realisasi_budget_items_id: Long, month:Int): Double {
+                                         realisasi_budget_items: Long?, realisasi_budget_items_id: Long, realisasi_budget_items_name: String, month:Int): Double {
         var percents = 0.0
         preventiveDetailDataList.forEach { a ->
             a.budget_area?.forEach { b ->
@@ -1668,7 +1680,7 @@ class PreventiveController{
                         else -> 0
                     }
 
-                    if (c.id == realisasi_budget_items_id)
+                    if ((c.name == realisasi_budget_items_name) or (c.id == realisasi_budget_items_id))
                         if (budgetValue != null)
                             if (realisasi_budget_items != null)
                                 percents = if (budgetValue > 0) realisasi_budget_items.toDouble().div(budgetValue) else 0.00
@@ -1679,8 +1691,6 @@ class PreventiveController{
     }
 
     fun createSummaryPreventiveXls(workbook: HSSFWorkbook, sheet: HSSFSheet, preventiveDetailDataList: List<PreventiveCustomerDetailHeader>){
-        val styleTableContent = styleTableContent(workbook)
-        val styleTableContentNumber = styleTableContentNumber(workbook)
         val styleTableHeader = styleTableHeader(workbook)
         val styleTableHeaderNumber = styleTableHeaderNumber(workbook)
         val styleTableHeaderPercent = styleTableHeaderPercent(workbook)
