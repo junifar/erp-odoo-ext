@@ -6,6 +6,7 @@ import com.prasetia.erp.constant.GlobalConstant.Companion.BASE_URL
 import com.prasetia.erp.pojo.PreventiveCustomerYear
 import com.prasetia.erp.pojo.preventive.PreventiveCustomerDetailHeader
 import com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice
+import com.prasetia.erp.pojo.preventive.PreventiveSummaryData
 import org.apache.poi.hssf.usermodel.*
 import org.apache.poi.hssf.util.HSSFColor
 import org.apache.poi.ss.usermodel.*
@@ -2067,6 +2068,79 @@ class PreventiveController{
         content.getCell(28).setCellStyle(styleTableHeaderPercent)
         sheet.addMergedRegion(CellRangeAddress(numRowLocal-1, numRowLocal-1, 1,2))
 
+        content = sheet.createRow(numRowLocal++)
+        cell3 = content.createCell(3)
+        cell5 = content.createCell(5)
+        cell7 = content.createCell(7)
+        cell9 = content.createCell(9)
+        cell11 = content.createCell(11)
+        cell13 = content.createCell(13)
+        cell15 = content.createCell(15)
+        cell17 = content.createCell(17)
+        cell19 = content.createCell(19)
+        cell21 = content.createCell(21)
+        cell23 = content.createCell(23)
+        cell25 = content.createCell(25)
+        cell27 = content.createCell(27)
+
+        content.createCell(1).setCellValue("PPH 2%")
+        content.getCell(1).setCellStyle(styleTableHeader)
+        content.createCell(2).setCellValue("")
+        content.getCell(2).setCellStyle(styleTableHeader)
+        cell3.cellFormula = "-D${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(3).setCellStyle(styleTableHeaderNumber)
+        content.createCell(4)
+        content.getCell(4).setCellStyle(styleTableHeaderNumber)
+        cell5.cellFormula = "-F${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(5).setCellStyle(styleTableHeaderNumber)
+        content.createCell(6)
+        content.getCell(6).setCellStyle(styleTableHeaderNumber)
+        cell7.cellFormula = "-H${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(7).setCellStyle(styleTableHeaderNumber)
+        content.createCell(8)
+        content.getCell(8).setCellStyle(styleTableHeaderNumber)
+        cell9.cellFormula = "-J${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(9).setCellStyle(styleTableHeaderNumber)
+        content.createCell(10)
+        content.getCell(10).setCellStyle(styleTableHeaderNumber)
+        cell11.cellFormula = "-L${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(11).setCellStyle(styleTableHeaderNumber)
+        content.createCell(12)
+        content.getCell(12).setCellStyle(styleTableHeaderNumber)
+        cell13.cellFormula = "-N${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(13).setCellStyle(styleTableHeaderNumber)
+        content.createCell(14)
+        content.getCell(14).setCellStyle(styleTableHeaderNumber)
+        cell15.cellFormula = "-P${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(15).setCellStyle(styleTableHeaderNumber)
+        content.createCell(16)
+        content.getCell(16).setCellStyle(styleTableHeaderNumber)
+        cell17.cellFormula = "-R${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(17).setCellStyle(styleTableHeaderNumber)
+        content.createCell(18)
+        content.getCell(18).setCellStyle(styleTableHeaderNumber)
+        cell19.cellFormula = "-T${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(19).setCellStyle(styleTableHeaderNumber)
+        content.createCell(20)
+        content.getCell(20).setCellStyle(styleTableHeaderNumber)
+        cell21.cellFormula = "-V${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(21).setCellStyle(styleTableHeaderNumber)
+        content.createCell(22)
+        content.getCell(22).setCellStyle(styleTableHeaderNumber)
+        cell23.cellFormula = "-X${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(23).setCellStyle(styleTableHeaderNumber)
+        content.createCell(24)
+        content.getCell(24).setCellStyle(styleTableHeaderNumber)
+        cell25.cellFormula = "-Z${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(25).setCellStyle(styleTableHeaderNumber)
+        content.createCell(26)
+        content.getCell(26).setCellStyle(styleTableHeaderNumber)
+        cell27.cellFormula = "-AB${this.numRowTotalNilaiInvoice}*2%"
+        content.getCell(27).setCellStyle(styleTableHeaderNumber)
+        content.createCell(28)
+        content.getCell(28).setCellStyle(styleTableHeaderPercent)
+        sheet.addMergedRegion(CellRangeAddress(numRowLocal-1, numRowLocal-1, 1,2))
+
 //        this.numRowTotalRealisasi = numRowLocal
 //        this.numRow = ++numRowLocal
 
@@ -2148,6 +2222,16 @@ class PreventiveController{
         model.addAttribute("total", getTotalPreventiveCustomer(preventiveDataList))
         model.addAttribute("preventiveDataList", preventiveDataList)
         return "preventive/index"
+    }
+
+    @RequestMapping("/preventive/summary")
+    fun summaryPreventive(model:Model):String{
+        val objectMapper = ObjectMapper()
+        val url = URL(BASE_URL + "api/preventive_summary")
+
+        val preventiveSummaryDataList: List<PreventiveSummaryData> = objectMapper.readValue(url)
+        model.addAttribute("preventiveSummaryDataList", preventiveSummaryDataList)
+        return "preventive/summary_preventive"
     }
 
     @RequestMapping("/preventive2")

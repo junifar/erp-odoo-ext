@@ -4,7 +4,9 @@ import com.prasetia.erp.model.preventive.PreventiveCustomer
 import com.prasetia.erp.pojo.PreventiveCustomerGroup
 import com.prasetia.erp.pojo.PreventiveCustomerGroupDetail
 import com.prasetia.erp.pojo.PreventiveCustomerYear
+import com.prasetia.erp.pojo.preventive.PreventiveSummaryData
 import com.prasetia.erp.repository.preventive.PreventiveCustomerRepository
+import com.prasetia.erp.repository.preventive.PreventiveSummaryRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -15,6 +17,9 @@ class PreventiveController{
     @Autowired
     lateinit var repository: PreventiveCustomerRepository
 
+    @Autowired
+    lateinit var repositoryPreventiveSummary: PreventiveSummaryRepository
+
 //    @Autowired
 //    lateinit var repositorybyCustomerYearArea: PreventiveCustomerDetail
 
@@ -24,6 +29,18 @@ class PreventiveController{
 //    @RequestMapping("/api/preventive_by_customer_year_area/{customer_id}/{tahun}/{area_id}")
 //    fun getDataByCustomerYearArea(@PathVariable("customer_id") customer_id: Long, @PathVariable("tahun") tahun: String,
 //                                  @PathVariable("area_id") area_id: String)
+
+    @RequestMapping("/api/preventive_summary")
+    fun getAllPreventiveSummary(): MutableList<PreventiveSummaryData>{
+        val data = repositoryPreventiveSummary.getAllPreventiveSummaryData()
+        val preventiveSummaryData: MutableList<PreventiveSummaryData> = mutableListOf()
+        data.forEach {
+            preventiveSummaryData.add((PreventiveSummaryData(it.id, it.tahun, it.nilai_po,
+                    it.nilai_penagihan, it.nilai_budget, it.realisasi_budget,it.laba_rugi, it.persent_penagihan,
+                    it.persent_budget, it.persent_laba_rugi)))
+        }
+        return preventiveSummaryData
+    }
 
     @RequestMapping("/api/preventive_customer")
     fun getAllData(): MutableList<PreventiveCustomerYear> {
