@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Repository
+import javax.websocket.server.PathParam
 
 @Repository
 interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>{
@@ -206,7 +207,7 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                 "public".project_project."state" NOT IN ('cancelled') AND
                                 "public".project_project.site_type_id = 7 AND
                                 "public".project_site.tahun IS NOT NULL AND
-                                "public".project_site.tahun = '2018'
+                                "public".project_site.tahun = :tahun
                             GROUP BY
                                 "public".res_partner."id",
                                 "public".res_partner.code,
@@ -220,5 +221,5 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
 
     @Async
     @Query(QUERY_PREVENTIVE_REPORT, nativeQuery = true)
-    fun getAllData(): Iterable<PreventiveCustomer>
+    fun getAllData(@PathParam("tahun") tahun:String): Iterable<PreventiveCustomer>
 }

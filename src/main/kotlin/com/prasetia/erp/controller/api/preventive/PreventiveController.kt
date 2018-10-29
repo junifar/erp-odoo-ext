@@ -8,8 +8,10 @@ import com.prasetia.erp.pojo.preventive.PreventiveSummaryData
 import com.prasetia.erp.repository.preventive.PreventiveCustomerRepository
 import com.prasetia.erp.repository.preventive.PreventiveSummaryRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.websocket.server.PathParam
 
 @RestController
 class PreventiveController{
@@ -42,9 +44,9 @@ class PreventiveController{
         return preventiveSummaryData
     }
 
-    @RequestMapping("/api/preventive_customer")
-    fun getAllData(): MutableList<PreventiveCustomerYear> {
-        val data = repository.getAllData()
+    @RequestMapping("/api/preventive_customer/{tahun}")
+    fun getAllData(@PathVariable("tahun") tahun: String): MutableList<PreventiveCustomerYear> {
+        val data = repository.getAllData(tahun)
         var yearGroup: MutableList<PreventiveCustomerYear> = mutableListOf()
         var id:Long = 1
         data.forEach {

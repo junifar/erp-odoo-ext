@@ -2214,10 +2214,20 @@ class PreventiveController{
             getTotalPreventiveCustomer(data, "total_laba_rugi")
     )
 
-    @RequestMapping("/preventive")
-    fun indexPreventive(model:Model): String{
+//    @RequestMapping("/preventive")
+//    fun indexPreventive(model:Model): String{
+//        val objectMapper = ObjectMapper()
+//        val url = URL(BASE_URL + "api/preventive_customer")
+//        val preventiveDataList: List<PreventiveCustomerYear> = objectMapper.readValue(url)
+//        model.addAttribute("total", getTotalPreventiveCustomer(preventiveDataList))
+//        model.addAttribute("preventiveDataList", preventiveDataList)
+//        return "preventive/index"
+//    }
+
+    @RequestMapping("/preventive/{tahun}")
+    fun indexPreventiveByYear(model:Model, @PathVariable("tahun") tahun:String): String{
         val objectMapper = ObjectMapper()
-        val url = URL(BASE_URL + "api/preventive_customer")
+        val url = URL(BASE_URL + "api/preventive_customer/$tahun")
         val preventiveDataList: List<PreventiveCustomerYear> = objectMapper.readValue(url)
         model.addAttribute("total", getTotalPreventiveCustomer(preventiveDataList))
         model.addAttribute("preventiveDataList", preventiveDataList)
