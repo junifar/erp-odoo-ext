@@ -134,7 +134,7 @@ class PreventiveDetailController{
                     item.customer_name, item.area, item.area_id, item.tahun.toString(),
                     getPreventiveSaleOrder(customer_id, tahun, area_id, dataPreventiveSaleOrder, dataPreventiveSaleOrderInvoice),
                     getPreventiveInvoice(customer_id, tahun, area_id, dataPreventiveInvoice),
-                    getPreventiveBudgetArea(customer_id, tahun, area_id, dataPreventiveBudget),
+                    getPreventiveBudgetArea(customer_id, tahun, area_id, dataPreventiveBudget, dataPreventiveRealisasiBudget),
                     getPreventiveRealisasiBudgetArea(customer_id, tahun, area_id, dataPreventiveRealisasiBudget)))
         }
         return headerGroup
@@ -267,7 +267,9 @@ class PreventiveDetailController{
         return nilai_budget
     }
 
-    fun getPreventiveBudget(customer_id: Int, tahun: String, area_id: String, sub_area: String?, data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>):MutableList<PreventiveBudget>{
+    fun getPreventiveBudget(customer_id: Int, tahun: String, area_id: String, sub_area: String?,
+                            data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>,
+                            dataRealisasiBudget: Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveBudget>{
         val preventiveBudget:MutableList<PreventiveBudget> = mutableListOf()
         data.forEach {
             item->
@@ -295,14 +297,58 @@ class PreventiveDetailController{
                     preventiveBudget.add(PreventiveBudget(item.id, item.name,
                             i, ii, iii, iv,
                             v, vi, vii, viii,
-                            ix, x, xi, xii, total))
+                            ix, x, xi, xii, total,
+                            getPreventiveBudgetWithRealisasiBudget(customer_id, tahun, area_id, sub_area,
+                                    item.id, dataRealisasiBudget)))
                 }
             }
         }
         return preventiveBudget
     }
 
-    fun getPreventiveBudgetArea(customer_id: Int, tahun: String, area_id: String, data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>):MutableList<PreventiveBudgetArea>{
+    fun getPreventiveBudgetWithRealisasiBudget(customer_id: Int, tahun: String, area_id: String, sub_area: String?,
+                                               budget_realisasi_id: Long,
+                                               data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>): MutableList<PreventiveRealisasiBudget> {
+        val preventiveRealisasiBudget:MutableList<PreventiveRealisasiBudget> = mutableListOf()
+        data.forEach {
+            item->
+            if((item.tahun.toString() == tahun) and
+                    (item.customer_id == customer_id.toLong()) and
+                    (item.area_id.toString() == area_id) and (item.area_detail == sub_area) and
+                    (item.id == budget_realisasi_id)){
+                var found = false
+                preventiveRealisasiBudget.forEach {
+                    itemDetail ->
+                    if(itemDetail.name == item.name) found = true
+                }
+                if(!found){
+                    val i = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 1, data)
+                    val ii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 2, data)
+                    val iii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 3, data)
+                    val iv = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 4, data)
+                    val v = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 5, data)
+                    val vi = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 6, data)
+                    val vii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 7, data)
+                    val viii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 8, data)
+                    val ix = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 9, data)
+                    val x = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 10, data)
+                    val xi = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 11, data)
+                    val xii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 12, data)
+                    val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
+
+                    preventiveRealisasiBudget.add(PreventiveRealisasiBudget(item.id, item.name,
+                            i, ii, iii, iv,
+                            v, vi, vii, viii,
+                            ix, x, xi, xii, total))
+                }
+            }
+        }
+        return preventiveRealisasiBudget
+    }
+
+    fun getPreventiveBudgetArea(customer_id: Int, tahun: String, area_id: String,
+                                data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>,
+                                dataRealisasiBudget: Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveBudgetArea>{
         val preventiveBudgetArea:MutableList<PreventiveBudgetArea> = mutableListOf()
         var id:Long= 0
         data.forEach {
@@ -314,7 +360,7 @@ class PreventiveDetailController{
                     if(itemDetail.area_detail == item.area_detail?: "-") found = true
                 }
                 if (!found){
-                    preventiveBudgetArea.add(PreventiveBudgetArea(id++, item.area_detail?: "-", getPreventiveBudget(customer_id, tahun, area_id, item.area_detail , data)))
+                    preventiveBudgetArea.add(PreventiveBudgetArea(id++, item.area_detail?: "-", getPreventiveBudget(customer_id, tahun, area_id, item.area_detail , data, dataRealisasiBudget)))
                 }
             }
         }
