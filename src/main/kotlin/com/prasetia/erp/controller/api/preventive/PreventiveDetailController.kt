@@ -54,6 +54,30 @@ class PreventiveDetailController{
         return value
     }
 
+
+
+    fun getPreventiveSaleOrderInvoice(client_order_ref: String, data:Iterable<PreventiveSaleOrderInvoice>, bulan: Long): Long{
+        var value:Long = 0
+        data.forEach {
+            item->
+            if ((item.client_order_ref == client_order_ref) and (item.bulan_po == bulan)){
+                value += item.nilai_invoice
+            }
+        }
+        return value
+    }
+
+    fun getPreventiveBudgetRealisasi(name: String, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>, bulan: Long): Long{
+        var value:Long = 0
+        data.forEach {
+            item->
+            if ((item.name == name) and (item.bulan == bulan)){
+                value += item.realisasi_budget?:0
+            }
+        }
+        return value
+    }
+
     fun getPreventivePOInvoice(clientOrderRef: String, data:Iterable<PreventiveSaleOrderInvoice>):MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice>{
         val preventiveSaleOrderInvoice:MutableList<com.prasetia.erp.pojo.preventive.PreventiveSaleOrderInvoice> = mutableListOf()
         data.forEach {
@@ -164,6 +188,30 @@ class PreventiveDetailController{
                     val x = getPreventiveSaleOrderNilaiPO(customer_id, tahun, area_id, item.client_order_ref, 10, data)
                     val xi = getPreventiveSaleOrderNilaiPO(customer_id, tahun, area_id, item.client_order_ref, 11, data)
                     val xii = getPreventiveSaleOrderNilaiPO(customer_id, tahun, area_id, item.client_order_ref, 12, data)
+                    val i_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 1)
+                    val ii_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 2)
+                    val iii_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 3)
+                    val iv_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 4)
+                    val v_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 5)
+                    val vi_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 6)
+                    val vii_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 7)
+                    val viii_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 8)
+                    val ix_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 9)
+                    val x_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 10)
+                    val xi_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 11)
+                    val xii_inv = getPreventiveSaleOrderInvoice(item.client_order_ref, dataSaleOrder , 12)
+                    val i_inv_precentage = if (i == 0.toLong()) 0f else i_inv.toFloat().div(i.toFloat())
+                    val ii_inv_precentage = if (ii == 0.toLong()) 0f else ii_inv.toFloat().div(i.toFloat())
+                    val iii_inv_precentage = if (iii == 0.toLong()) 0f else iii_inv.toFloat().div(i.toFloat())
+                    val iv_inv_precentage = if (iv == 0.toLong()) 0f else iv_inv.toFloat().div(i.toFloat())
+                    val v_inv_precentage = if (v == 0.toLong()) 0f else v_inv.toFloat().div(i.toFloat())
+                    val vi_inv_precentage = if (vi == 0.toLong()) 0f else vi_inv.toFloat().div(i.toFloat())
+                    val vii_inv_precentage = if (vii == 0.toLong()) 0f else vii_inv.toFloat().div(i.toFloat())
+                    val viii_inv_precentage = if (viii == 0.toLong()) 0f else viii_inv.toFloat().div(i.toFloat())
+                    val ix_inv_precentage = if (ix == 0.toLong()) 0f else ix_inv.toFloat().div(i.toFloat())
+                    val x_inv_precentage = if (x == 0.toLong()) 0f else x_inv.toFloat().div(i.toFloat())
+                    val xi_inv_precentage = if (xi == 0.toLong()) 0f else xi_inv.toFloat().div(i.toFloat())
+                    val xii_inv_precentage = if (xii == 0.toLong()) 0f else xii_inv.toFloat().div(i.toFloat())
                     val total = i + ii + iii + iv + v + vi + vii + vii + ix + x + xi + xii
 
                     preventiveSaleOrder.add(com.prasetia.erp.pojo.preventive.PreventiveSaleOrder(
@@ -173,7 +221,13 @@ class PreventiveDetailController{
                             iv, v, vi,
                             vii, viii, ix,
                             x, xi, xii,
-                            total, getPreventivePOInvoice(item.client_order_ref, dataSaleOrder)))
+                            total, i_inv, ii_inv, iii_inv,
+                            iv_inv, v_inv, vi_inv,
+                            vii_inv, viii_inv, ix_inv, x_inv, xi_inv, xii_inv,
+                            i_inv_precentage, ii_inv_precentage, iii_inv_precentage, iv_inv_precentage,
+                            v_inv_precentage, vi_inv_precentage, vii_inv_precentage, viii_inv_precentage,
+                            ix_inv_precentage, x_inv_precentage, xi_inv_precentage, xii_inv_precentage,
+                            getPreventivePOInvoice(item.client_order_ref, dataSaleOrder)))
                 }
 
             }
@@ -293,11 +347,43 @@ class PreventiveDetailController{
                     val xi = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 11, data)
                     val xii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 12, data)
                     val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
+                    val i_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,1)
+                    val ii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,2)
+                    val iii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,3)
+                    val iv_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,4)
+                    val v_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,5)
+                    val vi_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,6)
+                    val vii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,7)
+                    val viii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,8)
+                    val ix_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,9)
+                    val x_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,10)
+                    val xi_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,11)
+                    val xii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,12)
+                    val i_realisasi_percentage = if (i == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val ii_realisasi_percentage = if (ii == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val iii_realisasi_percentage = if (iii == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val iv_realisasi_percentage = if (iv == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val v_realisasi_percentage = if (v == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val vi_realisasi_percentage = if (vi == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val vii_realisasi_percentage = if (vii == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val viii_realisasi_percentage = if (viii == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val ix_realisasi_percentage = if (ix == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val x_realisasi_percentage = if (x == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val xi_realisasi_percentage = if (xi == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                    val xii_realisasi_percentage = if (xii == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
 
                     preventiveBudget.add(PreventiveBudget(item.id, item.name,
                             i, ii, iii, iv,
                             v, vi, vii, viii,
                             ix, x, xi, xii, total,
+                            i_realisasi, ii_realisasi, iii_realisasi,
+                            iv_realisasi, v_realisasi, vi_realisasi,
+                            vii_realisasi, viii_realisasi, ix_realisasi,
+                            x_realisasi, xi_realisasi, xii_realisasi,
+                            i_realisasi_percentage, ii_realisasi_percentage, iii_realisasi_percentage,
+                            iv_realisasi_percentage, v_realisasi_percentage, vi_realisasi_percentage,
+                            vii_realisasi_percentage, viii_realisasi_percentage, ix_realisasi_percentage,
+                            x_realisasi_percentage,xi_realisasi_percentage, xii_realisasi_percentage,
                             getPreventiveBudgetWithRealisasiBudget(customer_id, tahun, area_id, sub_area,
                                     item.id, dataRealisasiBudget)))
                 }
