@@ -44,7 +44,7 @@ class CorrectiveController{
         val correctiveCustomerSummaryData:MutableList<CorrectiveCustomerSummaryData> = mutableListOf()
         data.forEach {
             correctiveCustomerSummaryData.add(CorrectiveCustomerSummaryData(it.id, it.jumlah_site,
-                    it.year_project, it.nilai_po, it.nilai_inv, it.realisasi_budget, it.percentage, it.profit,
+                    it.year_project, it.nilai_po, it.nilai_inv, it.realisasi_budget, it.nilai_budget, it.percentage, it.persent_budget, it.profit,
                     it.profit_percentage))
         }
         return correctiveCustomerSummaryData
