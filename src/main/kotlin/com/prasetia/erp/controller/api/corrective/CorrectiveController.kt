@@ -106,7 +106,7 @@ class CorrectiveController{
         val correctiveYearData:MutableList<CorrectiveYearData> = mutableListOf()
         data.forEach {
             correctiveYearData.add((CorrectiveYearData(it.id, it.customer_id, it.code, it.jumlah_site, it.year_project,
-                    it.nilai_po, it.nilai_inv, it.realisasi_budget, it.percentage,
+                    it.nilai_po, it.nilai_inv, it.realisasi_budget, it.nilai_budget, it.percentage, it.persent_budget,
                     it.profit, it.profit_percentage, getCorrectiveProject(tahun.toString(), it.code))))
         }
         return correctiveYearData

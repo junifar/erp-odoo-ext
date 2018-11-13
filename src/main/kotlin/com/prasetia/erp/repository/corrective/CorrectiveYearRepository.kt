@@ -20,10 +20,12 @@ interface CorrectiveYearRepository:CrudRepository<CorrectiveYear, Long>{
                                 EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) as year_project,
                                 Sum(A.nilai_po) AS nilai_po,
                                 Sum(B.nilai_inv) AS nilai_inv,
-                                round(Sum(B.nilai_inv)/Sum(A.nilai_po),2) AS percentage,
+                                COALESCE(round(Sum(B.nilai_inv)/Sum(A.nilai_po)*100,2), 0) AS percentage,
+		                        COALESCE(sum(D.nilai_budget),0) AS nilai_budget,
                                 Sum(C.realisasi_budget) AS realisasi_budget,
                                 Sum(B.nilai_inv) - Sum(C.realisasi_budget) AS profit,
-                                CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END AS profit_percentage
+                                CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END AS profit_percentage,
+		                        COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
                             FROM
                                 "public".project_project
                                 LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
@@ -138,6 +140,19 @@ interface CorrectiveYearRepository:CrudRepository<CorrectiveYear, Long>{
                                             GROUP BY
                                             "public".project_project."id"
                                     ) AS C ON "public".project_project."id" = C.id
+                                    LEFT JOIN (
+                                            SELECT
+                                            "public".budget_plan.project_id,
+                                            Sum("public".budget_plan_line.amount) AS nilai_budget
+                                            FROM
+                                            "public".budget_plan
+                                            LEFT JOIN "public".budget_plan_line ON "public".budget_plan_line.budget_id = "public".budget_plan."id"
+                                            WHERE
+                                            "public".budget_plan."state" <> 'draft' AND
+                                            "public".budget_plan.project_id IS NOT NULL
+                                            GROUP BY
+                                            "public".budget_plan.project_id
+                                    ) AS D ON D.project_id = "public".project_project.id
                             WHERE
                                 "public".project_project.site_type_id = 8 AND
                                 "public".project_site.customer_id IS NOT NULL AND
