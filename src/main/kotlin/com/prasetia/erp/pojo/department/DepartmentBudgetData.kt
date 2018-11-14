@@ -1,6 +1,15 @@
 package com.prasetia.erp.pojo.department
 
-import com.prasetia.erp.model.department.DepartmentBudget
+class DepartmentBudgetDetailData(
+        val id:Long,
+        val code:String?,
+        val budget_item_view:String?,
+        val nilai_budget:Long?,
+        val realisasi_budget:Long?,
+        val persent_budget: Float?
+){
+    constructor(): this(0, "","",0,0,0f)
+}
 
 class DepartmentBudgetYearData(
         val id:Long,
@@ -18,8 +27,9 @@ class DepartmentBudgetData(
         val id:Long,
         val name:String?,
         val nilai_budget:Long?,
-        val realisasiBudget: Long?,
-        val persent_budget: Float?
+        val realisasi_budget: Long?,
+        val persent_budget: Float?,
+        val budget_detail: MutableList<DepartmentBudgetDetailData>?
 ){
-    constructor(): this(0,"",0,0,0f)
+    constructor(): this(0,"",0,0,0f, null)
 }
