@@ -11,6 +11,7 @@ interface DepartmentBudgetDetailRepository:CrudRepository<DepartmentBudgetDetail
         const val QUERY = """
                             SELECT
                             "public".budget_plan."id",
+                            "public".budget_plan_line."id" as line_id,
                             "public".budget_plan_line.code,
                             "public".budget_plan_line."name" as budget_item_view,
                             A.nilai_budget,
