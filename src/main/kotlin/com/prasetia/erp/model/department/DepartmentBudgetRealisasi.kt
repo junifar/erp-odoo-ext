@@ -7,8 +7,8 @@ import javax.persistence.Id
 class DepartmentBudgetRealisasi(
         @Id
         val id:Long,
-        val budget_id:Long,
-        val parent_id:Long,
+        val budget_id:Long?,
+        val parent_id:Long?,
         val ref:String?,
         val narration:String?,
         val budget_realisasi:Long?

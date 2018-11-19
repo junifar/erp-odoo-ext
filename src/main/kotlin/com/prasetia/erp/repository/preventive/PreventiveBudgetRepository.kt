@@ -19,7 +19,7 @@ interface PreventiveBudgetRepository:CrudRepository<PreventiveBudget, Long>{
                                 "public".project_site.customer_id,
                                 budget_plan_line_parent."name",
                                 Sum("public".budget_plan_line.amount) AS nilai_budget,
-                            "public".budget_area_detail."name" AS area_detail
+                                "public".budget_area_detail."name" AS area_detail
                             FROM
                                 "public".budget_plan_line
                                 LEFT JOIN "public".budget_plan ON "public".budget_plan_line.budget_id = "public".budget_plan."id"

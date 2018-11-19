@@ -2,8 +2,8 @@ package com.prasetia.erp.pojo.department
 
 class DepartmentBudgetRealisasiData(
         val id:Long,
-        val budget_id:Long,
-        val parent_id:Long,
+        val budget_id:Long?,
+        val parent_id:Long?,
         val ref:String?,
         val narration:String?,
         val budget_realisasi:Long?
