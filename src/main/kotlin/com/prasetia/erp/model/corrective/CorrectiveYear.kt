@@ -8,7 +8,7 @@ class CorrectiveYear(
         @Id
         val id: Long,
         val customer_id:Long,
-        val code:String,
+        val code:String?,
         val jumlah_site: Long?,
         val year_project: String?,
         val nilai_po: Long?,

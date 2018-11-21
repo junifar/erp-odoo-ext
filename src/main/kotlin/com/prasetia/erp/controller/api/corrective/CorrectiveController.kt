@@ -61,7 +61,7 @@ class CorrectiveController{
         return correctiveCustomerSummaryData
     }
 
-    fun getCorrectiveProject(tahun:String, customer:String): MutableList<CorrectiveProjectData>{
+    fun getCorrectiveProject(tahun:String, customer:String?): MutableList<CorrectiveProjectData>{
 //        val data = repositoryCorrectiveProject.getCorrectiveProject(tahun)
         val data = correctiveProjectDataRepository
         val correctiveProjectData: MutableList<CorrectiveProjectData> = mutableListOf()

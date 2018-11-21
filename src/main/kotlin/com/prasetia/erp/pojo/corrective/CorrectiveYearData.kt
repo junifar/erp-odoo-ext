@@ -7,7 +7,7 @@ class CorrectiveYearData(
         @Id
         val id: Long,
         val customer_id:Long,
-        val code:String,
+        val code:String?,
         val jumlah_site: Long?,
         val year_project: String?,
         val nilai_po: Long?,
@@ -29,7 +29,7 @@ class CorrectiveProjectData(
         val id:Long,
         val year_project:String,
         val site_name:String,
-        val customer:String,
+        val customer:String?,
         var budget_used: MutableList<CorrectiveBudgetUsedData>?,
         var cash_advance: MutableList<CorrectiveAdvanceData>?
 ){
