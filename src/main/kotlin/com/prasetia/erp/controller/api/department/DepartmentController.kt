@@ -63,10 +63,10 @@ class DepartmentController{
     }
 
     fun getDepartmentBudgetDetailData(budget_id:Long):MutableList<DepartmentBudgetDetailData>{
-        val data = departmentBudgetDetailData.filter { it.id == budget_id }
+        val data = departmentBudgetDetailData.filter { it.budget_id == budget_id }
         val departmentBudgetDetailData: MutableList<DepartmentBudgetDetailData> = mutableListOf()
         data.forEach {
-                departmentBudgetDetailData.add(DepartmentBudgetDetailData(it.id, it.line_id, it.code, it.budget_item_view,
+                departmentBudgetDetailData.add(DepartmentBudgetDetailData(it.id, it.budget_id, it.line_id, it.code, it.budget_item_view,
                         it.nilai_budget, it.realisasi_budget, it.persent_budget, getDepartmentBudgetRealisasiData(it.line_id)))
         }
         return departmentBudgetDetailData

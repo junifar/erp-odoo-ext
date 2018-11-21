@@ -7,6 +7,7 @@ import javax.persistence.Id
 class DepartmentBudgetDetail(
         @Id
         val id:Long,
+        val budget_id:Long,
         val line_id:Long?,
         val code:String?,
         val budget_item_view:String?,
@@ -14,5 +15,5 @@ class DepartmentBudgetDetail(
         val realisasi_budget:Long?,
         val persent_budget: Float?
 ){
-    constructor(): this(0,0,"","", 0,0,0f)
+    constructor(): this(0,0,0,"","", 0,0,0f)
 }

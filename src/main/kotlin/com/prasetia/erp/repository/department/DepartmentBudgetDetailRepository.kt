@@ -10,7 +10,8 @@ interface DepartmentBudgetDetailRepository:CrudRepository<DepartmentBudgetDetail
     companion object {
         const val QUERY = """
                             SELECT
-                            "public".budget_plan."id",
+                            ROW_NUMBER() OVER (ORDER BY "public".budget_plan."id") AS id,
+                            "public".budget_plan."id" as budget_id,
                             "public".budget_plan_line."id" as line_id,
                             "public".budget_plan_line.code,
                             "public".budget_plan_line."name" as budget_item_view,

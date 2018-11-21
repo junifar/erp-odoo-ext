@@ -37,7 +37,7 @@ interface DepartmentYearRepository:CrudRepository<DepartmentYear, Long>{
                             LEFT JOIN (
                                                 SELECT
                                                 "public".budget_plan."id",
-                                                Max(AB.budget_realisasi) AS realisasi_budget
+                                                SUM(AB.budget_realisasi) AS realisasi_budget
                                                 FROM
                                                 "public".project_project
                                                 LEFT JOIN "public".budget_plan ON "public".budget_plan.project_id = "public".project_project."id"
@@ -147,7 +147,7 @@ interface DepartmentYearRepository:CrudRepository<DepartmentYear, Long>{
                             LEFT JOIN (
                                                                     SELECT
                                                                     "public".budget_plan."id",
-                                                                    Max(AB.budget_realisasi) AS realisasi_budget
+                                                                    SUM(AB.budget_realisasi) AS realisasi_budget
                                                                     FROM
                                                                     "public".project_project
                                                                     LEFT JOIN "public".budget_plan ON "public".budget_plan.project_id = "public".project_project."id"
