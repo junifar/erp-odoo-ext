@@ -106,12 +106,12 @@ interface DepartmentSummaryRepository:CrudRepository<DepartmentSummary, Long>{
                                                                 AA.ref
                                                 ) AS AB ON AB.budget_plan_line_id = "public".budget_plan_line."id"
                                                 WHERE
-                                                "public".project_project.site_type_id IN (36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 61, 64, 65, 68, 70, 74)
+                                                "public".project_project.site_type_id IN (36, 37, 38, 40, 41, 42, 43, 45, 46, 47, 48, 61, 64, 65, 68, 70, 74)
                                                 GROUP BY
                                                 "public".budget_plan."id"
                                                 ) AS C ON "public".budget_plan."id" = C.id
                             WHERE
-                            "public".budget_plan.site_type_id IN (36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 61, 64, 65, 68, 70, 74) AND
+                            "public".budget_plan.site_type_id IN (36, 37, 38, 40, 41, 42, 43, 45, 46, 47, 48, 61, 64, 65, 68, 70, 74) AND
                             EXTRACT(YEAR from "public".budget_plan.periode_start) IS NOT NULL
                             GROUP BY
                             EXTRACT(YEAR from "public".budget_plan.periode_start)
