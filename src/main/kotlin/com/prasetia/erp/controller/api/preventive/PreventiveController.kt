@@ -56,9 +56,27 @@ class PreventiveController{
                 itemDetail ->
                 if(itemDetail.tahun == item.tahun) found = true
             }
+
             if (!found) yearGroup.add(PreventiveCustomerYear(id++, item.tahun, getCustomerItemDetail(item.tahun, data)))
         }
         return  yearGroup
+    }
+
+    private fun getSumTotalItemDetail(data:Iterable<PreventiveCustomer>): ArrayList<Long> {
+        val list = arrayListOf<Long>()
+        var nilai_po:Long = 0
+        var nilai_penagihan:Long = 0
+        var nilai_budget:Long = 0
+        var realisasi_budget:Long = 0
+
+        data.forEach {
+            nilai_po = it.nilai_po?.let { it1 -> nilai_po.plus(it1) }?:nilai_po
+            nilai_penagihan = it.nilai_penagihan?.let { it1 -> nilai_penagihan.plus(it1) }?:nilai_penagihan
+            nilai_budget = it.nilai_budget?.let { it1 -> nilai_budget.plus(it1) }?:nilai_budget
+            realisasi_budget = it.realisasi_budget?.let { it1 -> realisasi_budget.plus(it1) }?:realisasi_budget
+        }
+        list.addAll(listOf(nilai_po, nilai_penagihan, nilai_budget, realisasi_budget))
+        return list
     }
 
     fun getCustomerItemDetail(tahun: String, data:Iterable<PreventiveCustomer>):MutableList<PreventiveCustomerGroup>{
@@ -68,11 +86,29 @@ class PreventiveController{
             item->
             if(item.tahun == tahun){
                 var found = false
+                var nilai_po:Long = 0
+                var nilai_penagihan:Long = 0
+                var nilai_budget:Long = 0
+                var realisasi_budget:Long = 0
+
                 customerItemDetail.forEach {
                     itemDetail ->
                     if (itemDetail.customer_id == item.customer_id) found = true
                 }
-                if (!found) customerItemDetail.add(PreventiveCustomerGroup(id++, item.customer_name, item.customer_id, getCustomerSubItemDetail(tahun, item.customer_id, data)))
+
+                if(!found){
+                    val data_sum = getSumTotalItemDetail(data.filter { it.customer_id == item.customer_id })
+//                    nilai_po = data.filter { it.customer_id == item.customer_id }.sumBy { it.nilai_po?.toInt()?:0 }.toLong()
+//                    nilai_penagihan = data.filter { it.customer_id == item.customer_id }.sumBy { it.nilai_penagihan?.toInt()?:0 }.toLong()
+//                    nilai_budget = data.filter { it.customer_id == item.customer_id }.sumBy { it.nilai_budget?.toInt()?:0 }.toLong()
+//                    realisasi_budget = data.filter { it.customer_id == item.customer_id }.sumBy { it.realisasi_budget?.toInt()?:0 }.toLong()
+                    nilai_po = data_sum[0]
+                    nilai_penagihan = data_sum[1]
+                    nilai_budget = data_sum[2]
+                    realisasi_budget = data_sum[3]
+                }
+
+                if (!found) customerItemDetail.add(PreventiveCustomerGroup(id++, item.customer_name, item.customer_id, nilai_po, nilai_penagihan, nilai_budget, realisasi_budget, getCustomerSubItemDetail(tahun, item.customer_id, data)))
             }
         }
         return customerItemDetail
