@@ -18,7 +18,7 @@ interface CorrectiveBudgetRepository:CrudRepository<CorrectiveBudget, Long>{
                             "public".account_analytic_account."name" as project_id,
                             "public".budget_plan."name" AS nomor_budget,
                             A.nilai_budget,
-                            B.realisasi_budget,
+                            COALESCE(B.realisasi_budget,0) as realisasi_budget,
                             COALESCE(round(cast(B.realisasi_budget/A.nilai_budget as numeric) * 100,2),0) AS persent_budget
                             FROM
                             "public".budget_plan

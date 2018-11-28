@@ -15,17 +15,17 @@ interface CorrectiveYearRepository:CrudRepository<CorrectiveYear, Long>{
                                 ROW_NUMBER() OVER (ORDER BY "public".res_partner."id") AS id,
                                 "public".res_partner."id" AS customer_id,
                                 "public".res_partner.code,
-                                Count("public".project_project."id") AS jumlah_site,
+                                COALESCE(Count("public".project_project."id"),0) AS jumlah_site,
                                 --"public".project_project.year_project,
                                 EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) as year_project,
-                                Sum(A.nilai_po) AS nilai_po,
-                                Sum(B.nilai_inv) AS nilai_inv,
+                                COALESCE(Sum(A.nilai_po),0) AS nilai_po,
+                                COALESCE(Sum(B.nilai_inv),0) AS nilai_inv,
                                 COALESCE(round(Sum(B.nilai_inv)/Sum(A.nilai_po)*100,2), 0) AS percentage,
-		                        COALESCE(sum(D.nilai_budget),0) AS nilai_budget,
-                                Sum(C.realisasi_budget) AS realisasi_budget,
-                                Sum(B.nilai_inv) - Sum(C.realisasi_budget) AS profit,
-                                CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END AS profit_percentage,
-		                        COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
+                                COALESCE(sum(D.nilai_budget),0) AS nilai_budget,
+                                COALESCE(Sum(C.realisasi_budget),0) AS realisasi_budget,
+                                COALESCE(Sum(B.nilai_inv) - Sum(C.realisasi_budget),0) AS profit,
+                                COALESCE(CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END,0) AS profit_percentage,
+                                COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
                             FROM
                                 "public".project_project
                                 LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
@@ -170,17 +170,17 @@ interface CorrectiveYearRepository:CrudRepository<CorrectiveYear, Long>{
                                 ROW_NUMBER() OVER (ORDER BY "public".res_partner."id") AS id,
                                 "public".res_partner."id" AS customer_id,
                                 "public".res_partner.code,
-                                Count("public".project_project."id") AS jumlah_site,
+                                COALESCE(Count("public".project_project."id"),0) AS jumlah_site,
                                 --"public".project_project.year_project,
                                 EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) as year_project,
-                                Sum(A.nilai_po) AS nilai_po,
-                                Sum(B.nilai_inv) AS nilai_inv,
+                                COALESCE(Sum(A.nilai_po),0) AS nilai_po,
+                                    COALESCE(Sum(B.nilai_inv),0) AS nilai_inv,
                                 COALESCE(round(Sum(B.nilai_inv)/Sum(A.nilai_po)*100,2), 0) AS percentage,
-		                        COALESCE(sum(D.nilai_budget),0) AS nilai_budget,
-                                Sum(C.realisasi_budget) AS realisasi_budget,
-                                Sum(B.nilai_inv) - Sum(C.realisasi_budget) AS profit,
-                                CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END AS profit_percentage,
-		                        COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
+                                COALESCE(sum(D.nilai_budget),0) AS nilai_budget,
+                                COALESCE(Sum(C.realisasi_budget),0) AS realisasi_budget,
+                                COALESCE(Sum(B.nilai_inv) - Sum(C.realisasi_budget),0) AS profit,
+                                COALESCE(CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END,0) AS profit_percentage,
+                                COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
                             FROM
                                 "public".project_project
                                 LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"

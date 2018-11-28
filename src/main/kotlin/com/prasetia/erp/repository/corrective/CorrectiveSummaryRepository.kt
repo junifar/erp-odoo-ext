@@ -15,13 +15,13 @@ interface CorrectiveSummaryRepository:CrudRepository<CorrectiveSummary, Long>{
                             ROW_NUMBER() OVER (ORDER BY EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas)) AS id,
                             Count("public".project_project."id") AS jumlah_site,
                             EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) AS year_project,
-                            Sum(A.nilai_po) AS nilai_po,
-                            Sum(B.nilai_inv) AS nilai_inv,
+                            COALESCE(Sum(A.nilai_po),0) AS nilai_po,
+                            COALESCE(Sum(B.nilai_inv),0) AS nilai_inv,
                             COALESCE(round(Sum(B.nilai_inv)/Sum(A.nilai_po)*100,2), 0) AS percentage,
                             COALESCE(sum(D.nilai_budget),0) AS nilai_budget ,
-                            Sum(C.realisasi_budget) AS realisasi_budget,
-                            Sum(B.nilai_inv) - Sum(C.realisasi_budget) AS profit,
-                            CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END AS profit_percentage,
+                            COALESCE(Sum(C.realisasi_budget),0) AS realisasi_budget,
+                            COALESCE(Sum(B.nilai_inv) - Sum(C.realisasi_budget),0) AS profit,
+                            COALESCE(CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END,0) AS profit_percentage,
                             COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
                             FROM
                             "public".project_project
