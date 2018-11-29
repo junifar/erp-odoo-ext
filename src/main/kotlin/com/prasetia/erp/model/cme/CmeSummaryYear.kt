@@ -13,8 +13,8 @@ class CmeSummaryYear(
         val nilai_po: Long,
         val nilai_invoice: Long,
         val nilai_budget: Long,
-        val realisasi_budget: Long,
+        val realisasi_budget: Float,
         val estimate_po: Long
 ){
-    constructor(): this(0,0,0,0,0,0,0, 0, 0)
+    constructor(): this(0,0,0,0,0,0,0, 0f, 0)
 }

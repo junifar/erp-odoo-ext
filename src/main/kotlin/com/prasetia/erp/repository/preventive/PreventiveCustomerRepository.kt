@@ -58,7 +58,7 @@ interface PreventiveCustomerRepository: CrudRepository<PreventiveCustomer, Long>
                                 COALESCE(sum(D.nilai_budget),0) AS nilai_budget ,
                                 COALESCE(sum(E.realisasi_budget),0) AS realisasi_budget,
                                 COALESCE(sum(E.realisasi_budget)/sum(D.nilai_budget) * 100,0) AS persent_budget,
-                                COALESCE(sum(C.nilai_penagihan)-sum(E.realisasi_budget),0) AS laba_rugi,
+                                COALESCE(sum(C.nilai_penagihan),0)-COALESCE(sum(E.realisasi_budget),0) AS laba_rugi,
                                 COALESCE((sum(C.nilai_penagihan)-sum(E.realisasi_budget))/sum(E.realisasi_budget) *  100,0) AS persent_laba_rugi
                             FROM
                                 "public".project_project

@@ -39,7 +39,7 @@ class CmeController{
             val remainingInvoice = it.nilai_po - it.nilai_invoice
             val percentageRealization = if (it.nilai_budget == 0.toLong()) 0.toFloat() else it.realisasi_budget.toFloat().div(it.nilai_budget.toFloat())
             val profitLoss = it.nilai_invoice - it.realisasi_budget
-            val percentageProfitRealization = if (it.realisasi_budget == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.realisasi_budget)
+            val percentageProfitRealization = if (it.realisasi_budget == 0f) 0.toFloat() else profitLoss.toFloat().div(it.realisasi_budget)
             val percentageProfitPO = if(it.nilai_po == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.nilai_po)
 
             cmeSummaryYearData.add(CmeSummaryYearData(it.id, it.year_project, it.jumlah_site, it.site_cancel,

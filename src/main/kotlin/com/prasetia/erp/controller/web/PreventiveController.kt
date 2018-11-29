@@ -2186,8 +2186,8 @@ class PreventiveController{
     }
 
     //type : total_po, total_penagihan, total_budget, total_realisasi, total_laba_rugi
-    fun getTotalPreventiveCustomer(data:List<PreventiveCustomerYear>, type:String): Long{
-        var total: Long = 0
+    fun getTotalPreventiveCustomer(data:List<PreventiveCustomerYear>, type:String): Double{
+        var total: Double = 0.0
         data.forEach {
             items->
             items.detail?.forEach {
@@ -2206,7 +2206,7 @@ class PreventiveController{
         return total
     }
 
-    fun getTotalPreventiveCustomer(data:List<PreventiveCustomerYear>) = longArrayOf(
+    fun getTotalPreventiveCustomer(data:List<PreventiveCustomerYear>) = doubleArrayOf(
             getTotalPreventiveCustomer(data, "total_po"),
             getTotalPreventiveCustomer(data, "total_penagihan"),
             getTotalPreventiveCustomer(data, "total_budget"),

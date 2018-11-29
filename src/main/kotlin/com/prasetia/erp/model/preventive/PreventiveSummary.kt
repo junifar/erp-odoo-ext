@@ -8,15 +8,15 @@ class PreventiveSummary(
         @Id
         val id: Long,
         val tahun: String,
-        val nilai_po: Long?,
-        val nilai_penagihan: Long?,
-        val nilai_budget: Long?,
-        val realisasi_budget: Long?,
-        val laba_rugi: Long?,
-        val persent_penagihan:Long?,
-        val persent_budget:Long?,
-        val persent_laba_rugi:Long?
+        val nilai_po: Double?,
+        val nilai_penagihan: Double?,
+        val nilai_budget: Double?,
+        val realisasi_budget: Double,
+        val laba_rugi: Double?,
+        val persent_penagihan:Double?,
+        val persent_budget:Double?,
+        val persent_laba_rugi:Double?
 ){
-    constructor(): this(0, "", 0, 0, 0, 0, 0,
-            0,0,0)
+    constructor(): this(0, "", 0.0, 0.0, 0.0, 0.0, 0.0,
+            0.0,0.0,0.0)
 }

@@ -62,12 +62,12 @@ class PreventiveController{
         return  yearGroup
     }
 
-    private fun getSumTotalItemDetail(data:Iterable<PreventiveCustomer>): ArrayList<Long> {
-        val list = arrayListOf<Long>()
-        var nilai_po:Long = 0
-        var nilai_penagihan:Long = 0
-        var nilai_budget:Long = 0
-        var realisasi_budget:Long = 0
+    private fun getSumTotalItemDetail(data:Iterable<PreventiveCustomer>): ArrayList<Double> {
+        val list = arrayListOf<Double>()
+        var nilai_po = 0.0
+        var nilai_penagihan = 0.0
+        var nilai_budget = 0.0
+        var realisasi_budget = 0.0
 
         data.forEach {
             nilai_po = it.nilai_po?.let { it1 -> nilai_po.plus(it1) }?:nilai_po
@@ -75,7 +75,7 @@ class PreventiveController{
             nilai_budget = it.nilai_budget?.let { it1 -> nilai_budget.plus(it1) }?:nilai_budget
             realisasi_budget = it.realisasi_budget?.let { it1 -> realisasi_budget.plus(it1) }?:realisasi_budget
         }
-        list.addAll(listOf(nilai_po, nilai_penagihan, nilai_budget, realisasi_budget))
+        list.addAll(listOf(nilai_po.toDouble(), nilai_penagihan.toDouble(), nilai_budget.toDouble(), realisasi_budget))
         return list
     }
 
@@ -89,7 +89,7 @@ class PreventiveController{
                 var nilai_po:Long = 0
                 var nilai_penagihan:Long = 0
                 var nilai_budget:Long = 0
-                var realisasi_budget:Long = 0
+                var realisasi_budget:Double = 0.0
 
                 customerItemDetail.forEach {
                     itemDetail ->
@@ -102,9 +102,9 @@ class PreventiveController{
 //                    nilai_penagihan = data.filter { it.customer_id == item.customer_id }.sumBy { it.nilai_penagihan?.toInt()?:0 }.toLong()
 //                    nilai_budget = data.filter { it.customer_id == item.customer_id }.sumBy { it.nilai_budget?.toInt()?:0 }.toLong()
 //                    realisasi_budget = data.filter { it.customer_id == item.customer_id }.sumBy { it.realisasi_budget?.toInt()?:0 }.toLong()
-                    nilai_po = data_sum[0]
-                    nilai_penagihan = data_sum[1]
-                    nilai_budget = data_sum[2]
+                    nilai_po = data_sum[0].toLong()
+                    nilai_penagihan = data_sum[1].toLong()
+                    nilai_budget = data_sum[2].toLong()
                     realisasi_budget = data_sum[3]
                 }
 
