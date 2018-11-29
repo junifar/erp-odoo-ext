@@ -15,8 +15,8 @@ interface DepartmentBudgetDetailRepository:CrudRepository<DepartmentBudgetDetail
                             "public".budget_plan_line."id" as line_id,
                             "public".budget_plan_line.code,
                             "public".budget_plan_line."name" as budget_item_view,
-                            A.nilai_budget,
-                            B.realisasi_budget,
+                            COALESCE(A.nilai_budget, 0) as nilai_budget,
+                            COALESCE(B.realisasi_budget, 0) as realisasi_budget,
                             COALESCE(round(cast(B.realisasi_budget/A.nilai_budget as numeric) * 100,2),0) AS persent_budget
                             FROM
                             "public".budget_plan
