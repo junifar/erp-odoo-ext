@@ -1,14 +1,9 @@
 package com.prasetia.erp.controller.api.cme
 
+import com.prasetia.erp.model.cme.CmeInvoiceProject
 import com.prasetia.erp.model.cme.CmeProjectDetail
-import com.prasetia.erp.pojo.cme.CmeSummaryYearData
-import com.prasetia.erp.pojo.cme.CmeSummaryYearProjectTypeCustData
-import com.prasetia.erp.pojo.cme.CmeSummaryYearProjectTypeData
-import com.prasetia.erp.pojo.cme.CmeYearProjectTypeCustProjectDetailData
-import com.prasetia.erp.repository.cme.CmeProjectDetailRepository
-import com.prasetia.erp.repository.cme.CmeSummaryYearProjectTypeCustRepository
-import com.prasetia.erp.repository.cme.CmeSummaryYearProjectTypeRepository
-import com.prasetia.erp.repository.cme.CmeSummaryYearRepository
+import com.prasetia.erp.pojo.cme.*
+import com.prasetia.erp.repository.cme.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -29,7 +24,11 @@ class CmeController{
     @Autowired
     lateinit var repositoryCmeProjectDetail: CmeProjectDetailRepository
 
+    @Autowired
+    lateinit var repositoryCmeInvoiceProject: CmeInvoiceProjectRepository
+
     lateinit var cmeProjectDetailDataRepository: Iterable<CmeProjectDetail>
+    lateinit var cmeInvoiceProjectDataRepository: Iterable<CmeInvoiceProject>
 
     @RequestMapping("/api/project_summary_year")
     fun getSummaryCmeByYear():MutableList<CmeSummaryYearData>{
@@ -73,6 +72,7 @@ class CmeController{
     fun getSummaryCmeByYearProjectTypeCust(@PathVariable("tahun") tahun:Long, @PathVariable("site_type_id") site_type_id: Long): MutableList<CmeSummaryYearProjectTypeCustData>{
         val data = repositoryCmeSummaryYearProjectTypeCust.getCmeSummaryYearProjectTypeCust(tahun, site_type_id)
         val cmeSummaryYearProjectTypeCustData:MutableList<CmeSummaryYearProjectTypeCustData> = mutableListOf()
+        cmeInvoiceProjectDataRepository = repositoryCmeInvoiceProject.getCmeInvoiceProjectRepository(tahun, site_type_id)
 
         cmeProjectDetailDataRepository = repositoryCmeProjectDetail.getCmeProjectDetailRepository(tahun, site_type_id)
 
@@ -98,8 +98,18 @@ class CmeController{
             if((it.year_project == tahun) and (it.site_type_id == site_type_id) and (it.customer_id == customer_id))
                 cmeYearProjectTypeCustProjectDetailData.add(CmeYearProjectTypeCustProjectDetailData(it.id,
                         it.name, it.year_project, it.project_type, it.project_id, it.nilai_po, it.no_po, it.nilai_invoice,
-                        it.nilai_budget, it.realisasi_budget, it.estimate_po, it.customer, it.customer_id, it.site_type_id, it.area))
+                        it.nilai_budget, it.realisasi_budget, it.estimate_po, it.customer, it.customer_id, it.site_type_id, it.area,
+                        getCmeProjectInvoice(it.id)))
         }
         return cmeYearProjectTypeCustProjectDetailData
+    }
+
+    fun getCmeProjectInvoice(project_id:Long):MutableList<CmeInvoiceProjectData>{
+        val data = cmeInvoiceProjectDataRepository.filter { it.project_id == project_id }
+        val cmeInvoiceProjectDetailData: MutableList<CmeInvoiceProjectData> = mutableListOf()
+        data.forEach{
+            cmeInvoiceProjectDetailData.add(CmeInvoiceProjectData(it.id, it.project_id, it.name, it.state, it.nilai_invoice))
+        }
+        return cmeInvoiceProjectDetailData
     }
 }

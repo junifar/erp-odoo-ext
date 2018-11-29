@@ -21,7 +21,7 @@ interface CorrectiveSummaryRepository:CrudRepository<CorrectiveSummary, Long>{
                             COALESCE(sum(D.nilai_budget),0) AS nilai_budget ,
                             COALESCE(Sum(C.realisasi_budget),0) AS realisasi_budget,
                             COALESCE(Sum(B.nilai_inv) - Sum(C.realisasi_budget),0) AS profit,
-                            COALESCE(CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(C.realisasi_budget) END,0) AS profit_percentage,
+                            COALESCE(CASE WHEN Sum(C.realisasi_budget) = NULL THEN 0 ELSE (Sum(B.nilai_inv) - Sum(C.realisasi_budget))/Sum(B.nilai_inv) END,0) AS profit_percentage,
                             COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
                             FROM
                             "public".project_project

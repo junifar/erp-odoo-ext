@@ -2,6 +2,16 @@ package com.prasetia.erp.pojo.cme
 
 import javax.persistence.Id
 
+class CmeInvoiceProjectData(
+        val id:Long,
+        val project_id:Long?,
+        val name:String?,
+        val state:String?,
+        val nilai_invoice:Long?
+){
+    constructor(): this(0,0,"","",0)
+}
+
 class CmeSummaryYearProjectTypeCustData(
         @Id
         val id: Long,
@@ -44,8 +54,10 @@ class CmeYearProjectTypeCustProjectDetailData(@Id
                                               val customer:String?,
                                               val customer_id:Long?,
                                               val site_type_id: Long?,
-                                              val area: String?
+                                              val area: String?,
+                                              var invoice_list:List<CmeInvoiceProjectData>?
 ){
     constructor(): this(0,"",0,"","",0,"",
-            0,0,0,0,"", 0, 0, "")
+            0,0,0,0,"", 0, 0, "", null)
 }
+
