@@ -10,7 +10,7 @@ class CorrectiveAdvance(
         val id:Long,
         val year_project:String,
         val project_id:Long,
-        val amount:Long,
+        val amount:Double,
         val narration:String,
         val ref:String,
         val pic:String,
@@ -19,7 +19,7 @@ class CorrectiveAdvance(
         val ca_id: Long,
         val no_mi: String?,
         val no_po:String?,
-        val nilai_po:Long?
+        val nilai_po:Double?
 ){
-    constructor(): this(0, "", 0, 0, "","", "", "", null, 0, "","", 0)
+    constructor(): this(0, "", 0, 0.0, "","", "", "", null, 0, "","", 0.0)
 }

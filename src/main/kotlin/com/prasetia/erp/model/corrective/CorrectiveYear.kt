@@ -11,14 +11,18 @@ class CorrectiveYear(
         val code:String?,
         val jumlah_site: Long?,
         val year_project: String?,
-        val nilai_po: Long?,
-        val nilai_inv: Long?,
-        val realisasi_budget: Long?,
-        val nilai_budget: Long?,
-        val percentage:Float?,
-        val persent_budget:Float?,
-        val profit:Long?,
-        val profit_percentage:Float?
+        val nilai_po: Double?,
+        val nilai_inv: Double?,
+        val realisasi_budget: Double?,
+        val nilai_budget: Double?,
+        val percentage:Double?,
+        val persent_budget:Double?,
+        val profit:Double?,
+        val profit_percentage:Double?
 ){
-    constructor(): this(0,  0, "",0, "", 0, 0, 0,0,0f, 0f,0,0f)
+    constructor(): this(0,  0, "",
+            0, "", 0.0,
+            0.0, 0.0,0.0,
+            0.0, 0.0,0.0,
+            0.0)
 }

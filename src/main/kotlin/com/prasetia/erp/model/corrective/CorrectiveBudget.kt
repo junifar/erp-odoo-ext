@@ -13,10 +13,12 @@ class CorrectiveBudget(
         val site_name:String?,
         val project_id:String?,
         val nomor_budget:String?,
-        val nilai_budget:Long?,
-        val realisasi_budget:Long?,
-        val persent_budget:Float?
+        val nilai_budget:Double?,
+        val realisasi_budget:Double?,
+        val persent_budget:Double?
 
 ){
-    constructor(): this(0,0,0,0,"","","",0,0,0f)
+    constructor(): this(0,0,0,
+            0,"","","",
+            0.0,0.0,0.0)
 }

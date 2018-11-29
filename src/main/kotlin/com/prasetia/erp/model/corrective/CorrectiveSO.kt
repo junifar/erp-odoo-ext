@@ -11,9 +11,11 @@ class CorrectiveSO(
         val site_name:String,
         val project_id:String,
         val no_po:String,
-        val nilai_po:Long,
-        val nilai_invoice:Long,
-        val persent_invoice:Float
+        val nilai_po:Double,
+        val nilai_invoice:Double,
+        val persent_invoice:Double
 ){
-    constructor(): this(0,0,"","","",0,0,0f)
+    constructor(): this(0,0,"",
+            "","",0.0,
+            0.0,0.0)
 }

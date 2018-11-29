@@ -10,7 +10,7 @@ class CorrectiveBudgetUsed(
         val id:Long,
         val year_project:String?,
         val project_id:Long,
-        val amount:Long,
+        val amount:Double,
         val narration:String?,
         val ref:String?,
         val pic:String?,
@@ -18,5 +18,5 @@ class CorrectiveBudgetUsed(
         val tanggal:Date?
 
 ){
-    constructor(): this(0, "", 0, 0, "","", "", "", null)
+    constructor(): this(0, "", 0, 0.0, "","", "", "", null)
 }
