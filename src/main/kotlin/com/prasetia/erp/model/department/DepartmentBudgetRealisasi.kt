@@ -13,7 +13,7 @@ class DepartmentBudgetRealisasi(
         val parent_id:Long?,
         val ref:String?,
         val narration:String?,
-        val budget_realisasi:Long?
+        val budget_realisasi:Double?
 ){
-    constructor(): this(0,null,0,0,"","",0)
+    constructor(): this(0,null,0,0,"","",0.0)
 }
