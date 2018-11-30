@@ -10,7 +10,7 @@ class CmeInvoiceProject(
         val project_id:Long?,
         val name:String?,
         val state:String?,
-        val nilai_invoice:Long?
+        val nilai_invoice:Double?
 ){
-    constructor(): this(0,0,"","",0)
+    constructor(): this(0,0,"","",0.0)
 }

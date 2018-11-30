@@ -35,12 +35,12 @@ class CmeController{
         val data = repositoryCmeSummary.getCmeSummaryYear()
         val cmeSummaryYearData:MutableList<CmeSummaryYearData> = mutableListOf()
         data.forEach {
-            val percentage= if (it.nilai_po == 0.toLong()) 0.toFloat() else it.nilai_invoice.toFloat().div(it.nilai_po.toFloat())
+            val percentage= if (it.nilai_po == 0.0) 0.0 else it.nilai_invoice.div(it.nilai_po)
             val remainingInvoice = it.nilai_po - it.nilai_invoice
-            val percentageRealization = if (it.nilai_budget == 0.toLong()) 0.toFloat() else it.realisasi_budget.toFloat().div(it.nilai_budget.toFloat())
+            val percentageRealization = if (it.nilai_budget == 0.0) 0.0 else it.realisasi_budget.div(it.nilai_budget)
             val profitLoss = it.nilai_invoice - it.realisasi_budget
-            val percentageProfitRealization = if (it.realisasi_budget == 0f) 0.toFloat() else profitLoss.toFloat().div(it.realisasi_budget)
-            val percentageProfitPO = if(it.nilai_po == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.nilai_po)
+            val percentageProfitRealization = if (it.realisasi_budget == 0.0) 0.0 else profitLoss.div(it.realisasi_budget)
+            val percentageProfitPO = if(it.nilai_po == 0.0) 0.0 else profitLoss.div(it.nilai_po)
 
             cmeSummaryYearData.add(CmeSummaryYearData(it.id, it.year_project, it.jumlah_site, it.site_cancel,
                     it.nilai_po, it.nilai_invoice, it.nilai_budget, it.realisasi_budget, it.estimate_po, percentage, remainingInvoice,
@@ -54,12 +54,12 @@ class CmeController{
         val data = repositoryCmeSummaryYearProjectType.getCmeSummaryYearProjectType(tahun)
         val cmeSummaryYearProjectTypeData:MutableList<CmeSummaryYearProjectTypeData> = mutableListOf()
         data.forEach {
-            val percentage= if (it.nilai_po == 0.toLong()) 0.toFloat() else it.nilai_invoice.toFloat().div(it.nilai_po.toFloat())
+            val percentage= if (it.nilai_po == 0.0) 0.0 else it.nilai_invoice.div(it.nilai_po)
             val remainingInvoice = it.nilai_po - it.nilai_invoice
-            val percentageRealization = if (it.nilai_budget == 0.toLong()) 0.toFloat() else it.realisasi_budget.toFloat().div(it.nilai_budget.toFloat())
+            val percentageRealization = if (it.nilai_budget == 0.0) 0.0 else it.realisasi_budget.div(it.nilai_budget)
             val profitLoss = it.nilai_invoice - it.realisasi_budget
-            val percentageProfitRealization = if (it.realisasi_budget == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.realisasi_budget)
-            val percentageProfitPO = if(it.nilai_po == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.nilai_po)
+            val percentageProfitRealization = if (it.realisasi_budget == 0.0) 0.0 else profitLoss.toFloat().div(it.realisasi_budget)
+            val percentageProfitPO = if(it.nilai_po == 0.0) 0.0 else profitLoss.div(it.nilai_po)
 
             cmeSummaryYearProjectTypeData.add(CmeSummaryYearProjectTypeData(it.id, it.year_project, it.jumlah_site, it.project_type, it.site_cancel,
                     it.nilai_po, it.nilai_invoice, it.nilai_budget, it.realisasi_budget, it.estimate_po, it.site_type_id, percentage, remainingInvoice,
@@ -77,12 +77,12 @@ class CmeController{
         cmeProjectDetailDataRepository = repositoryCmeProjectDetail.getCmeProjectDetailRepository(tahun, site_type_id)
 
         data.forEach {
-            val percentage= if (it.nilai_po == 0.toLong()) 0.toFloat() else it.nilai_invoice.toFloat().div(it.nilai_po.toFloat())
+            val percentage= if (it.nilai_po == 0.0) 0.0 else it.nilai_invoice.div(it.nilai_po)
             val remainingInvoice = it.nilai_po - it.nilai_invoice
-            val percentageRealization = if (it.nilai_budget == 0.toLong()) 0.toFloat() else it.realisasi_budget.toFloat().div(it.nilai_budget.toFloat())
+            val percentageRealization = if (it.nilai_budget == 0.0) 0.0 else it.realisasi_budget.div(it.nilai_budget)
             val profitLoss = it.nilai_invoice - it.realisasi_budget
-            val percentageProfitRealization = if (it.realisasi_budget == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.realisasi_budget)
-            val percentageProfitPO = if(it.nilai_po == 0.toLong()) 0.toFloat() else profitLoss.toFloat().div(it.nilai_po)
+            val percentageProfitRealization = if (it.realisasi_budget == 0.0) 0.0 else profitLoss.div(it.realisasi_budget)
+            val percentageProfitPO = if(it.nilai_po == 0.0) 0.0 else profitLoss.div(it.nilai_po)
             cmeSummaryYearProjectTypeCustData.add(CmeSummaryYearProjectTypeCustData(it.id, it.year_project, it.jumlah_site, it.project_type,
                     it.site_cancel, it.nilai_po, it.nilai_invoice, it.nilai_budget, it.realisasi_budget, it.estimate_po,
                     it.site_type_id, it.customer, it.customer_id, percentage, remainingInvoice, percentageRealization,
