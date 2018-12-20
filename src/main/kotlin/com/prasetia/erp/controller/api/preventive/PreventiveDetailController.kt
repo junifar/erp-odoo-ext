@@ -325,69 +325,73 @@ class PreventiveDetailController{
                             data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>,
                             dataRealisasiBudget: Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveBudget>{
         val preventiveBudget:MutableList<PreventiveBudget> = mutableListOf()
-        data.forEach {
-            item->
-            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id) and (item.area_detail == sub_area)){
-                var found = false
-                preventiveBudget.forEach {
-                    itemDetail ->
-                    if(itemDetail.name == item.name) found = true
-                }
-                if(!found){
-                    val i = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 1, data)
-                    val ii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 2, data)
-                    val iii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 3, data)
-                    val iv = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 4, data)
-                    val v = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 5, data)
-                    val vi = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 6, data)
-                    val vii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 7, data)
-                    val viii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 8, data)
-                    val ix = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 9, data)
-                    val x = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 10, data)
-                    val xi = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 11, data)
-                    val xii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 12, data)
-                    val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
-                    val i_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,1)
-                    val ii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,2)
-                    val iii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,3)
-                    val iv_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,4)
-                    val v_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,5)
-                    val vi_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,6)
-                    val vii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,7)
-                    val viii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,8)
-                    val ix_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,9)
-                    val x_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,10)
-                    val xi_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,11)
-                    val xii_realisasi = getPreventiveBudgetRealisasi(item.name, dataRealisasiBudget,12)
-                    val i_realisasi_percentage = if (i == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
-                    val ii_realisasi_percentage = if (ii == 0.toLong()) 0f else ii_realisasi.toFloat().div(ii.toFloat())
-                    val iii_realisasi_percentage = if (iii == 0.toLong()) 0f else iii_realisasi.toFloat().div(iii.toFloat())
-                    val iv_realisasi_percentage = if (iv == 0.toLong()) 0f else iv_realisasi.toFloat().div(iv.toFloat())
-                    val v_realisasi_percentage = if (v == 0.toLong()) 0f else v_realisasi.toFloat().div(v.toFloat())
-                    val vi_realisasi_percentage = if (vi == 0.toLong()) 0f else vi_realisasi.toFloat().div(vi.toFloat())
-                    val vii_realisasi_percentage = if (vii == 0.toLong()) 0f else vii_realisasi.toFloat().div(vii.toFloat())
-                    val viii_realisasi_percentage = if (viii == 0.toLong()) 0f else viii_realisasi.toFloat().div(viii.toFloat())
-                    val ix_realisasi_percentage = if (ix == 0.toLong()) 0f else ix_realisasi.toFloat().div(ix.toFloat())
-                    val x_realisasi_percentage = if (x == 0.toLong()) 0f else x_realisasi.toFloat().div(x.toFloat())
-                    val xi_realisasi_percentage = if (xi == 0.toLong()) 0f else xi_realisasi.toFloat().div(xi.toFloat())
-                    val xii_realisasi_percentage = if (xii == 0.toLong()) 0f else xii_realisasi.toFloat().div(xii.toFloat())
+        val filterValue = data.filter { it.customer_id == customer_id.toLong() }
+                .filter { it.tahun == tahun.toLong() }
+                .filter { it.area_id == area_id.toLong() }
+                .filter { it.area_detail == sub_area }
 
-                    preventiveBudget.add(PreventiveBudget(item.id, item.name,
-                            i, ii, iii, iv,
-                            v, vi, vii, viii,
-                            ix, x, xi, xii, total,
-                            i_realisasi, ii_realisasi, iii_realisasi,
-                            iv_realisasi, v_realisasi, vi_realisasi,
-                            vii_realisasi, viii_realisasi, ix_realisasi,
-                            x_realisasi, xi_realisasi, xii_realisasi,
-                            i_realisasi_percentage, ii_realisasi_percentage, iii_realisasi_percentage,
-                            iv_realisasi_percentage, v_realisasi_percentage, vi_realisasi_percentage,
-                            vii_realisasi_percentage, viii_realisasi_percentage, ix_realisasi_percentage,
-                            x_realisasi_percentage,xi_realisasi_percentage, xii_realisasi_percentage,
-                            getPreventiveBudgetWithRealisasiBudget(customer_id, tahun, area_id, sub_area,
-                                    item.id, dataRealisasiBudget)))
-                }
+        val filterValueRealisasiBudget = dataRealisasiBudget.filter { it.customer_id == customer_id.toLong() }
+                .filter { it.tahun == tahun.toLong() }
+                .filter { it.area_id == area_id.toLong() }
+                .filter { it.area_detail == sub_area }
+
+        filterValue.forEach {
+            item->
+            if(preventiveBudget.filter { it.name == item.name }.count() == 0){
+                val i = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 1, filterValue)
+                val ii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 2, filterValue)
+                val iii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 3, filterValue)
+                val iv = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 4, filterValue)
+                val v = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 5, filterValue)
+                val vi = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 6, filterValue)
+                val vii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 7, filterValue)
+                val viii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 8, filterValue)
+                val ix = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 9, filterValue)
+                val x = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 10, filterValue)
+                val xi = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 11, filterValue)
+                val xii = getPreventiveNilaiBudget(customer_id, tahun, area_id, item.name, 12, filterValue)
+                val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
+                val i_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,1)
+                val ii_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,2)
+                val iii_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,3)
+                val iv_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,4)
+                val v_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,5)
+                val vi_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,6)
+                val vii_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,7)
+                val viii_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,8)
+                val ix_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,9)
+                val x_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,10)
+                val xi_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,11)
+                val xii_realisasi = getPreventiveBudgetRealisasi(item.name, filterValueRealisasiBudget,12)
+                val i_realisasi_percentage = if (i == 0.toLong()) 0f else i_realisasi.toFloat().div(i.toFloat())
+                val ii_realisasi_percentage = if (ii == 0.toLong()) 0f else ii_realisasi.toFloat().div(ii.toFloat())
+                val iii_realisasi_percentage = if (iii == 0.toLong()) 0f else iii_realisasi.toFloat().div(iii.toFloat())
+                val iv_realisasi_percentage = if (iv == 0.toLong()) 0f else iv_realisasi.toFloat().div(iv.toFloat())
+                val v_realisasi_percentage = if (v == 0.toLong()) 0f else v_realisasi.toFloat().div(v.toFloat())
+                val vi_realisasi_percentage = if (vi == 0.toLong()) 0f else vi_realisasi.toFloat().div(vi.toFloat())
+                val vii_realisasi_percentage = if (vii == 0.toLong()) 0f else vii_realisasi.toFloat().div(vii.toFloat())
+                val viii_realisasi_percentage = if (viii == 0.toLong()) 0f else viii_realisasi.toFloat().div(viii.toFloat())
+                val ix_realisasi_percentage = if (ix == 0.toLong()) 0f else ix_realisasi.toFloat().div(ix.toFloat())
+                val x_realisasi_percentage = if (x == 0.toLong()) 0f else x_realisasi.toFloat().div(x.toFloat())
+                val xi_realisasi_percentage = if (xi == 0.toLong()) 0f else xi_realisasi.toFloat().div(xi.toFloat())
+                val xii_realisasi_percentage = if (xii == 0.toLong()) 0f else xii_realisasi.toFloat().div(xii.toFloat())
+
+                preventiveBudget.add(PreventiveBudget(item.id, item.name,
+                        i, ii, iii, iv,
+                        v, vi, vii, viii,
+                        ix, x, xi, xii, total,
+                        i_realisasi, ii_realisasi, iii_realisasi,
+                        iv_realisasi, v_realisasi, vi_realisasi,
+                        vii_realisasi, viii_realisasi, ix_realisasi,
+                        x_realisasi, xi_realisasi, xii_realisasi,
+                        i_realisasi_percentage, ii_realisasi_percentage, iii_realisasi_percentage,
+                        iv_realisasi_percentage, v_realisasi_percentage, vi_realisasi_percentage,
+                        vii_realisasi_percentage, viii_realisasi_percentage, ix_realisasi_percentage,
+                        x_realisasi_percentage,xi_realisasi_percentage, xii_realisasi_percentage,
+                        getPreventiveBudgetWithRealisasiBudget(customer_id, tahun, area_id, sub_area,
+                                item.id, filterValueRealisasiBudget)))
             }
+
         }
         return preventiveBudget
     }
@@ -437,19 +441,11 @@ class PreventiveDetailController{
                                 dataRealisasiBudget: Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveBudgetArea>{
         val preventiveBudgetArea:MutableList<PreventiveBudgetArea> = mutableListOf()
         var id:Long= 0
-        data.forEach {
-            item ->
-            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id)){
-                var found = false
-                preventiveBudgetArea.forEach {
-                    itemDetail->
-                    if(itemDetail.area_detail == item.area_detail?: "-") found = true
-                }
-                if (!found){
-                    preventiveBudgetArea.add(PreventiveBudgetArea(id++, item.area_detail?: "-", getPreventiveBudget(customer_id, tahun, area_id, item.area_detail , data, dataRealisasiBudget)))
-                }
-            }
+        data.distinctBy { it.area_detail }.forEach {
+            item->
+            preventiveBudgetArea.add(PreventiveBudgetArea(id++, item.area_detail?: "-", getPreventiveBudget(customer_id, tahun, area_id, item.area_detail , data, dataRealisasiBudget)))
         }
+
         return preventiveBudgetArea
     }
 
@@ -472,34 +468,32 @@ class PreventiveDetailController{
 
     fun getPreventiveRealisasiBudget(customer_id: Int, tahun: String, area_id: String, sub_area: String?, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveRealisasiBudget>{
         val preventiveRealisasiBudget:MutableList<PreventiveRealisasiBudget> = mutableListOf()
-        data.forEach {
-            item->
-            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id) and (item.area_detail == sub_area)){
-                var found = false
-                preventiveRealisasiBudget.forEach {
-                    itemDetail ->
-                    if(itemDetail.name == item.name) found = true
-                }
-                if(!found){
-                    val i = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 1, data)
-                    val ii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 2, data)
-                    val iii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 3, data)
-                    val iv = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 4, data)
-                    val v = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 5, data)
-                    val vi = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 6, data)
-                    val vii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 7, data)
-                    val viii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 8, data)
-                    val ix = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 9, data)
-                    val x = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 10, data)
-                    val xi = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 11, data)
-                    val xii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 12, data)
-                    val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
+        val filterValue = data.filter { it.customer_id == customer_id.toLong() }
+                .filter { it.tahun == tahun.toLong() }
+                .filter { it.area_id == area_id.toLong() }
+                .filter { it.area_detail == sub_area }
 
-                    preventiveRealisasiBudget.add(PreventiveRealisasiBudget(item.id, item.name,
-                            i, ii, iii, iv,
-                            v, vi, vii, viii,
-                            ix, x, xi, xii, total))
-                }
+        filterValue.forEach{
+            item->
+            if(preventiveRealisasiBudget.filter { it.name == item.name }.count() == 0){
+                val i = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 1, filterValue)
+                val ii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 2, filterValue)
+                val iii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 3, filterValue)
+                val iv = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 4, filterValue)
+                val v = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 5, filterValue)
+                val vi = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 6, filterValue)
+                val vii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 7, filterValue)
+                val viii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 8, filterValue)
+                val ix = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 9, filterValue)
+                val x = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 10, filterValue)
+                val xi = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 11, filterValue)
+                val xii = getPreventiveNilaiRealisasiBudget(customer_id, tahun, area_id, item.name, 12, filterValue)
+                val total = i + ii + iii + iv + v + vi + vii + viii + ix + x + xi + xii
+
+                preventiveRealisasiBudget.add(PreventiveRealisasiBudget(item.id, item.name,
+                        i, ii, iii, iv,
+                        v, vi, vii, viii,
+                        ix, x, xi, xii, total))
             }
         }
         return preventiveRealisasiBudget
@@ -508,18 +502,9 @@ class PreventiveDetailController{
     fun getPreventiveRealisasiBudgetArea(customer_id: Int, tahun: String, area_id: String, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>): MutableList<PreventiveRealisasiBudgetArea>{
         val preventiveRealisasiBudgetArea:MutableList<PreventiveRealisasiBudgetArea> = mutableListOf()
         var id:Long = 0
-        data.forEach {
+        data.distinctBy { it.area_detail }.forEach {
             item->
-            if((item.tahun.toString() == tahun) and (item.customer_id == customer_id.toLong()) and (item.area_id.toString() == area_id)){
-                var found = false
-                preventiveRealisasiBudgetArea.forEach {
-                    itemDetail->
-                    if (itemDetail.area_detail == item.area_detail?: "-") found = true
-                }
-                if(!found){
-                    preventiveRealisasiBudgetArea.add(PreventiveRealisasiBudgetArea(id++, item.area_detail?: "-", getPreventiveRealisasiBudget(customer_id, tahun, area_id, item.area_detail, data)))
-                }
-            }
+            preventiveRealisasiBudgetArea.add(PreventiveRealisasiBudgetArea(id++, item.area_detail?: "-", getPreventiveRealisasiBudget(customer_id, tahun, area_id, item.area_detail, data)))
         }
         return preventiveRealisasiBudgetArea
     }
