@@ -60,17 +60,30 @@ class CorrectiveController{
         return correctiveCustomerSummaryData
     }
 
-    fun getCorrectiveProject(tahun:String, customer:String?): MutableList<CorrectiveProjectData>{
+
+    fun getCorrectiveProject(tahun:String, customer_id:Long?): MutableList<CorrectiveProjectData>{
 //        val data = repositoryCorrectiveProject.getCorrectiveProject(tahun)
-        val data = correctiveProjectDataRepository
+        val data = correctiveProjectDataRepository.filter { it.year_project == tahun }.
+                filter { it.customer_id == customer_id }
         val correctiveProjectData: MutableList<CorrectiveProjectData> = mutableListOf()
         data.forEach {
-            if((it.year_project == tahun) and (it.customer == customer))
-                correctiveProjectData.add(CorrectiveProjectData(it.id, it.year_project, it.site_name,
-                        it.customer, getCorrectiveBudgetUsed(tahun, it.id), getCorrectiveAdvance(tahun, it.id)))
+            correctiveProjectData.add(CorrectiveProjectData(it.id, it.year_project, it.site_name,
+                    it.customer, getCorrectiveBudgetUsed(tahun, it.id), getCorrectiveAdvance(tahun, it.id)))
         }
         return correctiveProjectData
     }
+
+//    fun getCorrectiveProject(tahun:String, customer:String?): MutableList<CorrectiveProjectData>{
+////        val data = repositoryCorrectiveProject.getCorrectiveProject(tahun)
+//        val data = correctiveProjectDataRepository
+//        val correctiveProjectData: MutableList<CorrectiveProjectData> = mutableListOf()
+//        data.forEach {
+//            if((it.year_project == tahun) and (it.customer == customer))
+//                correctiveProjectData.add(CorrectiveProjectData(it.id, it.year_project, it.site_name,
+//                        it.customer, getCorrectiveBudgetUsed(tahun, it.id), getCorrectiveAdvance(tahun, it.id)))
+//        }
+//        return correctiveProjectData
+//    }
 
     fun getCorrectiveBudgetUsed(tahun:String, project_id:Long): MutableList<CorrectiveBudgetUsedData>{
 //        val data = repositoryCorrectiveBudgetUsed.getCorrectiveBudgetUsed(tahun)
@@ -117,7 +130,7 @@ class CorrectiveController{
         data.forEach {
             correctiveYearData.add((CorrectiveYearData(it.id, it.customer_id, it.code, it.jumlah_site, it.year_project,
                     it.nilai_po, it.nilai_inv, it.realisasi_budget, it.nilai_budget, it.percentage, it.persent_budget,
-                    it.profit, it.profit_percentage, getCorrectiveProject(tahun.toString(), it.code))))
+                    it.profit, it.profit_percentage, getCorrectiveProject(tahun.toString(), it.customer_id))))
         }
         return correctiveYearData
     }

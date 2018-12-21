@@ -9,7 +9,8 @@ class CorrectiveProject(
         val id:Long,
         val year_project:String,
         val site_name:String,
-        val customer:String
+        val customer:String,
+        val customer_id:Long?
 ){
-    constructor(): this(0,"","","")
+    constructor(): this(0,"","","",0)
 }

@@ -16,7 +16,8 @@ interface CorrectiveProjectRepository:CrudRepository<CorrectiveProject, Long>{
                         --"public".project_project.year_project,
                         EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas) as year_project,
                         "public".project_site."name" AS site_name,
-                        "public".res_partner.code AS customer
+                        "public".res_partner.code AS customer,
+                        "public".project_site.customer_id
                         FROM
                         "public".project_project
                         LEFT JOIN "public".project_site ON "public".project_project.site_id = "public".project_site."id"
