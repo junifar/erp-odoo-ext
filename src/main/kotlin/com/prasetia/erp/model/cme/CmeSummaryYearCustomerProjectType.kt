@@ -4,7 +4,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-class CmeSummaryYearProjectType(
+class CmeSummaryYearCustomerProjectType(
         @Id
         val id: Long,
         val year_project: Long,
@@ -16,10 +16,12 @@ class CmeSummaryYearProjectType(
         val nilai_budget: Double,
         val realisasi_budget: Double,
         val estimate_po: Double,
-        val site_type_id: Long?
+        val site_type_id: Long?,
+        val customer:String?,
+        val customer_id:Long?
 ){
     constructor(): this(0,0,0,
             "",0,0.0,
             0.0,0.0,0.0,
-            0.0, 0)
+            0.0, 0, "", 0)
 }

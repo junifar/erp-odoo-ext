@@ -108,12 +108,12 @@
 
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>Vaadin Directory</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>Vaadin Directory</id>-->
+            <!--<url>http://maven.vaadin.com/vaadin-addons</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
     <build>
         <finalName>${project.artifactId}</finalName>
