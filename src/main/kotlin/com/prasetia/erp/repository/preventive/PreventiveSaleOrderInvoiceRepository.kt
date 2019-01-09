@@ -68,10 +68,13 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                             SELECT
                                 ROW_NUMBER() OVER (ORDER BY "public".sale_order_line."id") AS id,
                                 "public".sale_order_line."id" AS order_line_id,
-                                    A.NAME,
-                                    A.month_invoice,
-                                    A.year_invoice,
-                                A.nilai_invoice
+                                "public".sale_order.client_order_ref,
+                                "public".project_site.bulan AS bulan_po,
+                                A.NAME,
+                                A.month_invoice,
+                                A.year_invoice,
+                                A.nilai_invoice,
+                                A.state
                             FROM
                                 "public".sale_order_line
                                 LEFT JOIN "public".sale_order ON "public".sale_order_line.order_id = "public".sale_order."id"
@@ -83,6 +86,7 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                                                                         "public".sale_order_line_invoice_rel.order_line_id,
                                                                         Sum("public".account_invoice_line.price_subtotal) AS nilai_invoice,
                                                                         "public".account_invoice."name",
+                                                                        "public".account_invoice."state",
                                                                         EXTRACT(MONTH FROM "public".account_invoice.date_invoice) AS month_invoice,
                                                                         EXTRACT(YEAR FROM "public".account_invoice.date_invoice) AS year_invoice
                                                                         FROM
@@ -96,6 +100,7 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                                                                         GROUP BY
                                                                                         "public".sale_order_line_invoice_rel.order_line_id,
                                                                                         "public".account_invoice."name",
+                                                                                        "public".account_invoice."state",
                                                                                         EXTRACT(MONTH FROM "public".account_invoice.date_invoice),
                                                                                         EXTRACT(YEAR FROM "public".account_invoice.date_invoice)
                                                                     ) AS A ON A.order_line_id = "public".sale_order_line."id"
@@ -106,7 +111,7 @@ interface PreventiveSaleOrderInvoiceRepository:CrudRepository<PreventiveSaleOrde
                                 "public".sale_order."state" NOT IN ('draft', 'cancel') AND
                                 A.name IS NOT NULL AND
                                 "public".project_site.customer_id = :partner_id AND
-                                "public".project_site.area_id  IS NULL AND
+                                "public".project_site.area_id IS NULL AND
                                 "public".project_site.tahun = :tahun
                             ORDER BY
                                  CAST("public".project_site.bulan AS INTEGER) ASC

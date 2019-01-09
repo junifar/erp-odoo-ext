@@ -325,15 +325,26 @@ class PreventiveDetailController{
                             data:Iterable<com.prasetia.erp.model.preventive.PreventiveBudget>,
                             dataRealisasiBudget: Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveBudget>{
         val preventiveBudget:MutableList<PreventiveBudget> = mutableListOf()
-        val filterValue = data.filter { it.customer_id == customer_id.toLong() }
-                .filter { it.tahun == tahun.toLong() }
-                .filter { it.area_id == area_id.toLong() }
-                .filter { it.area_detail == sub_area }
+        val filterValue = when(area_id){
+            "null" -> data.filter { it.customer_id == customer_id.toLong() }
+                    .filter { it.tahun == tahun.toLong() }
+                    .filter { it.area_detail == sub_area }
+            else -> data.filter { it.customer_id == customer_id.toLong() }
+                    .filter { it.tahun == tahun.toLong() }
+                    .filter { it.area_id == area_id.toLong() }
+                    .filter { it.area_detail == sub_area }
+        }
 
-        val filterValueRealisasiBudget = dataRealisasiBudget.filter { it.customer_id == customer_id.toLong() }
-                .filter { it.tahun == tahun.toLong() }
-                .filter { it.area_id == area_id.toLong() }
-                .filter { it.area_detail == sub_area }
+        val filterValueRealisasiBudget = when(area_id){
+            "null" -> dataRealisasiBudget.filter { it.customer_id == customer_id.toLong() }
+                    .filter { it.tahun == tahun.toLong() }
+                    .filter { it.area_detail == sub_area }
+            else -> dataRealisasiBudget.filter { it.customer_id == customer_id.toLong() }
+                    .filter { it.tahun == tahun.toLong() }
+                    .filter { it.area_id == area_id.toLong() }
+                    .filter { it.area_detail == sub_area }
+        }
+
 
         filterValue.forEach {
             item->
@@ -468,10 +479,15 @@ class PreventiveDetailController{
 
     fun getPreventiveRealisasiBudget(customer_id: Int, tahun: String, area_id: String, sub_area: String?, data:Iterable<com.prasetia.erp.model.preventive.PreventiveRealisasiBudget>):MutableList<PreventiveRealisasiBudget>{
         val preventiveRealisasiBudget:MutableList<PreventiveRealisasiBudget> = mutableListOf()
-        val filterValue = data.filter { it.customer_id == customer_id.toLong() }
-                .filter { it.tahun == tahun.toLong() }
-                .filter { it.area_id == area_id.toLong() }
-                .filter { it.area_detail == sub_area }
+        val filterValue = when(area_id){
+            "null" -> data.filter { it.customer_id == customer_id.toLong() }
+                    .filter { it.tahun == tahun.toLong() }
+                    .filter { it.area_detail == sub_area }
+            else -> data.filter { it.customer_id == customer_id.toLong() }
+                    .filter { it.tahun == tahun.toLong() }
+                    .filter { it.area_id == area_id.toLong() }
+                    .filter { it.area_detail == sub_area }
+        }
 
         filterValue.forEach{
             item->
