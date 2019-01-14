@@ -101,14 +101,16 @@ class CmeController{
 
     @RequestMapping("/api/project_summary_year_customer/{tahun}/{customer_id}")
     fun getSummaryCmeByYearProjectCustomerProjectType(@PathVariable("tahun") tahun:Long,
-                                                      @PathVariable("customer_id") customer_id: Long):
+                                                      @PathVariable("customer_id") customer_id: String):
             MutableList<CmeSummaryYearCustomerProjectTypeData>{
-        val data = repositoryCmeSummaryYearCustomerProjectType.getCmeSummaryYearProjectTypeCust(tahun,
-                customer_id)
+        val data = if (customer_id != "null") repositoryCmeSummaryYearCustomerProjectType.getCmeSummaryYearProjectTypeCust(tahun,
+                customer_id.toLong()) else repositoryCmeSummaryYearCustomerProjectType.getCmeSummaryYearProjectTypeCust(tahun)
         val cmeSummaryYearCustomerProjectTypeData: MutableList<CmeSummaryYearCustomerProjectTypeData> = mutableListOf()
 
-        cmeProjectDetailCustomerDataRepository = repositoryCmeProjectDetailCustomer.getCmeProjectDetailCustomerRepository(tahun, customer_id)
-        cmeInvoiceProjectDataRepository = repositoryCmeInvoiceProject.getCmeInvoiceProjectCustomerRepository(tahun, customer_id)
+        cmeProjectDetailCustomerDataRepository = if (customer_id != "null") repositoryCmeProjectDetailCustomer.getCmeProjectDetailCustomerRepository(tahun, customer_id.toLong()) else
+            repositoryCmeProjectDetailCustomer.getCmeProjectDetailCustomerRepository(tahun)
+        cmeInvoiceProjectDataRepository = if (customer_id != "null") repositoryCmeInvoiceProject.getCmeInvoiceProjectCustomerRepository(tahun, customer_id.toLong()) else
+            repositoryCmeInvoiceProject.getCmeInvoiceProjectCustomerRepository(tahun)
 
         data.forEach {
             val percentage= if (it.nilai_po == 0.0) 0.0 else it.nilai_invoice.div(it.nilai_po)
@@ -121,7 +123,7 @@ class CmeController{
                     it.jumlah_site, it.project_type, it.site_cancel, it.nilai_po, it.nilai_invoice, it.nilai_budget,
                     it.realisasi_budget, it.estimate_po, it.site_type_id, it.customer, it.customer_id, percentage,
                     remainingInvoice, percentageRealization, profitLoss, percentageProfitRealization, percentageProfitPO,
-                    getCmeProjectDetailCustomer(tahun, it.site_type_id, customer_id)))
+                    getCmeProjectDetailCustomer(tahun, it.site_type_id, if(customer_id != "null") customer_id.toLong() else null)))
         }
 
         return cmeSummaryYearCustomerProjectTypeData
