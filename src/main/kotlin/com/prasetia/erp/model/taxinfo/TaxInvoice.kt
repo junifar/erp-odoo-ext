@@ -15,6 +15,7 @@ class TaxInvoice(
         val state:String?,
         val tax_amount:Float?,
         val name:String?,
+        val tax_percentage:Float?,
         val total:Float?,
         val subtotal_original:Float?,
         val subtotal:Float?,
@@ -24,5 +25,5 @@ class TaxInvoice(
         val voucher_id:Long?
 ){
     constructor(): this(0, 0, "", "","","",0f,
-            "", 0f, 0f, 0f, null, "", "", 0)
+            "", 0f, 0f, 0f, 0f, null, "", "", 0)
 }
