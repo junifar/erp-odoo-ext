@@ -23,7 +23,7 @@ class TaxInfoController {
         val data = repositoryTaxInvoiceData.getTaxInvoice()
         val taxInvoiceData:MutableList<TaxInvoiceData> = mutableListOf()
         data.forEach {
-            taxInvoiceData.add(TaxInvoiceData(it.id, it.invoice_id, it.nomor_faktur, it.invoice_no, it.customer_name,
+            taxInvoiceData.add(TaxInvoiceData(it.id, it.invoice_id, it.date_invoice, it.nomor_faktur, it.invoice_no, it.customer_name,
                     it.state, it.tax_amount, it.name, it.tax_percentage, it.total, it.subtotal_original, it.subtotal, it.tanggal_pembayaran,
                     it.bank, it.ref, it.voucher_id))
         }
@@ -35,7 +35,7 @@ class TaxInfoController {
         val data = repositoryTaxInvoiceData.getTaxInvoiceByYear(tahun)
         val taxInvoiceData:MutableList<TaxInvoiceData> = mutableListOf()
         data.forEach {
-            taxInvoiceData.add(TaxInvoiceData(it.id, it.invoice_id, it.nomor_faktur, it.invoice_no, it.customer_name,
+            taxInvoiceData.add(TaxInvoiceData(it.id, it.invoice_id, it.date_invoice, it.nomor_faktur, it.invoice_no, it.customer_name,
                     it.state, it.tax_amount, it.name, it.tax_percentage, it.total, it.subtotal_original, it.subtotal, it.tanggal_pembayaran,
                     it.bank, it.ref, it.voucher_id))
         }
