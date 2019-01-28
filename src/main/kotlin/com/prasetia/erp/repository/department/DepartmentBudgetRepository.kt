@@ -113,6 +113,7 @@ interface DepartmentBudgetRepository:CrudRepository<DepartmentBudget, Long>{
                             "public".budget_plan.site_type_id IN (36, 37, 38, 40, 41, 42, 43, 45, 46, 47, 48, 61, 64, 65, 68, 70, 74) AND
                             EXTRACT(YEAR from "public".budget_plan.periode_start) IS NOT NULL AND
                             EXTRACT(YEAR from "public".budget_plan.periode_start) = :tahun AND
+                            "public".budget_plan."state" NOT IN ('draft', 'cancel', 'approve1') AND
                             "public".budget_plan.department_id = :department_id
                             GROUP BY
                             "public".budget_plan."id",

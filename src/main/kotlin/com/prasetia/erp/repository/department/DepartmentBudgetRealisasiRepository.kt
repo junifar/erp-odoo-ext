@@ -84,6 +84,7 @@ interface DepartmentBudgetRealisasiRepository:CrudRepository<DepartmentBudgetRea
                             WHERE
                             EXTRACT(YEAR from "public".budget_plan.periode_start) IS NOT NULL AND
                             EXTRACT(YEAR from "public".budget_plan.periode_start) = :tahun AND
+                            "public".budget_plan."state" NOT IN ('draft', 'cancel', 'approve1') AND
                             "public".budget_plan.department_id = :department_id
                             GROUP BY
                                 AA.budget_plan_line_id,

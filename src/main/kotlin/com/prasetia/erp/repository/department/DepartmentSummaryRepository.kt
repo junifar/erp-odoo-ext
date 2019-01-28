@@ -112,6 +112,7 @@ interface DepartmentSummaryRepository:CrudRepository<DepartmentSummary, Long>{
                                                 ) AS C ON "public".budget_plan."id" = C.id
                             WHERE
                             "public".budget_plan.site_type_id IN (36, 37, 38, 40, 41, 42, 43, 45, 46, 47, 48, 61, 64, 65, 68, 70, 74) AND
+                            "public".budget_plan."state" NOT IN ('draft', 'cancel', 'approve1') AND
                             EXTRACT(YEAR from "public".budget_plan.periode_start) IS NOT NULL
                             GROUP BY
                             EXTRACT(YEAR from "public".budget_plan.periode_start)
