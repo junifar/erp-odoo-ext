@@ -110,7 +110,7 @@ interface TaxInvoiceRepository:CrudRepository<TaxInvoice, Long>{
                             WHERE
                                 "public".account_invoice."type" = 'out_invoice' AND
                                 "public".account_invoice."state" = 'paid' AND
-                                EXTRACT(year from "public".account_invoice.date_invoice) = :tahun
+                                EXTRACT(year from A.tanggal_pembayaran) = :tahun
                         """
     }
 
