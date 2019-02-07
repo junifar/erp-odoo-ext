@@ -59,6 +59,8 @@ interface TaxInvoiceRepository:CrudRepository<TaxInvoice, Long>{
                             WHERE
                                 "public".account_invoice."type" = 'out_invoice' AND
                                 "public".account_invoice."state" = 'paid'
+                            ORDER BY
+		                        "public".account_invoice.date_invoice ASC
                         """
 
         const val QUERY_BY_YEAR = """
@@ -111,6 +113,8 @@ interface TaxInvoiceRepository:CrudRepository<TaxInvoice, Long>{
                                 "public".account_invoice."type" = 'out_invoice' AND
                                 "public".account_invoice."state" = 'paid' AND
                                 EXTRACT(year from A.tanggal_pembayaran) = :tahun
+                            ORDER BY
+		                        "public".account_invoice.date_invoice ASC
                         """
     }
 
