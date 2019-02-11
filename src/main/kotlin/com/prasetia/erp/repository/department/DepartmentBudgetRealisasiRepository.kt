@@ -21,6 +21,7 @@ interface DepartmentBudgetRealisasiRepository:CrudRepository<DepartmentBudgetRea
                             (
                                     SELECT
                                     "public".account_invoice_line.budget_item_id as budget_plan_line_id,
+                                    "public".account_invoice.date_invoice AS date,
                                     Sum("public".account_invoice_line.price_subtotal) AS realisasi_debit,
                                     0 AS realisasi_credit,
                                     '' AS narration,
@@ -34,11 +35,13 @@ interface DepartmentBudgetRealisasiRepository:CrudRepository<DepartmentBudgetRea
                                     "public".account_invoice_line.budget_item_id IS NOT NULL
                                     GROUP BY
                                     "public".account_invoice_line.budget_item_id,
+                                    "public".account_invoice.date_invoice,
                                     "public".account_invoice."name"
                                     UNION
                                     --REIMBURSEMENT
                                     SELECT
                                     "public".account_voucher_line.budget_item_id AS budget_plan_line_id,
+                                    "public".account_voucher.date_pay AS date,
                                     Sum("public".account_voucher_line.amount) AS realisasi_debit,
                                     0 AS realisasi_credit,
                                     '' AS narration,
@@ -52,6 +55,7 @@ interface DepartmentBudgetRealisasiRepository:CrudRepository<DepartmentBudgetRea
                                     "public".account_voucher_line.budget_item_id IS NOT NULL
                                     GROUP BY
                                     "public".account_voucher_line.budget_item_id,
+                                    "public".account_voucher.date_pay,
                                     "public".account_voucher.reference
                                     UNION
                                     SELECT

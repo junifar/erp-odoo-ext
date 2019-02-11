@@ -82,27 +82,39 @@ interface CmeSummaryYearCustomerRepository:CrudRepository<CmeSummaryYearCustomer
                                                     FROM
                                                         (
                                                             SELECT
-                                                                                                                            "public".budget_plan_line."id" AS budget_plan_line_id,
-                                                                                                                            sum("public".account_move_line.debit) AS realisasi_debit,
-                                                                                                                            sum("public".account_move_line.credit) AS realisasi_credit,
-                                                                                                                            "public".account_move.narration,
-                                                                                                                            "public".account_move."ref"
+                                                                "public".account_invoice_line.budget_item_id as budget_plan_line_id,
+                                                                Sum("public".account_invoice_line.price_subtotal) AS realisasi_debit,
+                                                                0 AS realisasi_credit,
+                                                                '' AS narration,
+                                                                "public".account_invoice."name" AS "ref"
                                                             FROM
-                                                                                                                            "public".budget_plan_line
-                                                                                                                            LEFT JOIN "public".budget_used ON "public".budget_used.budget_item_id = "public".budget_plan_line."id"
-                                                                                                                            LEFT JOIN "public".account_move_line ON "public".budget_used.move_line_id = "public".account_move_line."id"
-                                                                                                                            LEFT JOIN "public".account_move ON "public".account_move_line.move_id = "public".account_move."id"
-                                                                                                                            LEFT JOIN "public".advance_move_rel ON "public".advance_move_rel.move_id = "public".account_move."id"
-                                                                                                                            LEFT JOIN "public".settlement_move_rel ON "public".settlement_move_rel.move_id = "public".account_move."id"
+                                                                "public".account_invoice
+                                                                LEFT JOIN "public".account_invoice_line ON "public".account_invoice_line.invoice_id = "public".account_invoice."id"
                                                             WHERE
-                                                                                                                            "public".advance_move_rel.advance_id IS NULL AND
-                                                                                                                            "public".settlement_move_rel.settlement_id IS NULL AND
-                                                                                                                            "public".account_move_line.debit IS NOT NULL AND
-                                                                                                                            "public".account_move_line.credit IS NOT NULL
+                                                                "public".account_invoice."type" = 'in_invoice' AND
+                                                                "public".account_invoice."state" = 'paid' AND
+                                                                "public".account_invoice_line.budget_item_id IS NOT NULL
                                                             GROUP BY
-                                                                                                                            "public".budget_plan_line."id",
-                                                                                                                            "public".account_move.narration,
-                                                                                                                            "public".account_move."ref"
+                                                                "public".account_invoice_line.budget_item_id,
+                                                                "public".account_invoice."name"
+                                                            UNION
+                                                            --REIMBURSEMENT
+                                                            SELECT
+                                                                "public".account_voucher_line.budget_item_id AS budget_plan_line_id,
+                                                                Sum("public".account_voucher_line.amount) AS realisasi_debit,
+                                                                0 AS realisasi_credit,
+                                                                '' AS narration,
+                                                                "public".account_voucher.reference
+                                                            FROM
+                                                                "public".account_voucher
+                                                            LEFT JOIN "public".account_voucher_line ON "public".account_voucher_line.voucher_id = "public".account_voucher."id"
+                                                            WHERE
+                                                                "public".account_voucher."type" = 'reimbursement' AND
+                                                                "public".account_voucher."state" = 'posted' AND
+                                                                "public".account_voucher_line.budget_item_id IS NOT NULL
+                                                            GROUP BY
+                                                                "public".account_voucher_line.budget_item_id,
+                                                                "public".account_voucher.reference
                                                             UNION
                                                             SELECT
                                                                                                                             "public".cash_advance_line.budget_item_id AS budget_plan_line_id,
