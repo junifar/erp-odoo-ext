@@ -12,6 +12,9 @@ interface DepartmentBudgetRepository:CrudRepository<DepartmentBudget, Long>{
                             SELECT
                             "public".budget_plan."id",
                             "public".budget_plan."name",
+                            "public".budget_plan.notes,
+                            "public".budget_plan.periode_start,
+                            "public".budget_plan.periode_end,
                             Sum(d.nilai_budget) AS nilai_budget,
                             COALESCE(sum(C.realisasi_budget), 0) AS realisasi_budget,
                             COALESCE(round(cast(sum(C.realisasi_budget)/sum(D.nilai_budget) as numeric) * 100,2),0) AS persent_budget
@@ -129,7 +132,10 @@ interface DepartmentBudgetRepository:CrudRepository<DepartmentBudget, Long>{
                             "public".budget_plan.department_id = :department_id
                             GROUP BY
                             "public".budget_plan."id",
-                            "public".budget_plan."name"
+                            "public".budget_plan."name",
+                            "public".budget_plan.notes,
+                            "public".budget_plan.periode_start,
+                            "public".budget_plan.periode_end
                         """
     }
 

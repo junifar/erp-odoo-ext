@@ -76,7 +76,7 @@ class DepartmentController{
         val data = departmentBudgetData
         val departmentBudgetData: MutableList<DepartmentBudgetData> = mutableListOf()
         data.forEach {
-            departmentBudgetData.add(DepartmentBudgetData(it.id, it.name, it.nilai_budget, it.realisasi_budget,
+            departmentBudgetData.add(DepartmentBudgetData(it.id, it.name, it.notes, it.periode_start, it.periode_end, it.nilai_budget, it.realisasi_budget,
                     it.persent_budget, getDepartmentBudgetDetailData(it.id)))
         }
         return departmentBudgetData
