@@ -24,7 +24,7 @@ interface DepartmentBudgetRealisasiRepository:CrudRepository<DepartmentBudgetRea
                                     "public".account_invoice.date_invoice AS date,
                                     Sum("public".account_invoice_line.price_subtotal) AS realisasi_debit,
                                     0 AS realisasi_credit,
-                                    '' AS narration,
+                                    string_agg("public".account_invoice_line."name", '; ') AS narration,
                                     "public".account_invoice."name" AS "ref"
                                     FROM
                                     "public".account_invoice
@@ -44,7 +44,7 @@ interface DepartmentBudgetRealisasiRepository:CrudRepository<DepartmentBudgetRea
                                     "public".account_voucher.date_pay AS date,
                                     Sum("public".account_voucher_line.amount) AS realisasi_debit,
                                     0 AS realisasi_credit,
-                                    '' AS narration,
+                                    string_agg("public".account_voucher_line."name", '; ') AS narration,
                                     "public".account_voucher.reference
                                     FROM
                                     "public".account_voucher
