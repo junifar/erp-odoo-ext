@@ -110,7 +110,8 @@ interface DepartmentBudgetRepository:CrudRepository<DepartmentBudget, Long>{
                                                                 LEFT JOIN "public".cash_settlement ON "public".cash_settlement_line.voucher_id = "public".cash_settlement."id"
                                                                 LEFT JOIN "public".cash_advance ON "public".cash_settlement.advance_id = "public".cash_advance."id"
                                                                 WHERE
-                                                                "public".cash_advance."state" = 'lunas'
+                                                                "public".cash_advance."state" = 'lunas' AND
+                                                                "public".cash_settlement."state" NOT IN ('draft', 'cancel')
                                                                 GROUP BY
                                                                 "public".cash_settlement_line.budget_item_id,
                                                                 "public".cash_advance."number"
