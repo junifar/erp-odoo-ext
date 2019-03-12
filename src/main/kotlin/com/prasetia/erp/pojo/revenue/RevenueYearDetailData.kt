@@ -20,7 +20,7 @@ class RevenueYearDetailData(
        @Id
        val id:Long,
        val customer_id:Long,
-       val code:String,
+       val code:String?,
        val jumlah_site:Int,
        val tahun:Int?,
        val nilai_po:Double?,
