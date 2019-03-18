@@ -82,7 +82,7 @@ interface RevenueYearDetailRepository:CrudRepository<RevenueYearDetail, Long>{
                                             "public".res_partner.code,
                                             EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas)
                             ORDER BY
-                                            "public".res_partner."id" ASC
+                                            COALESCE(Sum(A.nilai_po),0) DESC
                             """
     }
 

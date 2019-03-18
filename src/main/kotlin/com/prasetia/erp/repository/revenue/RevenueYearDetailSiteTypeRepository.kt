@@ -83,7 +83,7 @@ interface RevenueYearDetailSiteTypeRepository:CrudRepository<RevenueYearDetailSi
                             "public".project_site_type."name",
                             EXTRACT(YEAR FROM "public".project_project.tanggal_surat_tugas)
                             ORDER BY
-                            "public".project_site_type."id" ASC
+                            COALESCE(Sum(A.nilai_po),0) DESC
                             """
     }
 
