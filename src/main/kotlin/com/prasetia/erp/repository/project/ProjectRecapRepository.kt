@@ -15,7 +15,8 @@ interface ProjectRecapRepository:CrudRepository<ProjectRecap, Long>{
                                 AA.site_type_id,
                                 AA.site_type,
                                 COALESCE(SUM(AA.count_po_project),0) AS po,
-                                COALESCE(SUM(AA.invoiced),0) AS invoiced,
+                                --COALESCE(SUM(AA.invoiced),0) AS invoiced,
+                                COALESCE(SUM(AA.invoiced) + SUM(AA.invoice_paid),0) AS invoiced,
                                 COALESCE(SUM(AA.BAST_STATUS),0) AS bast,
                                 COALESCE(SUM(AA.invoice_paid),0) AS paid,
                                 COALESCE(SUM(AA.nilai_po),0) AS nilai_po,
@@ -115,6 +116,8 @@ interface ProjectRecapRepository:CrudRepository<ProjectRecap, Long>{
                                             AND D.date = "public".budget_plan.date
                                     WHERE
                                     "public".sale_order."state" NOT IN ('draft', 'cancel')
+                                    AND "public".project_site_type."id" IN (2,80,10,3,1,5) AND
+                                    EXTRACT(YEAR from "public".budget_plan.date) IN (2016,2018,2018,2019)
                                     GROUP BY
                                     "public".budget_plan."id",
                                     "public".project_site_type."id",
@@ -195,7 +198,8 @@ interface ProjectRecapRepository:CrudRepository<ProjectRecap, Long>{
                                 AA.site_type_id,
                                 AA.site_type,
                                 COALESCE(SUM(AA.count_po_project),0) AS po,
-                                COALESCE(SUM(AA.invoiced),0) AS invoiced,
+                                --COALESCE(SUM(AA.invoiced),0) AS invoiced,
+		                        COALESCE(SUM(AA.invoiced) + SUM(AA.invoice_paid),0) AS invoiced,
                                 COALESCE(SUM(AA.BAST_STATUS),0) AS bast,
                                 COALESCE(SUM(AA.invoice_paid),0) AS paid,
                                 COALESCE(SUM(AA.nilai_po),0) AS nilai_po,
@@ -376,7 +380,8 @@ interface ProjectRecapRepository:CrudRepository<ProjectRecap, Long>{
                                 AA.site_type_id,
                                 AA.site_type,
                                 COALESCE(SUM(AA.count_po_project),0) AS po,
-                                COALESCE(SUM(AA.invoiced),0) AS invoiced,
+                                --COALESCE(SUM(AA.invoiced),0) AS invoiced,
+		                        COALESCE(SUM(AA.invoiced) + SUM(AA.invoice_paid),0) AS invoiced,
                                 COALESCE(SUM(AA.BAST_STATUS),0) AS bast,
                                 COALESCE(SUM(AA.invoice_paid),0) AS paid,
                                 COALESCE(SUM(AA.nilai_po),0) AS nilai_po,
@@ -557,7 +562,8 @@ interface ProjectRecapRepository:CrudRepository<ProjectRecap, Long>{
                                 AA.site_type_id,
                                 AA.site_type,
                                 COALESCE(SUM(AA.count_po_project),0) AS po,
-                                COALESCE(SUM(AA.invoiced),0) AS invoiced,
+                                --COALESCE(SUM(AA.invoiced),0) AS invoiced,
+		                        COALESCE(SUM(AA.invoiced) + SUM(AA.invoice_paid),0) AS invoiced,
                                 COALESCE(SUM(AA.BAST_STATUS),0) AS bast,
                                 COALESCE(SUM(AA.invoice_paid),0) AS paid,
                                 COALESCE(SUM(AA.nilai_po),0) AS nilai_po,

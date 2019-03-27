@@ -127,6 +127,8 @@ interface ProjectRecapAgingRepository:CrudRepository<ProjectRecapAging, Long>{
                                             AND D.date = "public".budget_plan.date
                                     WHERE
                                     "public".sale_order."state" NOT IN ('draft', 'cancel')
+                                    AND "public".project_site_type."id" IN (2,80,10,3,1,5) AND
+                                    EXTRACT(YEAR from "public".budget_plan.date) IN (2016,2018,2018,2019)
                                     GROUP BY
                                     "public".budget_plan."id",
 																		"public".project_site_type."id",
@@ -137,7 +139,7 @@ interface ProjectRecapAgingRepository:CrudRepository<ProjectRecapAging, Long>{
                                 AA.invoice_date IS NOT NULL
                             ) AS AAA
                             GROUP BY
-																AAA.site_type_id,
+                                AAA.site_type_id,
                                 AAA.site_type
         """
 
@@ -537,7 +539,7 @@ interface ProjectRecapAgingRepository:CrudRepository<ProjectRecapAging, Long>{
                                 AA.invoice_date IS NOT NULL
                             ) AS AAA
                             GROUP BY
-																AAA.site_type_id,
+                                AAA.site_type_id,
                                 AAA.site_type
         """
     }
