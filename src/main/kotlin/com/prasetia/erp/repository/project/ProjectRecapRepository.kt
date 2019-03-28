@@ -556,6 +556,7 @@ interface ProjectRecapRepository:CrudRepository<ProjectRecap, Long>{
                                 AA.site_type_id
         """
 
+
         const val QUERY_BY_CONDITION_SITE_TYPE_ID_YEAR = """
                             SELECT
                                 ROW_NUMBER() OVER (ORDER BY AA.site_type) AS id,
