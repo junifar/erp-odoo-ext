@@ -1,4 +1,4 @@
-package com.prasetia.erp.constant
+package com.prasetia.erp.api.constant
 
 class GlobalConstant{
     companion object {

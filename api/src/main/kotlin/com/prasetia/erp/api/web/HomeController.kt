@@ -1,4 +1,4 @@
-package com.prasetia.erp.controller.web
+package com.prasetia.erp.api.web
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
